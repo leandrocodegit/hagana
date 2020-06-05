@@ -13,15 +13,12 @@
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src='https://vjs.zencdn.net/7.6.5/video.js'></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ 
 
     <link href="/hagana/restrict/css/style.css" rel="stylesheet" type="text/css"/>
- 
+
 
     <h:head>
         <title>Busca</title>
@@ -50,109 +47,217 @@
                 </ul>
             </div>
 
-            <div class="w3-main" style="margin-left:200px" id="main" >
+            
+            <div class="w3-main " style="margin-left:200px" id="main" >
 
-                <div class="w3-container w3-border-bottom"  style="padding:0px;padding-top:80px;">
+                <div class="w3-mobile w3-white w3-section w3-row-padding w3-left " style="width:100%;padding-top:70px;padding-left:0;padding-right:0; ">
 
-                    <div class=" w3-twothird"  style="">
+                    <div class="w3-twothird "  style="padding:1px;">
 
-                        <div class="w3-row " >
+                        <header id="DH1" class="w3-container w3-border-bottom w3-border-light-blue" style="background-color:#F7F7F3; ">
 
-                            <div class=" w3-twothird" style="width:100%;">
+                            <h:form>
+                                <h:panelGroup rendered="#{true == true}">
+                                    <h:commandLink     action="{dispositivosMB.limpar()}" 
+                                                       title="Adicionar cliente"  
+                                                       onclick="abreModal('cad1')" 
+                                                       style="word-spacing:10px;padding-right:0px;padding-left: 0px;margin-top:12px; "
+                                                       class="iconeHead fas fa-plus-circle w3-right ">
 
+                                        <f:ajax  render=":formDis" />
 
+                                    </h:commandLink>
+                                </h:panelGroup>
 
+                            </h:form>
+                            <h3 class="textoMenu">Dispositivos</h3>
+                        </header>
+                    </div>
 
-                                <!-- Barra videos -->
+                    <div class="w3-third w3-mobile  w3-white  " style="padding-right:1px;padding-left:0px; " >
 
+                        <div class="w3-row" style="padding-top:0px;padding-right:0px;padding-left:0px">
 
+                            <div class=" w3-twothird " style="padding-left:1px;padding-right:1px;padding-top:0%;width:100%; ">
 
+                                <header class="w3-container w3-border-ligth-grey w3-border-bottom w3-border-lime" style="background-color:#F7F7F3;">
+                                    <h:form>
+                                        <h:panelGroup rendered="#{true == true}">
+                                            <h:commandLink     action="{computador.limpar()}" 
+                                                               title="Adicionar cliente"  onclick="abreModal('cad2')" style="word-spacing:10px;padding-right:0px;padding-left: 0px;margin-top:12px; "
+                                                               class="iconeHead fas fa-plus-circle w3-right ">
 
+                                                <f:ajax  render=":formPC" />                                      
 
-                                <!-- Corpo centro-->
-
-
+                                            </h:commandLink>
+                                        </h:panelGroup>
+                                    </h:form>
+                                    <h3 class="textoMenu">Computadores</h3>
+                                </header>
                             </div>
+                        </div>
 
+                        <div class="w3-row w3-mobile "  style="width:100%;padding-top:10px">
+
+                            <div class="w3-row" style="padding-top:0px;padding-right:0px;padding-left:0px;">
+
+                                <div class=" w3-twothird " style="padding-left:1px;padding-right:1px;padding-top:0%;width:100%; ">
+                                    <header class="w3-container w3-border-ligth-grey w3-border-bottom   w3-border-yellow" style="background-color:#F7F7F3;margin-bottom:20px">                 
+
+                                        <h:form>
+                                            <h:panelGroup rendered="#{true == true}">
+                                                <h:commandLink     action="{redeMB.limpar()}" 
+                                                                   title="Adicionar equipamento"  onclick="abreModal('cad3')" style="word-spacing:10px;padding-right:0px;padding-left: 0px;margin-top:12px; "
+                                                                   class="iconeHead fas fa-plus-circle w3-right ">
+                                                    <f:ajax render=":formRede"/>                       
+
+                                                </h:commandLink>
+                                            </h:panelGroup>
+                                        </h:form> 
+                                        <h3 class="textoMenu">Rede</h3>
+                                    </header>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div id="arq002" class="w3-modal " >
+                            <div class="w3-modal-content"  style="width: 500px;margin-top: 150px">
+                                <header class="w3-container w3-light-blue" style="background-color:#F7F7F3;margin-bottom:20px;"> 
+                                    <i class="fas fa-times-circle w3-right minimiza" onclick="document.getElementById('arq002').style.display = 'none'" style="font-size:20px;padding-top: 10px;"></i>
+                                    <h4 style="color: #FFF">Enviar arquivo</h4>
+                                </header>
+                                <div class="w3-container"  style="width: 100%;padding-right: 10px;padding-left: 10px;">
+
+                                    <h:form id="formEnviarARQ" enctype="multipart/form-data">
+                                        <br></br>
+                                        <br></br>
+                                        <p:fileUpload value="{redeMB.file}" mode="simple" update="messages"  skinSimple="true" styleClass="aaa w3-card-2 w3-hover-blue"
+                                                      label="Escolher arquivo" />
+                                        <br></br>
+
+                                        <dir class="w3-right">
+                                            <p:commandButton  value="Cancelar" update="@form"
+                                                              onclick="document.getElementById('arq002').style.display = 'none'" styleClass="botao w3-card-4 w3-hover-blue">
+                                            </p:commandButton>
+                                            <p:commandButton  action="{redeMB.salvarArquivoConf()}" 
+                                                              update="@form"  
+                                                              ajax="false" 
+                                                              value="Salvar" 
+                                                              styleClass="botao w3-card-2 w3-hover-blue">
+                                            </p:commandButton> 
+                                        </dir>
+                                        <br></br>
+                                        <br></br> 
+
+                                        <p:messages id="aviso" style="width: 100%" />
+
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div id="m006" class="w3-modal w3-round-xlarge" >
+                            <div class="w3-modal-content w3-round-large"  style="width: 500px;margin-top:50px">
+                                <header class="w3-container w3-pink" style="background-color:#F7F7F3;margin-bottom:20px;"> 
+                                    <h3 style="color: #FFF">Excluir arquivo ?</h3>
+
+                                </header>
+                                <div class="w3-container"  style="width: 100%;padding-right: 10px;padding-left: 10px;">
+                                    <p>Clique em "sim" para continuar!</p>
+                                    <br></br>
+                                    <h:form>
+                                        <p:commandButton   value="Sim"  actionListener="{redeMB.deletarArquivo()}"  class="botao w3-right w3-hover-pink"   onclick="document.getElementById('m003').style.display = 'none'" >
+
+                                        </p:commandButton>
+                                        <p:commandButton  value="Não"  
+                                                          class="botao w3-right"
+                                                          onclick="document.getElementById('m006').style.display = 'none'" >
+                                        </p:commandButton>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w3-row" style="padding-top:15px;padding-right:0px;padding-left:0px">
+                            <div class=" w3-twothird " style="padding-left:1px;padding-right:1px;padding-top:0%;width:100%; ">
+
+                                <header class="w3-container w3-border-ligth-grey w3-border-bottom   w3-border-green" style="background-color:#F7F7F3;margin-bottom:20px">
+                                    <h:form> 
+                                        <h:panelGroup rendered="#{true == true}">
+                                            <h:commandLink     action="{linkMB.limpar()}" 
+                                                               title="Adicionar link"  onclick="abreModal('cad4')" style="word-spacing:10px;padding-right:0px;padding-left: 0px;margin-top:12px; "
+                                                               class="iconeHead fas fa-plus-circle w3-right ">
+                                                <f:ajax render=":formLnk"/>                        
+
+                                            </h:commandLink>
+                                        </h:panelGroup>
+                                    </h:form> 
+                                    <h3 class="textoMenu">Links</h3>
+                                </header>
+                            </div>
                         </div>
                     </div>
-                    <div class="w3-third" >
-
-
-
-                        <!-- Lado direito -->
-
-                    </div> 
-
                 </div>
-
             </div>
 
         </div>
         <br></br>  
 
-        <footer class="w3-container w3-light-grey w3-center">
-
-            <p>Powered by</p>
-            <p><a href="https://www.w3schools.com/w3css/default.asp" target="_blank">Gennis</a></p>
-        </footer> 
-
-        <script src="/encoder/web/js/transformvideo.js"></script>
-
-        <script src="/encoder/web/js/Novecanal.js"></script>
 
         <script>
 
 
-                        function w3_open() {
+            function w3_open() {
 
-                            document.getElementById("sideBar").style.display = "block";
-                            var x = document.getElementById("main");
+                document.getElementById("sideBar").style.display = "block";
+                var x = document.getElementById("main");
 
-                            x.className = x.className.replace("  w3-white  ", " w3-hide ");
-                            document.getElementById("sideBar").style.width = "200px";
-                            document.getElementById("main").style.marginLeft = "200px";
-
-
-                        }
-
-                        function w3_close() {
-                            document.getElementById("sideBar").style.display = "none";
-                            var x = document.getElementById("sideBar");
-
-                            x.className = x.className.replace(" w3-hide ", " w3-white ");
-                            document.getElementById("sideBar").style.width = "0px";
-                            document.getElementById("main").style.marginLeft = "0px";
-
-                        }
-
-                        $(function () {
-                            var $refreshButton = $('#refresh');
-                            var $results = $('#css_result');
-
-                            function refresh() {
-                                var css = $('style.cp-pen-styles').text();
-                                $results.html(css);
-                            }
-
-                            refresh();
-                            $refreshButton.click(refresh);
-
-                            // Select all the contents when clicked
-                            $results.click(function () {
-                                $(this).select();
-                            });
-                        });
+                x.className = x.className.replace("  w3-white  ", " w3-hide ");
+                document.getElementById("sideBar").style.width = "200px";
+                document.getElementById("main").style.marginLeft = "200px";
 
 
-                        function acord(id) {
-                            var x = document.getElementById(id);
-                            if (x.className.indexOf(" w3-show ") == -1) {
-                                x.className = x.className.replace(" w3-hide-small ", " w3-show ");
-                            } else {
-                                x.className = x.className.replace(" w3-show ", " w3-hide-small ");
-                            }
-                        }
+            }
+
+            function w3_close() {
+                document.getElementById("sideBar").style.display = "none";
+                var x = document.getElementById("sideBar");
+
+                x.className = x.className.replace(" w3-hide ", " w3-white ");
+                document.getElementById("sideBar").style.width = "0px";
+                document.getElementById("main").style.marginLeft = "0px";
+
+            }
+
+            $(function () {
+                var $refreshButton = $('#refresh');
+                var $results = $('#css_result');
+
+                function refresh() {
+                    var css = $('style.cp-pen-styles').text();
+                    $results.html(css);
+                }
+
+                refresh();
+                $refreshButton.click(refresh);
+
+                // Select all the contents when clicked
+                $results.click(function () {
+                    $(this).select();
+                });
+            });
+
+
+            function acord(id) {
+                var x = document.getElementById(id);
+                if (x.className.indexOf(" w3-show ") == -1) {
+                    x.className = x.className.replace(" w3-hide-small ", " w3-show ");
+                } else {
+                    x.className = x.className.replace(" w3-show ", " w3-hide-small ");
+                }
+            }
 
 
 
