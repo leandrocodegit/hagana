@@ -1,12 +1,164 @@
-<?xml version='1.0' encoding='UTF-8' ?>
+<?xml version='1.0' encoding='UTF-8' ?> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        Hello from Facelets
-    </h:body>
-</html>
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> </link>
+    <link href="https://vjs.zencdn.net/7.6.5/video-js.css" rel="stylesheet"> </link>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src='https://vjs.zencdn.net/7.6.5/video.js'></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <link href="/hagana/restrict/css/style.css" rel="stylesheet" type="text/css"/>
+ 
+
+    <h:head>
+        <title>Busca</title>
+    </h:head>
+
+    <h:body>
+
+        <div class="w3-main"  >
+            <div class="w3-card  menu w3-top" style="padding-left:6px;">
+                <button id="openNav" class="w3-xlarge w3-button w3-hover-white btBar w3-border-0" onclick="w3_open()" style="outline: none" >&#9776;</button>               
+            </div>
+            <div class="w3-sidebar w3-card-4  w3-collapse w3-animate-left" style="width:200px;"  id="sideBar" >
+                <div class="btBarGradiente  ">
+
+                    <div class="w3-container " onclick="w3_close()">
+                        <i class="fas fa-angle-left" style="font-size:30px;padding-top:4%;color: white; "></i>
+                    </div>
+                </div>
+
+                <ul>
+                    <li class="icone"><a href="dashboard.xhtml"><span><b class="fas fa-stream  " style="color:#e70920"></b></span>   <b class="textoMenu" style="color:#fc5774" >Dashboard</b></a></li>
+                    <li class="icone"><a href="busca.xhtml"><span><b class="far fa-calendar-alt "></b></span>   <b class="textoMenu" >Home</b></a></li>                   
+                    <li class="icone"><a href="dispositivos.xhtml"><span><b class="fas fa-desktop   "></b></span>   <b class="textoMenu" >Arquivos</b></a></li>
+                    <li class="icone"><a><span><b class="far fa-hdd   "></b></span>   <b class="textoMenu" >Fotos</b></a></li>
+                    <li class="icone"><a href="login.xhtml"><span><b class="far fa-user   "></b></span>   <b class="textoMenu" style="padding-left:9px" > Sair</b></a></li>
+                </ul>
+            </div>
+
+            <div class="w3-main" style="margin-left:200px" id="main" >
+
+                <div class="w3-container w3-border-bottom"  style="padding:0px;padding-top:80px;">
+
+                    <div class=" w3-twothird"  style="">
+
+                        <div class="w3-row " >
+
+                            <div class=" w3-twothird" style="width:100%;">
+
+
+
+
+                                <!-- Barra videos -->
+
+
+
+
+
+                                <!-- Corpo centro-->
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="w3-third" >
+
+
+
+                        <!-- Lado direito -->
+
+                    </div> 
+
+                </div>
+
+            </div>
+
+        </div>
+        <br></br>  
+
+        <footer class="w3-container w3-light-grey w3-center">
+
+            <p>Powered by</p>
+            <p><a href="https://www.w3schools.com/w3css/default.asp" target="_blank">Gennis</a></p>
+        </footer> 
+
+        <script src="/encoder/web/js/transformvideo.js"></script>
+
+        <script src="/encoder/web/js/Novecanal.js"></script>
+
+        <script>
+
+
+                        function w3_open() {
+
+                            document.getElementById("sideBar").style.display = "block";
+                            var x = document.getElementById("main");
+
+                            x.className = x.className.replace("  w3-white  ", " w3-hide ");
+                            document.getElementById("sideBar").style.width = "200px";
+                            document.getElementById("main").style.marginLeft = "200px";
+
+
+                        }
+
+                        function w3_close() {
+                            document.getElementById("sideBar").style.display = "none";
+                            var x = document.getElementById("sideBar");
+
+                            x.className = x.className.replace(" w3-hide ", " w3-white ");
+                            document.getElementById("sideBar").style.width = "0px";
+                            document.getElementById("main").style.marginLeft = "0px";
+
+                        }
+
+                        $(function () {
+                            var $refreshButton = $('#refresh');
+                            var $results = $('#css_result');
+
+                            function refresh() {
+                                var css = $('style.cp-pen-styles').text();
+                                $results.html(css);
+                            }
+
+                            refresh();
+                            $refreshButton.click(refresh);
+
+                            // Select all the contents when clicked
+                            $results.click(function () {
+                                $(this).select();
+                            });
+                        });
+
+
+                        function acord(id) {
+                            var x = document.getElementById(id);
+                            if (x.className.indexOf(" w3-show ") == -1) {
+                                x.className = x.className.replace(" w3-hide-small ", " w3-show ");
+                            } else {
+                                x.className = x.className.replace(" w3-show ", " w3-hide-small ");
+                            }
+                        }
+
+
+
+        </script>
+    </h:body>
+
+
+
+</html>

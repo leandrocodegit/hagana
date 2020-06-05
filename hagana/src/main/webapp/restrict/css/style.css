@@ -50,9 +50,9 @@ body
 
 
     height:50px;
-    background: rgb(51,22,55);
-    background: radial-gradient(circle, rgba(51,22,55,0.9444152661064426) 0%, rgba(10,13,19,0.8883928571428571) 100%);
-    box-shadow: 0 0 10px #ff5900;
+    background: rgb(99,181,255);
+background: radial-gradient(circle, rgba(99,181,255,1) 0%, rgba(60,111,230,1) 100%);
+    box-shadow: 0 0 10px #d7d9db;
 
 }
 .btBarGradiente:hover
@@ -67,7 +67,7 @@ body
     margin: 0;
     border-radius: 0;
     border-style: none;
-    height: 40px;
+    height: 50px;
     background: #f7f7f4
 }
 
