@@ -15,7 +15,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
- 
+
 
     <link href="/hagana/restrict/css/style.css" rel="stylesheet" type="text/css"/>
 
@@ -26,45 +26,79 @@
 
     <h:body>
 
+
+
         <div class="w3-main"  >
             <div class="w3-card  menu w3-top" style="padding-left:6px;">
-                <button id="openNav" class="w3-xlarge w3-button w3-hover-white btBar w3-border-0" onclick="w3_open()" style="outline: none" >&#9776;</button>               
+                <button id="openNav" class="w3-xlarge w3-button w3-hover-white btBar w3-border-0" onclick="w3_open()" style="outline: none" >&#9776;</button>              
             </div>
             <div class="w3-sidebar w3-card-4  w3-collapse w3-animate-left" style="width:200px;"  id="sideBar" >
                 <div class="btBarGradiente  ">
-
                     <div class="w3-container " onclick="w3_close()">
                         <i class="fas fa-angle-left" style="font-size:30px;padding-top:4%;color: white; "></i>
                     </div>
                 </div>
 
                 <ul>
-                    <li class="icone"><a href="dashboard.xhtml"><span><b class="fas fa-stream  " style="color:#e70920"></b></span>   <b class="textoMenu" style="color:#fc5774" >Dashboard</b></a></li>
-                    <li class="icone"><a href="busca.xhtml"><span><b class="far fa-calendar-alt "></b></span>   <b class="textoMenu" >Home</b></a></li>                   
-                    <li class="icone"><a href="dispositivos.xhtml"><span><b class="fas fa-desktop   "></b></span>   <b class="textoMenu" >Arquivos</b></a></li>
-                    <li class="icone"><a><span><b class="far fa-hdd   "></b></span>   <b class="textoMenu" >Fotos</b></a></li>
-                    <li class="icone"><a href="login.xhtml"><span><b class="far fa-user   "></b></span>   <b class="textoMenu" style="padding-left:9px" > Sair</b></a></li>
+                    <li class="icone"><a href="dashboard.xhtml"><span><b class="fas fa-desktop" style="color:#8a4ae4"></b></span>   <b class="textoMenu" style="color:#0bd6e2" >Dashboard</b></a></li>
+                    <li class="icone"><a href="busca.xhtml"><span><b class="fas fa-home w3-text-blue-grey"></b></span>   <b class="textoMenu" >Home</b></a></li>                   
+                    <li class="icone"><a href="dispositivos.xhtml"><span><b class="fas fa-clone w3-text-blue-grey"></b></span>   <b class="textoMenu" >Arquivos</b></a></li>
+                    <li class="icone"><a><span><b class="fas fa-camera-retro w3-text-blue-grey" ></b></span>   <b class="textoMenu" >Fotos</b></a></li>
+                    <li class="icone"><a href="login.xhtml"><span><b class="far fa-user w3-text-purple"></b></span>   <b class="w3-text-purple" style="padding-left:9px" > Olá, #{loginBean.dadosUsuario}</b></a></li>
+
+                    <div class="w3-padding">
+
+                        <div id="demoDrop" >
+
+                            <h:form>
+                                <b class="fas fa-power-off" style="margin-left:10px;color:#fe5000"></b>
+                                <h:commandLink 
+                                    action="{loginMB.sair()}"
+                                    value="Sair"                                     
+                                    style="font-size: 18px;padding-left:20px;color:#fe5000"> 
+                                </h:commandLink>
+                            </h:form>
+                        </div>
+                    </div>
+
+
                 </ul>
+
+       
             </div>
 
-            
-            <div class="w3-main " style="margin-left:200px" id="main" >
 
-                <div class="w3-mobile w3-white w3-section w3-row-padding w3-left " style="width:100%;padding-top:70px;padding-left:0;padding-right:0; ">
+         <footer class=" w3-bottom">
+                    <h:form>
+                        <p:commandLink onclick="abreModal('m002')" class="w3-left w3-round-xxlarge btBarGradiente w3-card-2 w3-border-bottom  w3-button w3-block w3-left-align  w3-hover-blue " style="margin-bottom:3px;height: 45px;font-size:14px;word-spacing:10px;width:85px">
+                            <i style="color:#FFF;font-size:20px"><b>0001</b></i> 
+                        </p:commandLink>
 
-                    <div class="w3-twothird "  style="padding:1px;">
+                    </h:form>
+                </footer>
 
+
+            <div class="w3-main" style="margin-left:200px" id="main" >      
+
+                <div class="w3-mobile w3-white w3-section w3-row-padding w3-left " style="width:100%;padding-top:60px;padding-left:0;padding-right:0; ">
+
+                    <div class="" style="height:40px;margin-bottom: 10px;margin-left:5px" id="navCliente">                        
+                        <a class="w3-btn w3-white w3-border w3-border-blue w3-round-xlarge" href="clientes.xhtml"  style="font-size:16px;text-decoration: none;padding-left: 10px">#{loginBean.dadosCliente}</a>
+                    </div>
+
+                    <!-- Inicio dispositivos -->
+                    <div class="w3-twothird"  style="padding:5px;">
+                        <!-- Head dispositivos -->
                         <header id="DH1" class="w3-container w3-border-bottom w3-border-light-blue" style="background-color:#F7F7F3; ">
 
                             <h:form>
                                 <h:panelGroup rendered="#{true == true}">
-                                    <h:commandLink     action="{dispositivosMB.limpar()}" 
+                                    <h:commandLink     action="#{dispositivoBean.limpar()}" 
                                                        title="Adicionar cliente"  
-                                                       onclick="abreModal('cad1')" 
+                                                       onclick="abreModal('mDispostivo')"
                                                        style="word-spacing:10px;padding-right:0px;padding-left: 0px;margin-top:12px; "
                                                        class="iconeHead fas fa-plus-circle w3-right ">
-
-                                        <f:ajax  render=":formDis" />
+                                        <f:ajax  render="formCadDis" />
 
                                     </h:commandLink>
                                 </h:panelGroup>
@@ -72,7 +106,185 @@
                             </h:form>
                             <h3 class="textoMenu">Dispositivos</h3>
                         </header>
+                        <!-- Head dispositivos -->
+
+                        <!-- Inicio grid dispositivos -->
+                        <h:form id="formDis">
+                            <h:dataTable id="dataDis" var="dis" binding="#{dispositivoBean.dataTable}" value="#{dispositivoBean.dispositivoList}" style="width: 100%;background-color:#FFF;margin-top: 10px"
+                                         styleClass="book-table"
+                                         headerClass="book-table-header"
+                                         rowClasses="book-table-odd-row,book-table-even-row">
+
+
+                                <h:column>
+
+                                    <div onclick="acord('D' + #{dis.iddispositivo})" id="BTD#{dis.iddispositivo}" class="w3-border-bottom w3-round-large w3-hover-light-blue w3-block w3-left-align item">
+                                        <i class="fas fa-dot-circle" style="color:#3E5182;padding-top:16px;padding-left:8px"></i> <b>#{dis.nome}</b>
+
+                                        <h:panelGroup rendered="#{true == true}">
+                                            <h:commandLink  
+                                                action="#{dispositivoBean.setDispositivo(dis)}"
+                                                title="Editar dispositivo" style=";padding-right:18px;font-size:15px;padding-top:16px"
+                                                class="iconeConfig w3-right fas fa-cog"
+                                                onclick="abreModal('mDispostivo')">
+                                                <f:ajax render="formCadDis" />
+
+
+                                            </h:commandLink>
+                                        </h:panelGroup>
+                                    </div>
+
+                                    <!-- caixa dispositivos -->
+
+                                    <div id="D#{dis.iddispositivo}" class=" w3-hide w3-animate-left w3-container w3-white w3-border-bottom w3-border-rigth" style="width: 100%;margin-top:10px;padding-left:15px">
+                                        <br></br>
+                                        <div class="w3-row w3-hover-sand w3-round-large " >
+                                            <div class="w3-col s4 ">
+                                                <b><p>Nome:</p></b>
+                                            </div>
+                                            <div class="w3-col s6 ">
+                                                <p>#{dis.nome}</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="w3-row w3-hover-sand w3-round-large">
+                                            <div class="w3-col s4">
+                                                <b><p>Tipo:</p></b>
+                                            </div>
+                                            <div class="w3-col s6 ">
+                                                <p>#{dis.tipo}</p>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row w3-hover-sand w3-round-large"  >
+                                            <div class="w3-col s4" >
+                                                <b><p>IP:</p></b>
+                                            </div>
+                                            <div class="w3-col s4 "> 
+                                                <p>#{dis.ip}</p>
+                                            </div>
+                                            <div class="w3-col s4 " >
+
+                                                <h:commandLink  class="fas fa-cog w3-right w3-large " 
+                                                                title="Local" target="_blank" 
+                                                                style="color:#010648;margin-right: 10px;margin-top: 4px;height:10px ">
+                                                    <f:setPropertyActionListener value="#{dis}" target="{dispositivosMB.dispositivosLinkLocal}"  />
+
+                                                </h:commandLink>
+                                                <h:commandLink class="fas fa-satellite-dish w3-right  w3-large " 
+                                                               title="Remoto"  target="_blank" 
+                                                               style="color:#05D72C;margin-right: 10px;margin-top: 4px;height:10px " >
+                                                    <f:setPropertyActionListener value="#{dis}" target="{dispositivosMB.dispositivosLinkRemoto}"  />
+                                                </h:commandLink>
+
+                                            </div>
+                                        </div>
+                                        <div class="w3-row w3-hover-sand w3-round-large">
+                                            <div class="w3-col s4">
+                                                <b><p>Porta TCP:</p></b>
+                                            </div>
+                                            <div class="w3-col s4 ">
+                                                <p>#{dis.portaTCP}</p>
+                                            </div>
+
+                                            <div class="w3-col s4 w3-round-large" style="height: 30px">
+                                                <h:commandLink id="f1"  
+                                                               title="Testar portas" 
+                                                               style="padding-right:10px;padding-top:1px;;font-size: 18px"
+                                                               class="w3-right fas fa-question-circle icone "
+                                                               onclick="abreModal('m001')" >
+                                                    <f:setPropertyActionListener value="#{dis}" target="{dispositivosMB.dispositivosPort}"  />
+                                                    <f:ajax  render=":formTestePortas" />
+
+                                                </h:commandLink>
+                                            </div>
+                                        </div>
+
+                                        <div class="w3-row w3-hover-sand w3-round-large" >
+                                            <div class="w3-col s4">
+                                                <b><p>Porta WEB:</p></b>
+                                            </div>
+                                            <div class="w3-col s4 ">
+                                                <p>#{dis.portaWEB}</p>
+                                            </div>
+                                            <div class="w3-col s4 w3-round-large" style="height: 30px">
+
+                                                <h:commandLink id="f2" actionListener="#{dispositivosMB.atualizarLista()}"
+                                                               title="Testar portas" 
+                                                               style="padding-right:10px;padding-top:1px;font-size: 18px"
+                                                               class="w3-right fas fa-question-circle icone "
+                                                               onclick="abreModal('m001')" >
+                                                    <f:ajax  render=":formTestePortas" />
+
+                                                </h:commandLink>
+                                            </div>
+                                        </div>
+
+                                        <div class="w3-row w3-hover-sand w3-round-large">
+                                            <div class="w3-col s4">
+                                                <b><p>Senha admin:</p></b>
+                                            </div>
+                                            <div class="w3-col s6 ">
+                                                <h:panelGroup rendered="#{loginMB.usuario.verSenha == true}">
+                                                    <p>{dis.senha}</p>
+                                                </h:panelGroup>
+                                                <h:panelGroup rendered="#{loginMB.usuario.verSenha == false}">
+                                                    <p>*************</p>
+                                                </h:panelGroup>
+                                            </div>
+                                        </div>
+
+                                        <div class="w3-row w3-hover-sand w3-round-large">
+                                            <div class="w3-col s4">
+                                                <b><p>Modelo:</p></b>
+                                            </div>
+                                            <div class="w3-col s6 ">
+                                                <p>#{dis.modelo}</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="w3-row w3-hover-sand w3-round-large">
+                                            <div class="w3-col s4">
+                                                <b><p>Fabricante:</p></b>
+                                            </div>
+                                            <div class="w3-col s4 ">
+                                                <p>#{dis.fabricanteFK.nome}</p>
+                                            </div>
+                                            <div class="w3-col s4 ">
+                                                <i href="https://www.intelbras.com/pt-br/seguranca-eletronica/cameras" class="fas fa-info-circle w3-right " style="color:#02427D;margin-right: 10px;margin-top: 4px;"></i> 
+                                            </div>
+                                        </div>
+
+
+                                        <div class="w3-row w3-hover-sand w3-round-large">
+                                            <div class="w3-col s4">
+                                                <b><p>IP padrão:</p></b>
+                                            </div>
+                                            <div class="w3-col s6 ">
+                                                <p>#{dis.ipPadrao}</p>
+                                            </div>
+                                        </div>
+                                        <div class="w3-row w3-hover-sand w3-round-large">
+                                            <div class="w3-col s4">
+                                                <b><p>Senha padrão:</p></b>
+                                            </div>
+                                            <div class="w3-col s6 ">
+                                                <p>#{dis.senhaPadrao}</p>
+                                            </div>
+                                        </div>
+                                        <br></br>
+                                    </div>
+
+                                    <!-- fim caixa dispositivos -->
+
+                                </h:column>
+
+                            </h:dataTable>
+                        </h:form>
+
+                        <!-- Fim grid dispositivos -->
+
                     </div>
+                    <!-- Fim dispositivos -->
 
                     <div class="w3-third w3-mobile  w3-white  " style="padding-right:1px;padding-left:0px; " >
 
@@ -202,7 +414,153 @@
                 </div>
             </div>
 
-        </div>
+            <div id="mDispostivo" class="w3-modal">
+                <div class="w3-modal-content w3-animate-zoom "  >
+
+                    <div  class=" w3-white w3-border-bottom w3-border-rigth " >
+
+                        <div class="w3-container w3-light-blue">
+                            <i class="fas fa-times-circle w3-right minimiza" onclick="document.getElementById('mDispostivo').style.display = 'none'" style="font-size:20px;padding-top: 10px"></i>
+                            <h4 class="w3-text-white">Cadastrar novo dispositivo</h4>
+                        </div>
+
+                        <br></br>
+
+                        <div class=" w3-left w3-white w3-mobile "  style="width:100%">
+                            <div class=""  >
+                                <h:form id="formCadDis">
+
+                                    <table class="w3-table">
+
+                                        <tr>
+                                            <td class="w3-right-align"><b>Nome:</b></td>
+                                            <td><p:inputText id="nome" value="#{dispositivoBean.dispositivo.nome}" required="true" class="inp"> 
+                                                    <f:validateLength minimum="2" />
+                                                </p:inputText></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="w3-right-align"><b>Tipo:</b></td>
+                                            <td>
+
+                                                <h:selectOneMenu value="#{dispositivoBean.dispositivo.tipo}"  class="inp form-control" style="height: 40px" >
+                                                    <f:selectItem itemLabel="Antena TAG" itemValue="1" />
+                                                    <f:selectItem itemLabel="Alarme IP" itemValue="2" />
+                                                    <f:selectItem itemLabel="Biometria" itemValue="3" />
+                                                    <f:selectItem itemLabel="Camera IP" itemValue="4" />
+                                                    <f:selectItem itemLabel="Controladora" itemValue="5" />
+                                                    <f:selectItem itemLabel="DVR/NVR" itemValue="6" />
+                                                    <f:selectItem itemLabel="Intefone IP" itemValue="7" />
+                                                </h:selectOneMenu>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td class="w3-right-align"><b>IP</b></td>
+                                            <td><p:inputText id="ip" value="#{dispositivoBean.dispositivo.ip}" required="true" class="inp"/></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td class="w3-right-align"><b>Porta TCP:</b></td>
+                                            <td><p:inputText type="number"  value="#{dispositivoBean.dispositivo.portaTCP}" class="inp" style="width:  90px"/></td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="w3-right-align"><b>Porta WEB:</b></td>
+                                            <td><p:inputText type="number" value="#{dispositivoBean.dispositivo.portaWEB}"  class="inp" style="width: 90px"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="w3-right-align"><b>Senha:</b></td>
+                                            <td><h:inputText value="#{dispositivoBean.dispositivo.senha}" class="inp"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="w3-right-align"><b>Modelo:</b></td>
+                                            <td><h:inputText value="#{dispositivoBean.dispositivo.modelo}" class="inp"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="w3-right-align"><b>Fabricante:</b></td>
+                                            <td>
+
+                                                <h:selectOneMenu class="inp form-control" style="height: 40px" >   
+                                                    <f:selectItem  itemLabel="#{dispositivoBean.dispositivo.fabricanteFK.nome}" itemValue="#{dispositivoBean.dispositivo.fabricanteFK.idfabricante}" />
+                                                    <f:selectItems  var="seleDis" value="#{dispositivoBean.fabricantes}" itemValue="#{seleDis.idfabricante}" itemLabel="#{seleDis.nome}" />                                                    
+
+                                                    <!-- <f:ajax render="resultados"/>-->
+                                                </h:selectOneMenu>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="w3-right-align"><b>Local</b></td>
+                                            <td>
+
+                                                <h:selectOneMenu class="inp form-control" style="height: 40px" >   
+                                                    <f:selectItem  itemLabel="#{dispositivoBean.dispositivo.localFK}" itemValue="#{dispositivoBean.dispositivo.localFK.idlocal}" />
+                                                    <f:selectItems  var="seleDis" value="#{dispositivoBean.fabricantes}" itemValue="#{seleDis.idfabricante}" itemLabel="#{seleDis.nome}" />                                                    
+
+                                                    <!-- <f:ajax render="resultados"/>-->
+                                                </h:selectOneMenu>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="w3-right-align"><b>IP padrão:</b></td>
+                                            <td><h:inputText value="#{dispositivoBean.dispositivo.ipPadrao}" class="inp"></h:inputText></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="w3-right-align"><b>Senha padrão:</b></td>
+                                            <td><h:inputText value="#{dispositivoBean.dispositivo.senhaPadrao}" class="inp"></h:inputText></td>
+                                        </tr>
+                                    </table>
+
+
+                                    <br></br>
+                                    <div class="w3-center">
+
+                                        <h:commandButton value="Adicionar"   action="#{dispositivoBean.adicionar()}" class="botao w3-center">
+                                        </h:commandButton>
+                                        <h:commandButton value="Atualizar"  action="#{dispositivoBean.atualizar()}" class="botao w3-center" onmousemove="acordFechar('D' + #{dispositivoBean.dispositivo.iddispositivo})">
+
+                                        </h:commandButton>                                    
+                                        <h:commandButton value="Excluir"  onclick="abreModal('ex01')" onmousemove="acordFechar('D' + #{dispositivoBean.dispositivoFom.iddispositivo})" class="botao w3-center">
+                                            <f:ajax render="dataDis"/>
+                                        </h:commandButton>
+
+                                    </div>
+
+                                    <br></br>
+                                    <br></br>
+
+                                    <!-- Modal excluir dispositivo -->
+                                    <div id="ex01" class="w3-modal w3-round-xlarge" >
+                                        <div class="w3-modal-content w3-round-large"  style="width: 500px;margin-top:150px">
+                                            <header class="w3-container w3-pink" style="color:#FFFFFF;margin-bottom:20px;"> 
+
+                                                <h3 class="w3-text-white">Excluir dispositivo ? #{dispositivoBean.dispositivo.nome}</h3>
+                                            </header>
+                                            <div class="w3-container"  style="width: 100%;padding-right: 10px;padding-left: 10px;">
+                                                <br></br>
+                                                <p:commandButton   value="Sim"  actionListener="#{dispositivoBean.deletar()}"  class="botaoExcluir w3-right w3-hover-pink"   onclick="document.getElementById('m003').style.display = 'none'" >
+
+                                                </p:commandButton>
+                                                <p:commandButton   value="Não"  class="botaoExcluir w3-right"
+                                                                   onclick="document.getElementById('ex01').style.display = 'none'" >
+                                                </p:commandButton>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Fim modal excluir dispositivo -->
+                                </h:form>
+                                <br></br>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>  
+        <!-- fim main -->
         <br></br>  
 
 
@@ -225,7 +583,7 @@
                 document.getElementById("sideBar").style.display = "none";
                 var x = document.getElementById("sideBar");
 
-                x.className = x.className.replace(" w3-hide ", " w3-white ");
+                x.className = x.className.replace("w3-hide", " w3-white ");
                 document.getElementById("sideBar").style.width = "0px";
                 document.getElementById("main").style.marginLeft = "0px";
 
@@ -252,11 +610,25 @@
 
             function acord(id) {
                 var x = document.getElementById(id);
-                if (x.className.indexOf(" w3-show ") == -1) {
-                    x.className = x.className.replace(" w3-hide-small ", " w3-show ");
+
+                var bt = document.getElementById('BT' + id);
+
+                if (x.className.indexOf(" w3-show ") === -1) {
+                    x.className = x.className.replace(" w3-hide ", " w3-show ");
+                    bt.className = bt.className.replace("", " w3-card-2 w3-lime ");
                 } else {
-                    x.className = x.className.replace(" w3-show ", " w3-hide-small ");
+                    x.className = x.className.replace(" w3-show ", " w3-hide ");
+
+                    bt.className = bt.className.replace(" w3-card-2 w3-lime ", "");
                 }
+            }
+
+            function abreModal(id) {
+                document.getElementById(id).style.display = 'block';
+            }
+            function acordFechar(id) {
+                var x = document.getElementById(id);
+                x.className = x.className.replace(" w3-show ", " w3-hide ");
             }
 
 

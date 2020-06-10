@@ -6,16 +6,21 @@
 package br.leandro.hagana.entidade;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -31,8 +36,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Cliente.findAll", query = "SELECT c FROM Cliente c"),
     @NamedQuery(name = "Cliente.findByConta", query = "SELECT c FROM Cliente c WHERE c.conta = :conta"),
-    @NamedQuery(name = "Cliente.findByNome", query = "SELECT c FROM Cliente c WHERE c.nome = :nome"),
-    @NamedQuery(name = "Cliente.findByEndereco", query = "SELECT c FROM Cliente c WHERE c.endereco = :endereco")})
+    @NamedQuery(name = "Cliente.findByNome", query = "SELECT c FROM Cliente c WHERE c.nome LIKE :nome OR c.conta LIKE :conta"),
+    @NamedQuery(name = "Cliente.findByEndereco", query = "SELECT c FROM Cliente c WHERE c.endereco = :endereco"),
+    @NamedQuery(name = "Cliente.findByDataCriacao", query = "SELECT c FROM Cliente c WHERE c.dataCriacao = :dataCriacao")})
 public class Cliente implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,8 +56,14 @@ public class Cliente implements Serializable {
     @Size(max = 45)
     @Column(name = "endereco")
     private String endereco;
+    @Column(name = "dataCriacao")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataCriacao;
     @OneToMany(mappedBy = "clienteFK")
     private List<Computador> computadorList;
+    @JoinColumn(name = "usuarioFK", referencedColumnName = "idusuario")
+    @ManyToOne(optional = false)
+    private Usuario usuarioFK;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "contaFK")
     private List<Rede> redeList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "contaFK")
@@ -99,6 +111,14 @@ public class Cliente implements Serializable {
         this.endereco = endereco;
     }
 
+    public Date getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(Date dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
     @XmlTransient
     public List<Computador> getComputadorList() {
         return computadorList;
@@ -106,6 +126,14 @@ public class Cliente implements Serializable {
 
     public void setComputadorList(List<Computador> computadorList) {
         this.computadorList = computadorList;
+    }
+
+    public Usuario getUsuarioFK() {
+        return usuarioFK;
+    }
+
+    public void setUsuarioFK(Usuario usuarioFK) {
+        this.usuarioFK = usuarioFK;
     }
 
     @XmlTransient
@@ -175,7 +203,7 @@ public class Cliente implements Serializable {
 
     @Override
     public String toString() {
-        return "br.leandro.hagana.entidade.Cliente[ conta=" + conta + " ]";
+        return conta + " - " + nome;
     }
     
 }

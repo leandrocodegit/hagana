@@ -36,6 +36,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Local.findByNome", query = "SELECT l FROM Local l WHERE l.nome = :nome")})
 public class Local implements Serializable {
 
+    @OneToMany(mappedBy = "localFK")
+    private List<Dispositivo> dispositivoList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -114,6 +117,15 @@ public class Local implements Serializable {
     @Override
     public String toString() {
         return "br.leandro.hagana.entidade.Local[ idlocal=" + idlocal + " ]";
+    }
+
+    @XmlTransient
+    public List<Dispositivo> getDispositivoList() {
+        return dispositivoList;
+    }
+
+    public void setDispositivoList(List<Dispositivo> dispositivoList) {
+        this.dispositivoList = dispositivoList;
     }
     
 }

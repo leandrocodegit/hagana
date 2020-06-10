@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
     @NamedQuery(name = "Usuario.findByIdusuario", query = "SELECT u FROM Usuario u WHERE u.idusuario = :idusuario"),
-    @NamedQuery(name = "Usuario.findByUser", query = "SELECT u FROM Usuario u WHERE u.user = :user"),
+    @NamedQuery(name = "Usuario.findByUser", query = "SELECT u FROM Usuario u WHERE (u.user = :user) AND (u.password = :password)"),
     @NamedQuery(name = "Usuario.findByPassword", query = "SELECT u FROM Usuario u WHERE u.password = :password"),
     @NamedQuery(name = "Usuario.findByNome", query = "SELECT u FROM Usuario u WHERE u.nome = :nome"),
     @NamedQuery(name = "Usuario.findByPerfil", query = "SELECT u FROM Usuario u WHERE u.perfil = :perfil"),
@@ -44,6 +44,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByBloqueado", query = "SELECT u FROM Usuario u WHERE u.bloqueado = :bloqueado"),
     @NamedQuery(name = "Usuario.findByGerenciarCliente", query = "SELECT u FROM Usuario u WHERE u.gerenciarCliente = :gerenciarCliente")})
 public class Usuario implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioFK")
+    private List<Cliente> clienteList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -269,6 +272,15 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "br.leandro.hagana.entidade.Usuario[ idusuario=" + idusuario + " ]";
+    }
+
+    @XmlTransient
+    public List<Cliente> getClienteList() {
+        return clienteList;
+    }
+
+    public void setClienteList(List<Cliente> clienteList) {
+        this.clienteList = clienteList;
     }
     
 }

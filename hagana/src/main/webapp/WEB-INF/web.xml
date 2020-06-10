@@ -13,11 +13,23 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
-    <session-config>
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>none</param-value>
+    </context-param>
+    <session-config>        
         <session-timeout>
             30
         </session-timeout>
-    </session-config>
+    </session-config>    
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>br.leandro.hagana.bean.LoginFilter</filter-class>    
+    </filter>        
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/faces/restrict/*</url-pattern>
+    </filter-mapping>
     <welcome-file-list>
         <welcome-file>faces/restrict/index.xhtml</welcome-file>
     </welcome-file-list>
