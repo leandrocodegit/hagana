@@ -93,7 +93,7 @@ public class ClienteDAO {
     } catch (Exception ex) {
       entityManager.getTransaction().rollback();
     } finally {
-      entityManager.close();
+    //  entityManager.close();
     }
   }
     

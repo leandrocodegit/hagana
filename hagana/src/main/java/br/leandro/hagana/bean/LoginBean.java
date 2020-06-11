@@ -76,8 +76,6 @@ public class LoginBean implements Serializable {
         
         usuario = UsuarioDao.getInstance().findUser(u);
         
-        
-        
         if (usuario != null && usuario.getBloqueado() == false) {
 
             
@@ -85,12 +83,8 @@ public class LoginBean implements Serializable {
             FacesMessage msg = new FacesMessage("Login ", usuario.getNome());
             FacesContext.getCurrentInstance().addMessage(null, msg);
 
-           SessionContext.getInstance().getSession().setAttribute("usuarioLogado", usuario);
-           
-                   Cliente cliente = new Cliente();
-        cliente.setConta("0001");        
-        SessionContext.getInstance().setClienteSelecionado(ClienteDAO.getInstance().findAll(cliente));
-         
+           SessionContext.getInstance().getSession().setAttribute("usuarioLogado", usuario);          
+                            
             return "/restrict/clientes.xhtml?faces-redirect=true";
         } else {
 

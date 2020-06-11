@@ -40,22 +40,22 @@
                 </div>
 
                 <ul>
-                    <li class="icone"><a href="dashboard.xhtml"><span><b class="fas fa-desktop w3-text-blue-grey"></b></span>   <b class="textoMenu" style="color:#0bd6e2" >Dashboard</b></a></li>
-                    <li class="icone"><a href="busca.xhtml"><span><b class="fas fa-home w3-text-blue-grey"></b></span>   <b class="textoMenu" >Home</b></a></li>                   
+                    <li class="icone"><a href="dashboard.xhtml"><span><b class="fas fa-server w3-text-blue-grey"></b></span>   <b class="textoMenu" style="color:#0bd6e2" >Dashboard</b></a></li>
+                    <li class="icone"><a href="index.xhtml"><span><b class="fas fa-home w3-text-blue-grey"></b></span>   <b class="textoMenu" >Home</b></a></li>                   
                     <li class="icone"><a href="dispositivos.xhtml"><span><b class="fas fa-clone w3-text-blue-grey"></b></span>   <b class="textoMenu" >Arquivos</b></a></li>
                     <li class="icone"><a><span><b class="fas fa-camera-retro w3-text-blue-grey" ></b></span>   <b class="textoMenu" >Fotos</b></a></li>
-                    <li class="icone"><a href="login.xhtml"><span><b class="far fa-user w3-text-purple"></b></span>   <b class="w3-text-purple" style="padding-left:9px" > Olá, #{loginBean.dadosUsuario}</b></a></li>
+                    <li class="icone"><a href="login.xhtml"><span><b class="fas fa-user w3-text-deep-orange"></b></span>   <b class="w3-text-deep-orange" style="padding-left:9px" > Olá, #{loginBean.dadosUsuario}</b></a></li>
 
                     <div class="w3-padding">
 
                         <div id="demoDrop" >
 
                             <h:form>
-                                <b class="fas fa-power-off" style="margin-left:10px;color:#fe5000"></b>
+                                <b class="fas fa-power-off " style="margin-left:10px;color:#919ca1"></b>
                                 <h:commandLink 
-                                    action="{loginMB.sair()}"
+                                    action="#{loginBean.sair()}"
                                     value="Sair"                                     
-                                    style="font-size: 18px;padding-left:20px;color:#fe5000"> 
+                                    style="font-size: 18px;padding-left:20px;color:#919ca1"> 
                                 </h:commandLink>
                             </h:form>
                         </div>
@@ -67,26 +67,22 @@
 
             </div>
 
-            <footer class=" w3-bottom">
-                <h:form>
-                    <p:commandLink onclick="abreModal('m002')" class="w3-left w3-round-xxlarge btBarGradiente w3-card-2 w3-border-bottom  w3-button w3-block w3-left-align  w3-hover-blue " style="margin-bottom:3px;height: 45px;font-size:14px;word-spacing:10px;width:85px">
-                        <i style="color:#FFF;font-size:20px"><b>0001</b></i> 
-                    </p:commandLink>
-
-                </h:form>
+            <footer class=" w3-bottom">  
+                <a class="w3-btn w3-white w3-border w3-border-blue-grey w3-round-xlarge w3-text-blue-grey" href="clientes.xhtml"  style="font-size:16px;text-decoration: none;margin: 5px">#{clienteBean.clienteSelecionado.conta}</a>
             </footer>
 
 
             <div class="w3-main" style="margin-left:200px" id="main" >      
 
-                <div class="w3-mobile w3-white w3-section w3-row-padding w3-left " style="width:100%;padding-top:60px;padding-left:0;padding-right:0; ">
+                <div class="w3-mobile w3-white w3-section w3-row-padding w3-left " style="width:100%;padding-top:50px;padding-left:0;padding-right:0; ">
 
-                    <div class="" style="height:40px;margin-bottom: 10px;margin-left:5px" id="navCliente">                        
-                        <a class="w3-xlarge" href="clientes.xhtml"  style="font-size:16px;text-decoration: none;padding-left: 10px">#{loginBean.dadosCliente}</a>
+                    <div class="" style="height:40px;margin-bottom: 15px;margin-left:0px" id="navCliente">                        
+                        <a class="w3-button w3-xlarge w3-round-large w3-text-white w3-hover-pink" href="clientes.xhtml"  
+                           style="font-size:16px;text-decoration: none;margin-left: -12px;background: #0bd6e2">#{loginBean.dadosCliente}</a>
                     </div>
 
                     <!-- Inicio dispositivos -->
-                    <div class="w3-twothird"  style="padding:5px;">
+                    <div class="w3-twothird" style="padding:0px;">
                         <!-- Head dispositivos -->
                         <header id="DH1" class="w3-container w3-border-bottom w3-border-light-blue" style="background-color:#F7F7F3; ">
 
@@ -110,59 +106,70 @@
                         <!-- Head dispositivos -->
 
                         <!-- Inicio grid clientes -->
+                        <div  style="margin: 8px">
+                            <h:form id="dtable"> 
+                                <div class="w3-round-large" style="height: 45px;border: 0.5px solid #c9d8de;font-size: 22px;width: 350px;margin-bottom: -15px ">
+                                    <p:inputText value="#{clienteBean.pesquisa}" autocomplete="off" placeholder="Pesquisar" class="w3-border-0 w3-xlarge" >               
+                                        <p:ajax event="keyup" update="dataCliente" listener="#{clienteBean.buscar()}"/> 
+                                    </p:inputText><b class="fas fa-search" style="color: #c9d8de;font-size: 30px;margin-left: 5px;margin-top: 6px"/>  
+                                </div>
+                                <br></br>
+                                <br></br>
+                            </h:form>
 
-                        <h:form id="dtable" >
-                            <p:autoComplete id="acSimple" value="#{clienteBean.pesquisa}" completeMethod="#{clienteBean.completeText}"  title="Pesquisar conta" style="height: 50px;font-size: 22px;width: 300px">
-                              <p:ajax event="itemSelect" update="dataCliente" rendered="dataCliente"/> 
-                            <f:ajax render="dtable"/>
-                            
-                            </p:autoComplete>
- 
-                            <br></br>
-                            <br></br>
 
-                            <h:dataTable id="dataCliente" var="cli" binding="#{clienteBean.dataTable}" value="#{clienteBean.clienteList}" style="width: 100%;background-color:#FFF"
-                                         styleClass="book-table">
-                                <p:column >
+                            <h:form id="dataCliente" >
+                                <h:dataTable  var="cli" binding="#{clienteBean.dataTable}" value="#{clienteBean.clienteList}" style="width: 100%;background-color:#FFF"
+                                              styleClass="book-table">
+                                    <p:column >
 
-                                    <div  class="bt w3-border-bottom w3-border-light-blue w3-block w3-left-align   " style="border-radius: 4px;margin-bottom:6px;height: 40px;margin-right: ">
-                                        <a class="" style="color: #3F4445;padding-top:12px;padding-left:8px;"> <b> #{cli.toString()}</b></a>
+                                        <div  class="w3-container w3-border-bottom w3-border-light-blue w3-block w3-left-align w3-hover-light-blue " style="border-radius: 4px;margin-bottom:6px;height: 40px;margin-right: ">
+                                            <a class="" style="color: #3F4445;margin-top:20px;padding-left:8px;"> <b> #{cli.toString()}</b></a>
 
-                                        <p:commandLink                                              
-                                            title="Selecionar cliente" 
+                                            <p:commandLink                                              
+                                                title="Selecionar cliente" 
+                                                action="#{clienteBean.selecionaCliente(cli)}"
+                                                ajax="false"
+                                                style="font-size:22px;padding-top:8px;padding-right:1px;"
+                                                class="iconeCli w3-right far fa-share-square">                                             
 
-                                            style="font-size:22px;padding-top:8px;padding-right:1px;color: #08b4f0 "
-                                            class="iconeCli w3-right far fa-share-square">                                             
+                                            </p:commandLink>
+                                            <p:commandLink 
+                                                actionListener="#{clienteBean.setCliente(cli)}"
+                                                update="formDetalhes"
+                                                ajax="true"
+                                                title="Detalhes" 
+                                                style="font-size:18px;padding-top:10px;padding-right:8px;text-decoration: none;"
+                                                class="iconeCli w3-right fas fa-exclamation-circle">
+                                                <f:setPropertyActionListener value="#{cli}" target="#{clienteBean.cliente}"/>
 
-                                        </p:commandLink>
-                                        <p:commandLink 
-                                            actionListener="#{clienteBean.setCliente(cli)}"
-                                            update="formDetalhes"
-                                            ajax="true"
-                                            title="Detalhes" 
-                                            style="font-size:22px;padding-top:8px;padding-right:8px;text-decoration: none;color: #49cedb "
-                                            class="iconeCli w3-right fas fa-exclamation-circle">
-                                            <f:setPropertyActionListener value="#{cli}" target="#{clienteBean.cliente}"/>
+                                            </p:commandLink>
 
-                                        </p:commandLink>
+                                            <h:panelGroup  id="ptable" rendered="#{loginBean.usuario.gerenciarUsuario == true}">
 
-                                        <h:panelGroup  id="ptable" rendered="#{loginBean.usuario.gerenciarUsuario == true}">
+                                                <p:commandLink  onclick="abreModal('cadCliente')" 
+                                                                update="formcadCliente" 
+                                                                ajax="true"  
+                                                                class="fas fa-pen iconeCli"
+                                                                title="Editar cliente" 
+                                                                style="padding-right:6px;font-size:13px;padding-top:14px;padding-left:7px;">
+                                                    <f:setPropertyActionListener value="#{cli}" target="#{clienteBean.cliente}"  />
 
-                                            <p:commandLink  onclick="abreModal('cadCliente')" update="formcadCliente" ajax="true"  class="icone  fas fa-pen iconeCli"
-                                                            title="Editar cliente" style="padding-right:6px;font-size:13px;padding-top:0px;padding-left:7px">
-                                                <f:setPropertyActionListener value="#{cli}" target="#{clienteBean.cliente}"  />
+                                                </p:commandLink>                                        
 
-                                            </p:commandLink>                                        
+                                            </h:panelGroup>
+                                        </div>
 
-                                        </h:panelGroup>
-                                    </div>
+                                    </p:column>
 
-                                </p:column>
+                                </h:dataTable>
 
-                            </h:dataTable>
+                            </h:form>
+                            <p:messages id="messages" showDetail="true" closable="true">
+                                <p:autoUpdate />
+                            </p:messages>
 
-                        </h:form>
-
+                        </div>
 
                         <!-- Fim grid clientes -->
 
@@ -171,7 +178,7 @@
 
                     <div class="w3-third w3-mobile  w3-white  " style="padding-right:1px;padding-left:0px; " >
 
-                        <div class="w3-row" style="padding-top:5px;padding-right:0px;padding-left:0px">
+                        <div class="w3-row">
 
                             <div class=" w3-twothird " style="padding-left:1px;padding-right:1px;padding-top:0%;width:100%; ">
 
@@ -184,17 +191,17 @@
 
                                             <tr>
                                                 <td>Conta</td>
-                                                <td class="w3-text-black">#{clienteBean.cliente.conta}</td>
+                                                <td class="w3-text-pink">#{clienteBean.cliente.conta}</td>
 
                                             </tr>
                                             <tr>
                                                 <td>Nome</td>
-                                                <td class="w3-text-black">#{clienteBean.cliente.nome}</td>
+                                                <td class="w3-text-blue">#{clienteBean.cliente.nome}</td>
 
                                             </tr>
                                             <tr>
                                                 <td>Endereço</td>
-                                                <td class="w3-text-black">#{clienteBean.cliente.endereco}</td>
+                                                <td class="w3-text-deep-orange">#{clienteBean.cliente.endereco}</td>
                                             </tr>
                                             <tr>
                                                 <td>Dispositivos</td>
@@ -218,7 +225,7 @@
                                             </tr>
                                             <tr>
                                                 <td>Data</td>
-                                                <td class="w3-text-black">#{clienteBean.cliente.dataCriacao}</td> 
+                                                <td class="w3-text-lime">#{clienteBean.cliente.dataCriacao}</td> 
                                             </tr>
                                         </table>
                                     </h:form>
@@ -280,21 +287,15 @@
                                         <td><p:message for="end" display="icon" class="inpValida" /></td>
                                     </tr>
 
-                                </table>
-
-
-                                <p:messages id="aviso" style="width: 100%" />
+                                </table> 
 
                                 <br></br>
 
-                                <p:commandButton  update="formcadCliente, dtable" value="Cadastrar" action="#{clienteBean.adicionar()}" class="botao w3-right">
-                                    <f:ajax render=":b7"/>
+                                <p:commandButton  update="formcadCliente, dataCliente" value="Cadastrar" ajax="true" action="#{clienteBean.adicionar()}" class="botao w3-right">                                    
                                 </p:commandButton>
-                                <p:commandButton update="formcadCliente, dtable" value="Atualizar" action="#{clienteBean.atualizar()}"     class="botao w3-right">
-                                    <f:ajax render=":b7"/>
+                                <p:commandButton update="formcadCliente, dataCliente" value="Atualizar" action="#{clienteBean.atualizar()}"     class="botao w3-right">
                                 </p:commandButton>
-                                <p:commandButton value="Excluir"   onclick="abreModal('m003')"  class="botao w3-right">
-                                    <f:ajax render=":b7"/>
+                                <p:commandButton value="Excluir" onclick="abreModal('m003')"  class="botao w3-right">                                    
                                 </p:commandButton>
 
 
@@ -316,9 +317,9 @@
 
                                             <br></br>
 
-                                            <p:commandButton   value="Sim" update=" dtable" actionListener="#{clienteBean.deletar()}"  class="botao w3-right w3-hover-pink"   onclick="document.getElementById('m003').style.display = 'none'" >
-                                                <f:ajax render=":dtable"/>
-                                            </p:commandButton>
+                                            <h:commandButton   value="Sim" actionListener="#{clienteBean.deletar()}"  class="botao w3-right w3-hover-pink"   onclick="document.getElementById('m003').style.display = 'none'" >
+
+                                            </h:commandButton>
                                             <p:commandButton update="formcadCliente"  value="Não"  class="botao w3-right"
 
                                                              onclick="document.getElementById('m003').style.display = 'none'" >

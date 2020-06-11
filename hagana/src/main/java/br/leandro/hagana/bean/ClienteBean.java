@@ -13,30 +13,28 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 
 /**
  *
  * @author leand
  */
 @ManagedBean
-@RequestScoped
+@SessionScoped
 public class ClienteBean implements Serializable {
 
     private static final long serialVersionUID = 12855655321L;
-    
+
     private HtmlDataTable dataTable;
     private List<Cliente> clienteList;
     private Cliente cliente;
     private String pesquisa;
-    
-     @PostConstruct
-    public void init() {
-        clienteList = ClienteDAO.getInstance().getclientes();
+
+    @PostConstruct
+    public void init() { 
+            clienteList = ClienteDAO.getInstance().getclientes();
     }
 
     public HtmlDataTable getDataTable() {
@@ -58,61 +56,75 @@ public class ClienteBean implements Serializable {
     public Cliente getCliente() {
         return cliente;
     }
+    public Cliente getClienteSelecionado() {
+        return SessionContext.getInstance().getClienteSelecionado();
+    }
 
     public void setCliente(Cliente cliente) {
         this.cliente = (Cliente) dataTable.getRowData();
     }
+    
 
-  
-    
-    public List<String> completeText(String query) {
-        List<String> results = new ArrayList<>();
-        clienteList = ClienteDAO.getInstance().pesquisar(query);
-        System.out.println(clienteList.size() + " " + query);
-        for(int i = 0; i < clienteList.size(); i++) {
-            System.out.println(i);
-            results.add(clienteList.get(i).toString());
+    public void buscar() {       
+        clienteList = ClienteDAO.getInstance().pesquisar(pesquisa);
+
+        if (pesquisa.equals("")) {
+            clienteList = ClienteDAO.getInstance().getclientes();
         }
-        if(clienteList.size() == 0){
-            results.add("Nenhum resultado");
+        if(clienteList.size() == 0)
+        {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Nenhum resultado encontrado!"));
         }
-         
-        return results;
-    }
  
-    
-      public String getPesquisa() {
+    }
+
+    public String getPesquisa() {
         return pesquisa;
     }
 
     public void setPesquisa(String pesquisa) {
         this.pesquisa = pesquisa;
     }
-    
-    public void deletar()
-    {
+
+    public String selecionaCliente(Cliente cliente) {
+
+        cliente = (Cliente) dataTable.getRowData();
+        SessionContext.getInstance().setClienteSelecionado(cliente);
+         
+        if (SessionContext.getInstance().getClienteSelecionado() != null) {
+
         
+        }
+
+        return "/restrict/index.xhtml?faces-redirect=true";
     }
-    public void atualizar()
-    {
-        
+
+    public void deletar() {
+        if(cliente != null){
+            ClienteDAO.getInstance().delete(cliente.getConta());
+            clienteList = ClienteDAO.getInstance().getclientes();
+        }
     }
-    public void adicionar()
-    {
+
+    public void atualizar() {
+
+    }
+
+    public void adicionar() {
         
         cliente.setUsuarioFK(SessionContext.getInstance().getUsuarioLogado());
-        if ( ClienteDAO.getInstance().insert(cliente) != null) {
+        if (ClienteDAO.getInstance().insert(cliente) != null) {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage("Cliente adicionado com sucesso! "));
-           // criarPasta(cli);
+            clienteList = ClienteDAO.getInstance().getclientes();
+            // criarPasta(cli);
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro  ao  gravar!", " "));
-        } 
+        }
     }
-    public void limpar()
-    {
+
+    public void limpar() {       
         cliente = new Cliente();
-         
     }
 
 }

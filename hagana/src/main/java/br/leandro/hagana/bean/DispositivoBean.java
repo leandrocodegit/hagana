@@ -12,8 +12,10 @@ import br.leandro.hagana.entidade.Dispositivo;
 import br.leandro.hagana.entidade.Fabricante;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.component.html.HtmlDataTable;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -24,22 +26,35 @@ public class DispositivoBean implements Serializable {
 
     private static final long serialVersionUID = 13245855655321L;
 
-    private HtmlDataTable dataTable;    
+    private HtmlDataTable dataTable;
     public Dispositivo dispositivo = new Dispositivo();
     public Dispositivo dispositivoFom;
     private List<Dispositivo> dispositivoList;
     private List<Fabricante> fabricantes;
     private Fabricante fabricante;
-    
 
-    public HtmlDataTable getDataTable() {
+    @PostConstruct
+    public void init() {
+
+        if (SessionContext.getInstance().getClienteSelecionado() == null){
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("clientes.xhtml");
+
+        } catch (Exception ex) {
+
+        }
+    }
+
+}
+
+public HtmlDataTable getDataTable() {
         return dataTable;
     }
 
     public void setDataTable(HtmlDataTable dataTable) {
         this.dataTable = dataTable;
     }
-   
+
     public Dispositivo getDispositivo() {
         return dispositivo;
     }
@@ -51,17 +66,15 @@ public class DispositivoBean implements Serializable {
     public void setDispositivoFom(Dispositivo dispositivoFom) {
         this.dispositivoFom = dispositivoFom;
     }
-    
+
     public void setDispositivo(Dispositivo dispositivo) {
-        
+
         this.dispositivo = (Dispositivo) dataTable.getRowData();
         this.dispositivoFom = dispositivo;
     }
 
     public List<Dispositivo> getDispositivoList() {
-        Cliente cliente = new Cliente();
-        cliente.setConta("0001");
-        return ClienteDAO.getInstance().findAll(cliente).getDispositivoList();
+        return ClienteDAO.getInstance().findAll(SessionContext.getInstance().getClienteSelecionado()).getDispositivoList();
     }
 
     public List<Fabricante> getFabricantes() {
@@ -79,35 +92,29 @@ public class DispositivoBean implements Serializable {
     public void setFabricante(Fabricante fabricante) {
         this.fabricante = fabricante;
     }
-    
+
     public void event() {
 
+        fabricante = new Fabricante();
 
-            fabricante = new Fabricante();
-           
-            dispositivo.setFabricanteFK(fabricante);
-           
+        dispositivo.setFabricanteFK(fabricante);
+
     }
-    
-    
-    public void deletar()
-    {
-        
+
+    public void deletar() {
+
     }
-    public void atualizar()
-    {
-        
+
+    public void atualizar() {
+
     }
-    public void adicionar()
-    {
-        
+
+    public void adicionar() {
+
     }
-    public void limpar()
-    {
+
+    public void limpar() {
         dispositivo = new Dispositivo();
     }
-    
-    
-    
-    
+
 }
