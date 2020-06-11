@@ -19,7 +19,7 @@ import javax.persistence.Query;
  * @author leand
  */
 public class ClienteDAO {
-    
+
     private static ClienteDAO instance;
     protected EntityManager entityManager;
 
@@ -44,9 +44,9 @@ public class ClienteDAO {
 
         return entityManager;
     }
-    
+
     public List<Cliente> getclientes() {
-        Query query = entityManager.createNamedQuery("Cliente.findAll");        
+        Query query = entityManager.createNamedQuery("Cliente.findAll");
         return query.getResultList();
     }
 
@@ -56,56 +56,70 @@ public class ClienteDAO {
         Cliente cliente = (Cliente) query.getSingleResult();
         return cliente;
     }
+
     public List<Cliente> pesquisar(String value) {
         Query query = entityManager.createNamedQuery("Cliente.findByNome");
-        query.setParameter("nome",value + "%");
-        query.setParameter("conta",value + "%");
+        query.setParameter("nome", value + "%");
+        query.setParameter("conta", value + "%");
         System.out.println(query);
         return query.getResultList();
     }
-    
-     public Cliente insert(Cliente cliente) {
-    EntityManager entityManager = getEntityManager();
-    try {
-      entityManager.getTransaction().begin();
-      if(cliente.getConta() == null) {
-        entityManager.persist(cliente);
-      } else {
-        entityManager.merge(cliente);
-      }
-      entityManager.flush();
-      entityManager.getTransaction().commit();
-    } catch (Exception ex) {
-      entityManager.getTransaction().rollback();
-    } finally {
-     // entityManager.close();
+
+    public Cliente insert(Cliente cliente) {
+        EntityManager entityManager = getEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            if (cliente.getConta() == null) {
+                entityManager.persist(cliente);
+            } else {
+                entityManager.merge(cliente);
+            }
+            entityManager.flush();
+            entityManager.getTransaction().commit();
+        } catch (Exception ex) {
+            entityManager.getTransaction().rollback();
+        } finally {
+            // entityManager.close();
+        }
+        return cliente;
     }
-    return cliente;
-  }
-     public void delete(String conta) {
-    EntityManager entityManager = getEntityManager();
-    try {
-      entityManager.getTransaction().begin();
-      Cliente cliente = entityManager.find(Cliente.class, conta);
-      entityManager.remove(cliente);
-      entityManager.flush();
-      entityManager.getTransaction().commit();
-    } catch (Exception ex) {
-      entityManager.getTransaction().rollback();
-    } finally {
-    //  entityManager.close();
+
+    public void delete(String conta) {
+        EntityManager entityManager = getEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            Cliente cliente = entityManager.find(Cliente.class, conta);
+            entityManager.remove(cliente);
+            entityManager.flush();
+            entityManager.getTransaction().commit();
+        } catch (Exception ex) {
+            entityManager.getTransaction().rollback();
+        } finally {
+            //  entityManager.close();
+        }
     }
-  }
-    
+
+    public void atualizar(Cliente cliente) {
+        EntityManager entityManager = getEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.merge(cliente);
+            entityManager.getTransaction().commit();
+        } catch (Exception ex) {
+            entityManager.getTransaction().rollback();
+        } finally {
+            //  entityManager.close();
+        }
+    }
+
     public static void main(String[] args) {
-        
+
         ClienteDAO clienteDAO = new ClienteDAO();
         Cliente cliente = new Cliente();
         cliente.setConta("0001");
-        
+
         System.out.println(clienteDAO.pesquisar("00").size());
-        
-        
+
     }
-    
+
 }

@@ -107,7 +107,8 @@ public class ClienteBean implements Serializable {
     }
 
     public void atualizar() {
-
+        ClienteDAO.getInstance().atualizar(cliente);
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Conta atualizada com sucesso!"));
     }
 
     public void adicionar() {
