@@ -245,6 +245,9 @@ input:hover
 .w3-hover-light-blue:hover b{
   color: white;  
 } 
+.w3-hover-light-blue:hover span{
+  color: white;  
+}
  
 .iconeHead
 {
@@ -259,7 +262,7 @@ input:hover
     text-shadow: none;
 }
 .iconeCli{
-    color: #70acc6;
+    color: #568fa6;
 }
 
 .iconeConfig

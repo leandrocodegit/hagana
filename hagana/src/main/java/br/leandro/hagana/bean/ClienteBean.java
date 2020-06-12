@@ -8,7 +8,8 @@ package br.leandro.hagana.bean;
 import br.leandro.hagana.controler.ClienteDAO;
 import br.leandro.hagana.entidade.Cliente;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -112,7 +113,8 @@ public class ClienteBean implements Serializable {
     }
 
     public void adicionar() {
-        
+         
+        cliente.setDataCriacao(new Date());
         cliente.setUsuarioFK(SessionContext.getInstance().getUsuarioLogado());
         if (ClienteDAO.getInstance().insert(cliente) != null) {
             FacesContext.getCurrentInstance().addMessage(null,

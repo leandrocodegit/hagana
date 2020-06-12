@@ -66,12 +66,7 @@
 
 
             </div>
-
-            <footer class=" w3-bottom">  
-                <a class="w3-btn w3-white w3-border w3-border-blue-grey w3-round-xlarge w3-text-blue-grey" href="clientes.xhtml"  style="font-size:16px;text-decoration: none;margin: 5px">#{clienteBean.clienteSelecionado.conta}</a>
-            </footer>
-
-
+ 
             <div class="w3-main" style="margin-left:200px" id="main" >      
 
                 <div class="w3-mobile w3-white w3-section w3-row-padding w3-left " style="width:100%;padding-top:50px;padding-left:0;padding-right:0; ">
@@ -82,7 +77,7 @@
                     </div>
 
                     <!-- Inicio dispositivos -->
-                    <div class="w3-twothird" style="padding:0px;">
+                    <div class="w3-twothird" style="padding:0px;margin-bottom: 20px">
                         <!-- Head dispositivos -->
                         <header id="DH1" class="w3-container w3-border-bottom w3-border-light-blue" style="background-color:#F7F7F3; ">
 
@@ -109,9 +104,9 @@
                         <div  style="margin: 8px">
                             <h:form id="dtable"> 
                                 <div class="w3-round-large" style="height: 45px;border: 0.5px solid #c9d8de;font-size: 22px;width: 350px;margin-bottom: -15px ">
-                                    <p:inputText value="#{clienteBean.pesquisa}" autocomplete="off" placeholder="Pesquisar" class="w3-border-0 w3-xlarge" >               
+                                    <p:inputText value="#{clienteBean.pesquisa}" autocomplete="off" placeholder="Pesquisar" class="w3-border-0 w3-large" >               
                                         <p:ajax event="keyup" update="dataCliente" listener="#{clienteBean.buscar()}"/> 
-                                    </p:inputText><b class="fas fa-search" style="color: #c9d8de;font-size: 30px;margin-left: 5px;margin-top: 6px"/>  
+                                    </p:inputText><b class="fas fa-search" style="color: #c9d8de;font-size: 30px;margin-left: 5px;margin-top: 4px"/>  
                                 </div>
                                 <br></br>
                                 <br></br>
@@ -124,13 +119,14 @@
                                     <p:column >
 
                                         <div  class="w3-container w3-border-bottom w3-border-light-blue w3-block w3-left-align w3-hover-light-blue " style="border-radius: 4px;margin-bottom:6px;height: 40px;margin-right: ">
-                                            <a class="" style="color: #3F4445;margin-top:20px;padding-left:8px;"> <b> #{cli.toString()}</b></a>
+                                            <p> </p>
+                                            <h:outputText class="iconeCli w3-large" value="#{cli.toString()}"/>
 
                                             <p:commandLink                                              
                                                 title="Selecionar cliente" 
                                                 action="#{clienteBean.selecionaCliente(cli)}"
                                                 ajax="false"
-                                                style="font-size:22px;padding-top:8px;padding-right:1px;"
+                                                style="font-size:20px;padding-right:1px;"
                                                 class="iconeCli w3-right far fa-share-square">                                             
 
                                             </p:commandLink>
@@ -139,7 +135,7 @@
                                                 update="formDetalhes"
                                                 ajax="true"
                                                 title="Detalhes" 
-                                                style="font-size:18px;padding-top:10px;padding-right:8px;text-decoration: none;"
+                                                style="font-size:18px;padding-right:8px;padding-top:1px;text-decoration: none;"
                                                 class="iconeCli w3-right fas fa-exclamation-circle">
                                                 <f:setPropertyActionListener value="#{cli}" target="#{clienteBean.cliente}"/>
 
@@ -150,9 +146,9 @@
                                                 <p:commandLink  onclick="abreModal('cadCliente')" 
                                                                 update="formcadCliente" 
                                                                 ajax="true"  
-                                                                class="fas fa-pen iconeCli"
+                                                                class="fas fa-cog iconeCli w3-right"
                                                                 title="Editar cliente" 
-                                                                style="padding-right:6px;font-size:13px;padding-top:14px;padding-left:7px;">
+                                                                style="padding-right:6px;font-size:18px;padding-top:2px;padding-right:10px;">
                                                     <f:setPropertyActionListener value="#{cli}" target="#{clienteBean.cliente}"  />
 
                                                 </p:commandLink>                                        
@@ -185,13 +181,15 @@
                                 <header class="w3-container w3-border-ligth-grey w3-border-bottom w3-border-lime" style="background-color:#F7F7F3;">
                                     <h3 class="textoMenu">Detalhes</h3>
                                 </header>
+                                <br/>
+                                <br/>
                                 <div>
                                     <h:form id="formDetalhes">
-                                        <table class="w3-table w3-xlarge">
+                                        <table class="w3-table w3-large">
 
                                             <tr>
                                                 <td>Conta</td>
-                                                <td class="w3-text-pink">#{clienteBean.cliente.conta}</td>
+                                                <td class="w3-text-deep-orange">#{clienteBean.cliente.conta}</td>
 
                                             </tr>
                                             <tr>
@@ -201,8 +199,25 @@
                                             </tr>
                                             <tr>
                                                 <td>Endereço</td>
-                                                <td class="w3-text-deep-orange">#{clienteBean.cliente.endereco}</td>
+                                                <td class="w3-text-blue">#{clienteBean.cliente.endereco}</td>
                                             </tr>
+                                            <tr>
+                                                <td>Tipo:</td>
+                                                <td>
+                                                    <h:selectOneMenu  value="#{clienteBean.cliente.tipo}" disabled="true"  class="w3-large w3-select w3-border-0" style="height: 40px" >
+                                                        <f:selectItem itemLabel="" itemValue="0"/>
+                                                        <f:selectItem itemLabel="Condominio residencial" itemValue="1"/>
+                                                        <f:selectItem itemLabel="Condominio comercial" itemValue="2" />                                                    
+                                                        <f:selectItem itemLabel="Fabrica" itemValue="3" />                                                    
+                                                        <f:selectItem itemLabel="Hospital" itemValue="4" />
+                                                        <f:selectItem itemLabel="Hotelaria" itemValue="5" />
+                                                        <f:selectItem itemLabel="Residencia" itemValue="6" />
+                                                        <f:selectItem itemLabel="Univercidade/escola" itemValue="7" />
+                                                        <f:selectItem itemLabel="Outros" itemValue="8" />
+                                                    </h:selectOneMenu>
+                                                </td>
+                                            </tr>
+
                                             <tr>
                                                 <td>Dispositivos</td>
                                                 <td class="w3-text-black">#{clienteBean.cliente.dispositivoList.size()}</td>
@@ -276,6 +291,24 @@
                                                 <f:validateLength minimum="2" />
                                             </p:inputText></td>
                                         <td><p:message for="nome" display="icon" class="inpValida" /></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td class="w3-right-align"><b>Tipo:</b></td>
+                                        <td>
+
+                                            <h:selectOneMenu value="#{clienteBean.cliente.tipo}"  class="inp form-control" style="height: 40px" >
+                                                <f:selectItem itemLabel="Condominio residencial" itemValue="1" />
+                                                <f:selectItem itemLabel="Condominio comercial" itemValue="2" />                                                    
+                                                <f:selectItem itemLabel="Fabrica" itemValue="3" />                                                    
+                                                <f:selectItem itemLabel="Hospital" itemValue="4" />
+                                                <f:selectItem itemLabel="Hotelaria" itemValue="5" />
+                                                <f:selectItem itemLabel="Residencia" itemValue="6" />
+                                                <f:selectItem itemLabel="Univercidade/escola" itemValue="7" />
+                                                <f:selectItem itemLabel="Outros" itemValue="8" />
+                                            </h:selectOneMenu>
+                                        </td>
+
                                     </tr>
 
 

@@ -26,26 +26,26 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author leand
  */
 @Entity
-@Table(name = "dominio")
+@Table(name = "link")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Dominio.findAll", query = "SELECT d FROM Dominio d"),
-    @NamedQuery(name = "Dominio.findByIddominio", query = "SELECT d FROM Dominio d WHERE d.iddominio = :iddominio"),
-    @NamedQuery(name = "Dominio.findByPorta", query = "SELECT d FROM Dominio d WHERE d.porta = :porta"),
-    @NamedQuery(name = "Dominio.findByHost", query = "SELECT d FROM Dominio d WHERE d.host = :host"),
-    @NamedQuery(name = "Dominio.findByOperadora", query = "SELECT d FROM Dominio d WHERE d.operadora = :operadora"),
-    @NamedQuery(name = "Dominio.findByVelocidade", query = "SELECT d FROM Dominio d WHERE d.velocidade = :velocidade"),
-    @NamedQuery(name = "Dominio.findByTipo", query = "SELECT d FROM Dominio d WHERE d.tipo = :tipo"),
-    @NamedQuery(name = "Dominio.findByUsuario", query = "SELECT d FROM Dominio d WHERE d.usuario = :usuario"),
-    @NamedQuery(name = "Dominio.findBySenha", query = "SELECT d FROM Dominio d WHERE d.senha = :senha")})
-public class Dominio implements Serializable {
+    @NamedQuery(name = "Link.findAll", query = "SELECT d FROM Link d"),
+    @NamedQuery(name = "Link.findByIdlink", query = "SELECT d FROM Link d WHERE d.idlink = :idlink"),
+    @NamedQuery(name = "Link.findByPorta", query = "SELECT d FROM Link d WHERE d.porta = :porta"),
+    @NamedQuery(name = "Link.findByHost", query = "SELECT d FROM Link d WHERE d.host = :host"),
+    @NamedQuery(name = "Link.findByOperadora", query = "SELECT d FROM Link d WHERE d.operadora = :operadora"),
+    @NamedQuery(name = "Link.findByVelocidade", query = "SELECT d FROM Link d WHERE d.velocidade = :velocidade"),
+    @NamedQuery(name = "Link.findByTipo", query = "SELECT d FROM Link d WHERE d.tipo = :tipo"),
+    @NamedQuery(name = "Link.findByUsuario", query = "SELECT d FROM Link d WHERE d.usuario = :usuario"),
+    @NamedQuery(name = "Link.findBySenha", query = "SELECT d FROM Link d WHERE d.senha = :senha")})
+public class Link implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "iddominio")
-    private Integer iddominio;
+    @Column(name = "idlink")
+    private Integer idlink;
     @Column(name = "porta")
     private Integer porta;
     @Size(max = 45)
@@ -79,25 +79,25 @@ public class Dominio implements Serializable {
     @ManyToOne
     private Usuario usuarioFK;
 
-    public Dominio() {
+    public Link() {
     }
 
-    public Dominio(Integer iddominio) {
-        this.iddominio = iddominio;
+    public Link(Integer idlink) {
+        this.idlink = idlink;
     }
 
-    public Dominio(Integer iddominio, String operadora, String velocidade) {
-        this.iddominio = iddominio;
+    public Link(Integer idlink, String operadora, String velocidade) {
+        this.idlink = idlink;
         this.operadora = operadora;
         this.velocidade = velocidade;
     }
 
-    public Integer getIddominio() {
-        return iddominio;
+    public Integer getIdlink() {
+        return idlink;
     }
 
-    public void setIddominio(Integer iddominio) {
-        this.iddominio = iddominio;
+    public void setIdlink(Integer idlink) {
+        this.idlink = idlink;
     }
 
     public Integer getPorta() {
@@ -180,21 +180,26 @@ public class Dominio implements Serializable {
         this.usuarioFK = usuarioFK;
     }
 
+    public String getPortaUPLink() {
+        
+        return idlink + "L";
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (iddominio != null ? iddominio.hashCode() : 0);
+        hash += (idlink != null ? idlink.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Dominio)) {
+        if (!(object instanceof Link)) {
             return false;
         }
-        Dominio other = (Dominio) object;
-        if ((this.iddominio == null && other.iddominio != null) || (this.iddominio != null && !this.iddominio.equals(other.iddominio))) {
+        Link other = (Link) object;
+        if ((this.idlink == null && other.idlink != null) || (this.idlink != null && !this.idlink.equals(other.idlink))) {
             return false;
         }
         return true;
@@ -202,7 +207,7 @@ public class Dominio implements Serializable {
 
     @Override
     public String toString() {
-        return "br.leandro.hagana.entidade.Dominio[ iddominio=" + iddominio + " ]";
+        return "br.leandro.hagana.entidade.Dominio[ iddominio=" + idlink + " ]";
     }
-    
+
 }

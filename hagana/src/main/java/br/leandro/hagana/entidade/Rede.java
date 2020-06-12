@@ -72,6 +72,8 @@ public class Rede implements Serializable {
     @Size(max = 45)
     @Column(name = "ipPadrao")
     private String ipPadrao;
+    @Column(name = "port_conect")
+    private String port_conect;
     @JoinColumn(name = "arquivo_FK", referencedColumnName = "idarquivo")
     @ManyToOne
     private Arquivo arquivoFK;
@@ -175,6 +177,14 @@ public class Rede implements Serializable {
         this.ipPadrao = ipPadrao;
     }
 
+    public String getPort_conect() {
+        return port_conect;
+    }
+
+    public void setPort_conect(String port_conect) {
+        this.port_conect = port_conect;
+    }
+
     public Arquivo getArquivoFK() {
         return arquivoFK;
     }
@@ -223,6 +233,10 @@ public class Rede implements Serializable {
         this.usuarioFK = usuarioFK;
     }
 
+    public String getPortaUPLink() {
+        return idrede + "R";
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -247,5 +261,5 @@ public class Rede implements Serializable {
     public String toString() {
         return "br.leandro.hagana.entidade.Rede[ idrede=" + idrede + " ]";
     }
-    
+
 }

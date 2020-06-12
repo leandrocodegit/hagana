@@ -88,7 +88,7 @@ public class Usuario implements Serializable {
     @OneToMany(mappedBy = "usuarioFK")
     private List<Foto> fotoList;
     @OneToMany(mappedBy = "usuarioFK")
-    private List<Dominio> dominioList;
+    private List<Link> linkList;
     @OneToMany(mappedBy = "usuarioFK")
     private List<Arquivo> arquivoList;
 
@@ -232,12 +232,12 @@ public class Usuario implements Serializable {
     }
 
     @XmlTransient
-    public List<Dominio> getDominioList() {
-        return dominioList;
+    public List<Link> getLinkList() {
+        return linkList;
     }
 
-    public void setDominioList(List<Dominio> dominioList) {
-        this.dominioList = dominioList;
+    public void setLinkList(List<Link> linkList) {
+        this.linkList = linkList;
     }
 
     @XmlTransient

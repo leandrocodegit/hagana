@@ -57,7 +57,7 @@ public class Data implements Serializable {
     @OneToMany(mappedBy = "dataFK")
     private List<Foto> fotoList;
     @OneToMany(mappedBy = "dataFK")
-    private List<Dominio> dominioList;
+    private List<Link> dominioList;
     @OneToMany(mappedBy = "dataFK")
     private List<Arquivo> arquivoList;
 
@@ -126,11 +126,11 @@ public class Data implements Serializable {
     }
 
     @XmlTransient
-    public List<Dominio> getDominioList() {
+    public List<Link> getDominioList() {
         return dominioList;
     }
 
-    public void setDominioList(List<Dominio> dominioList) {
+    public void setDominioList(List<Link> dominioList) {
         this.dominioList = dominioList;
     }
 

@@ -4,13 +4,14 @@
  * and open the template in the editor.
  */
 package br.leandro.hagana.controler;
-
-import static br.leandro.hagana.entidade.Dominio_.porta;
+ 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.StringTokenizer;
 
 /**
@@ -42,7 +43,18 @@ public class Main {
         } catch (Exception e) {
             retv = false;
         }
+        
+        
+        
+        LocalDateTime horaTime = LocalDateTime.now();
+        System.out.println(horaTime);
+        
+        Date date = new Date();
+        
+        System.out.println(date);
 
     }
+    
+    
 
 }

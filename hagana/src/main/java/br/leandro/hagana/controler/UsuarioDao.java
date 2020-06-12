@@ -5,10 +5,7 @@
  */
 package br.leandro.hagana.controler;
 
-import br.leandro.hagana.entidade.Cliente;
-import br.leandro.hagana.entidade.Local;
 import br.leandro.hagana.entidade.Usuario;
-import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;

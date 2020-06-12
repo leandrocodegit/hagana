@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -78,6 +79,8 @@ public class Dispositivo implements Serializable {
     @Size(max = 45)
     @Column(name = "ipPadrao")
     private String ipPadrao;
+    @Column(name = "port_conect")
+    private String port_conect;
     @JoinColumn(name = "conta_FK", referencedColumnName = "conta")
     @ManyToOne(optional = false)
     private Cliente contaFK;
@@ -189,6 +192,14 @@ public class Dispositivo implements Serializable {
         this.ipPadrao = ipPadrao;
     }
 
+    public String getPort_conect() {
+        return port_conect;
+    }
+
+    public void setPort_conect(String port_conect) {
+        this.port_conect = port_conect;
+    }
+
     public Cliente getContaFK() {
         return contaFK;
     }
@@ -228,7 +239,7 @@ public class Dispositivo implements Serializable {
     public void setUsuarioFK(Usuario usuarioFK) {
         this.usuarioFK = usuarioFK;
     }
-
+ 
     @Override
     public int hashCode() {
         int hash = 0;
@@ -253,5 +264,5 @@ public class Dispositivo implements Serializable {
     public String toString() {
         return "br.leandro.hagana.entidade.Dispositivo[ iddispositivo=" + iddispositivo + " ]";
     }
-    
+
 }

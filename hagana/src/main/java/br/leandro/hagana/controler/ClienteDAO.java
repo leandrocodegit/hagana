@@ -119,6 +119,7 @@ public class ClienteDAO {
         cliente.setConta("0001");
 
         System.out.println(clienteDAO.pesquisar("00").size());
+        System.out.println(clienteDAO.pesquisar("00").get(0).getRedeList().size());
 
     }
 

@@ -69,6 +69,8 @@ public class Computador implements Serializable {
     @Size(max = 45)
     @Column(name = "senhaADM")
     private String senhaADM;
+    @Column(name = "port_conect")
+    private String port_conect;
     @Size(max = 45)
     @Column(name = "senhaRMT")
     private String senhaRMT;
@@ -169,6 +171,14 @@ public class Computador implements Serializable {
         this.senhaRMT = senhaRMT;
     }
 
+    public String getPort_conect() {
+        return port_conect;
+    }
+
+    public void setPort_conect(String port_conect) {
+        this.port_conect = port_conect;
+    }
+
     public Cliente getClienteFK() {
         return clienteFK;
     }
@@ -192,7 +202,7 @@ public class Computador implements Serializable {
     public void setUsuarioFK(Usuario usuarioFK) {
         this.usuarioFK = usuarioFK;
     }
-
+ 
     @Override
     public int hashCode() {
         int hash = 0;
@@ -217,5 +227,5 @@ public class Computador implements Serializable {
     public String toString() {
         return "br.leandro.hagana.entidade.Computador[ idcomputador=" + idcomputador + " ]";
     }
-    
+
 }
