@@ -118,7 +118,7 @@
 
                                         <div onclick="acord('D' + #{dis.iddispositivo})" id="BTD#{dis.iddispositivo}" class="w3-border-bottom w3-round-large w3-hover-light-blue w3-block w3-left-align item">
                                             <i class="fas fa-dot-circle" style="color:#3E5182;padding-top:16px;padding-left: 12px"></i> <b class="iconeConfig">#{dis.nome}</b>
-                                            
+
 
                                             <h:panelGroup rendered="#{true == true}">
                                                 <h:commandLink  
@@ -137,33 +137,36 @@
 
                                         <div id="D#{dis.iddispositivo}" class=" w3-hide w3-animate-left w3-container w3-white w3-border-bottom w3-border-rigth" style="width: 100%;margin-top:10px;padding-left:15px">
                                             <br></br>
-                                            <div class="w3-row w3-hover-sand w3-round-large " >
-                                                <div class="w3-col s4 ">
-                                                    <b><p>Nome:</p></b>
-                                                </div>
-                                                <div class="w3-col s6 ">
-                                                    <p>#{dis.nome}</p>
-                                                </div>
-                                            </div>
 
-                                            <div class="w3-row w3-hover-sand w3-round-large">
-                                                <div class="w3-col s4">
-                                                    <b><p>Tipo:</p></b>
-                                                </div>
-                                                <div class="w3-col s6 ">
-                                                    <p>#{dis.tipo}</p>
-                                                </div>
-                                            </div>
-                                            <div class="w3-row w3-hover-sand w3-round-large"  >
-                                                <div class="w3-col s4" >
-                                                    <b><p>IP:</p></b>
-                                                </div>
-                                                <div class="w3-col s4 "> 
-                                                    <p>#{dis.ip}</p>
-                                                </div>
-                                                <div class="w3-col s4 " >
+                                            <table id="tableDis">
+                                                <tr>
+                                                    <td>Nome:</td>
+                                                    <td class="w3-text-deep-orange">#{dis.nome}</td>
 
-                                                    <h:commandLink  class="fas fa-cog w3-right w3-large " 
+                                                </tr>
+                                                <tr>
+                                                    <td>Tipo:</td>
+                                                    <td>
+                                                        <h:form>
+                                                            <h:selectOneMenu  value="#{dis.tipo}" disabled="true"  class="w3-select w3-border-0" style="height: 40px" >
+                                                                <f:selectItem itemLabel="" itemValue="0"/>
+                                                                <f:selectItem itemLabel="Antena TAG" itemValue="1" />
+                                                                <f:selectItem itemLabel="Alarme IP" itemValue="2" />
+                                                                <f:selectItem itemLabel="Biometria" itemValue="3" />
+                                                                <f:selectItem itemLabel="Camera IP" itemValue="4" />
+                                                                <f:selectItem itemLabel="Controladora" itemValue="5" />
+                                                                <f:selectItem itemLabel="DVR/NVR" itemValue="6" />
+                                                                <f:selectItem itemLabel="Intefone IP" itemValue="7" />                                            
+                                                            </h:selectOneMenu>
+                                                        </h:form>
+
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>IP/Host:</td>
+                                                    <td class="w3-text-blue">#{dis.ip}</td>
+                                                    <td>
+                                                        <h:commandLink  class="fas fa-cog w3-right w3-large " 
                                                                     title="Local" target="_blank" 
                                                                     style="color:#010648;margin-right: 10px;margin-top: 4px;height:10px ">
                                                         <f:setPropertyActionListener value="#{dis}" target="{dispositivosMB.dispositivosLinkLocal}"  />
@@ -174,104 +177,73 @@
                                                                    style="color:#05D72C;margin-right: 10px;margin-top: 4px;height:10px " >
                                                         <f:setPropertyActionListener value="#{dis}" target="{dispositivosMB.dispositivosLinkRemoto}"  />
                                                     </h:commandLink>
+                                                    </td>
 
-                                                </div>
-                                            </div>
-                                            <div class="w3-row w3-hover-sand w3-round-large">
-                                                <div class="w3-col s4">
-                                                    <b><p>Porta TCP:</p></b>
-                                                </div>
-                                                <div class="w3-col s4 ">
-                                                    <p>#{dis.portaTCP}</p>
-                                                </div>
-
-                                                <div class="w3-col s4 w3-round-large" style="height: 30px">
-                                                    <h:commandLink id="f1"  
+                                                </tr>
+                                                <tr>
+                                                    <td>Local</td>
+                                                    <td class="w3-text-blue">#{dis.localFK.nome}</td>
+                                                </tr>   
+                                                <tr>
+                                                    <td>Port conect</td>
+                                                    <td class="w3-text-blue">#{dis.port_conect}</td>
+                                                </tr>
+                                                  <tr>
+                                                    <td>Porta WEB</td>
+                                                    <td class="w3-text-blue">#{dis.portaWEB}</td>
+                                                </tr>
+                                                  <tr>
+                                                    <td>Porta TCP</td>
+                                                    <td class="w3-text-blue">#{dis.portaTCP}</td>
+                                                    <td>
+                                                        <h:commandLink id="f2" actionListener="#{dispositivosMB.atualizarLista()}"
                                                                    title="Testar portas" 
-                                                                   style="padding-right:10px;padding-top:1px;;font-size: 18px"
-                                                                   class="w3-right fas fa-question-circle icone "
-                                                                   onclick="abreModal('m001')" >
-                                                        <f:setPropertyActionListener value="#{dis}" target="{dispositivosMB.dispositivosPort}"  />
-                                                        <f:ajax  render=":formTestePortas" />
-
-                                                    </h:commandLink>
-                                                </div>
-                                            </div>
-
-                                            <div class="w3-row w3-hover-sand w3-round-large" >
-                                                <div class="w3-col s4">
-                                                    <b><p>Porta WEB:</p></b>
-                                                </div>
-                                                <div class="w3-col s4 ">
-                                                    <p>#{dis.portaWEB}</p>
-                                                </div>
-                                                <div class="w3-col s4 w3-round-large" style="height: 30px">
-
-                                                    <h:commandLink id="f2" actionListener="#{dispositivosMB.atualizarLista()}"
-                                                                   title="Testar portas" 
-                                                                   style="padding-right:10px;padding-top:1px;font-size: 18px"
+                                                                   style="padding-right:10px;padding-top:1px;font-size: 18px;height: 25px"
                                                                    class="w3-right fas fa-question-circle icone "
                                                                    onclick="abreModal('m001')" >
                                                         <f:ajax  render=":formTestePortas" />
 
                                                     </h:commandLink>
-                                                </div>
-                                            </div>
+                                                    </td>
+                                                </tr>
+                                                  <tr>
+                                                    <td>Senha</td>
+                                                    <td class="w3-text-blue">#{dis.senha}</td>
+                                                </tr>
+                                                  <tr>
+                                                    <td>Modelo</td>
+                                                    <td class="w3-text-blue">#{dis.modelo}</td>
+                                                </tr>
+                                                  <tr>
+                                                    <td>fabricante</td>
+                                                    <td class="w3-text-blue">#{dis.fabricanteFK.nome}</td>
+                                                </tr>
+                                                  <tr>
+                                                    <td>IP padrão</td>
+                                                    <td class="w3-text-blue">#{dis.ipPadrao}</td>
+                                                </tr>
+                                                  <tr>
+                                                    <td>Senha Padrão</td>
+                                                    <td class="w3-text-blue">#{dis.senhaPadrao}</td>
+                                                </tr>                                                
+                                                <tr>
+                                                    <td>Data</td>
+                                                    <td class="w3-text-blue">#{dis.dataCriacao}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Usuario</td>
+                                                    <td class="w3-text-blue">#{dis.usuarioFK.nome}</td>
+                                                </tr>
+                                            </table>
 
-                                            <div class="w3-row w3-hover-sand w3-round-large">
-                                                <div class="w3-col s4">
-                                                    <b><p>Senha admin:</p></b>
-                                                </div>
-                                                <div class="w3-col s6 ">
-                                                    <h:panelGroup rendered="#{loginMB.usuario.verSenha == true}">
-                                                        <p>{dis.senha}</p>
-                                                    </h:panelGroup>
-                                                    <h:panelGroup rendered="#{loginMB.usuario.verSenha == false}">
-                                                        <p>*************</p>
-                                                    </h:panelGroup>
-                                                </div>
-                                            </div>
-
-                                            <div class="w3-row w3-hover-sand w3-round-large">
-                                                <div class="w3-col s4">
-                                                    <b><p>Modelo:</p></b>
-                                                </div>
-                                                <div class="w3-col s6 ">
-                                                    <p>#{dis.modelo}</p>
-                                                </div>
-                                            </div>
-
-                                            <div class="w3-row w3-hover-sand w3-round-large">
-                                                <div class="w3-col s4">
-                                                    <b><p>Fabricante:</p></b>
-                                                </div>
-                                                <div class="w3-col s4 ">
-                                                    <p>#{dis.fabricanteFK.nome}</p>
-                                                </div>
-                                                <div class="w3-col s4 ">
-                                                    <i href="https://www.intelbras.com/pt-br/seguranca-eletronica/cameras" class="fas fa-info-circle w3-right " style="color:#02427D;margin-right: 10px;margin-top: 4px;"></i> 
-                                                </div>
-                                            </div>
-
-
-                                            <div class="w3-row w3-hover-sand w3-round-large">
-                                                <div class="w3-col s4">
-                                                    <b><p>IP padrão:</p></b>
-                                                </div>
-                                                <div class="w3-col s6 ">
-                                                    <p>#{dis.ipPadrao}</p>
-                                                </div>
-                                            </div>
-                                            <div class="w3-row w3-hover-sand w3-round-large">
-                                                <div class="w3-col s4">
-                                                    <b><p>Senha padrão:</p></b>
-                                                </div>
-                                                <div class="w3-col s6 ">
-                                                    <p>#{dis.senhaPadrao}</p>
-                                                </div>
-                                            </div>
                                             <br></br>
-                                        </div>
+                                                
+                                            </div>
+                                       
+                                                    
+                                                 
+                                            
+                                      
 
                                         <!-- fim caixa dispositivos -->
 
@@ -281,6 +253,16 @@
                             </h:form>
                         </div>
 
+                        <style>
+                            #tableDis tr{
+                                height: 25px;  
+                            }
+                           
+                            #tableDis{
+                                width: 100%;  
+                            }
+
+                        </style>
                         <!-- Fim grid dispositivos -->
 
                     </div>
