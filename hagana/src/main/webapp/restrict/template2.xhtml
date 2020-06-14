@@ -68,23 +68,20 @@
             </div>
 
 
-         <footer class=" w3-bottom">
-                    <h:form>
-                        <p:commandLink onclick="abreModal('m002')" class="w3-left w3-round-xxlarge btBarGradiente w3-card-2 w3-border-bottom  w3-button w3-block w3-left-align  w3-hover-blue " style="margin-bottom:3px;height: 45px;font-size:14px;word-spacing:10px;width:85px">
-                            <i style="color:#FFF;font-size:20px"><b>0001</b></i> 
-                        </p:commandLink>
-
-                    </h:form>
-                </footer>
+            <footer class=" w3-bottom">  
+                <a class="w3-btn w3-white w3-border w3-border-blue w3-round-xlarge w3-text-blue" href="clientes.xhtml"  style="font-size:16px;text-decoration: none;margin: 5px">#{clienteBean.clienteSelecionado.conta}</a>
+            </footer>
 
 
             <div class="w3-main" style="margin-left:200px" id="main" >      
 
-                <div class="w3-mobile w3-white w3-section w3-row-padding w3-left " style="width:100%;padding-top:60px;padding-left:0;padding-right:0; ">
+                <div class="w3-mobile w3-white w3-section w3-row-padding w3-left " style="width:100%;padding-top:50px;padding-left:0px;padding-right:0;padding-bottom: 5px ">
 
-                    <div class="" style="height:40px;margin-bottom: 10px;margin-left:5px" id="navCliente">                        
-                        <a class="w3-btn w3-white w3-border w3-border-blue w3-round-xlarge" href="clientes.xhtml"  style="font-size:16px;text-decoration: none;padding-left: 10px">#{loginBean.dadosCliente}</a>
+                    <div class="" style="height:40px;margin-bottom: 20px;margin-left:5px" id="navCliente">                        
+                        <a class="w3-button w3-xlarge w3-round-large w3-text-white w3-hover-pink" href="clientes.xhtml"  
+                           style="font-size:16px;text-decoration: none;margin-left: -12px;background: #0bd6e2">#{loginBean.dadosCliente}</a>
                     </div>
+
 
                     <!-- Inicio dispositivos -->
                     <div class="w3-twothird"  style="padding:5px;">

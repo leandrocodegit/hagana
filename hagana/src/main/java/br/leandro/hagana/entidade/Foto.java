@@ -6,6 +6,7 @@
 package br.leandro.hagana.entidade;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -50,12 +53,12 @@ public class Foto implements Serializable {
     @Size(max = 45)
     @Column(name = "extensao")
     private String extensao;
+    @Column(name = "dataCriacao")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataCriacao;
     @JoinColumn(name = "conta_FK", referencedColumnName = "conta")
     @ManyToOne
     private Cliente contaFK;
-    @JoinColumn(name = "data_FK", referencedColumnName = "iddata")
-    @ManyToOne
-    private Data dataFK;
     @JoinColumn(name = "usuario_FK", referencedColumnName = "idusuario")
     @ManyToOne
     private Usuario usuarioFK;
@@ -99,20 +102,20 @@ public class Foto implements Serializable {
         this.extensao = extensao;
     }
 
+    public Date getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(Date dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
     public Cliente getContaFK() {
         return contaFK;
     }
 
     public void setContaFK(Cliente contaFK) {
         this.contaFK = contaFK;
-    }
-
-    public Data getDataFK() {
-        return dataFK;
-    }
-
-    public void setDataFK(Data dataFK) {
-        this.dataFK = dataFK;
     }
 
     public Usuario getUsuarioFK() {
@@ -147,5 +150,5 @@ public class Foto implements Serializable {
     public String toString() {
         return "br.leandro.hagana.entidade.Foto[ idfoto=" + idfoto + " ]";
     }
-    
+
 }

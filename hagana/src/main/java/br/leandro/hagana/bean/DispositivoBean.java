@@ -39,12 +39,10 @@ public class DispositivoBean implements Serializable {
         if (SessionContext.getInstance().getClienteSelecionado() == null){
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect("clientes.xhtml");
-
         } catch (Exception ex) {
 
         }
     }
-
 }
 
 public HtmlDataTable getDataTable() {

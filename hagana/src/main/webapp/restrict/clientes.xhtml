@@ -40,34 +40,37 @@
                 </div>
 
                 <ul>
-                    <li class="icone"><a href="dashboard.xhtml"><span><b class="fas fa-server w3-text-blue-grey"></b></span>   <b class="textoMenu" style="color:#0bd6e2" >Dashboard</b></a></li>
-                    <li class="icone"><a href="index.xhtml"><span><b class="fas fa-home w3-text-blue-grey"></b></span>   <b class="textoMenu" >Home</b></a></li>                   
-                    <li class="icone"><a href="dispositivos.xhtml"><span><b class="fas fa-clone w3-text-blue-grey"></b></span>   <b class="textoMenu" >Arquivos</b></a></li>
+                    <li class="icone"><a href="dashboard.xhtml"><span><b class="fas fa-stream w3-text-blue-grey"></b></span>   <b class="textoMenu" style="color:#0bd6e2" >Dashboard</b></a></li>
+                    <li class="icone"><a href="index.xhtml"><span><b class="fas fa-hdd w3-text-blue-grey"></b></span>   <b class="textoMenu" >Dispositivos</b></a></li>                   
+                    <li class="icone"><a href="dispositivos.xhtml"  onclick="rc()" ><span><b class="fas fa-clone w3-text-blue-grey"></b></span>   <b class="textoMenu" >Arquivos</b></a></li>
+                    <li class="icone"><a href="map.xhtml"><span><b class="fas fa-sitemap w3-text-blue-grey"></b></span>   <b class="textoMenu" >Map</b></a></li>
                     <li class="icone"><a><span><b class="fas fa-camera-retro w3-text-blue-grey" ></b></span>   <b class="textoMenu" >Fotos</b></a></li>
-                    <li class="icone"><a href="login.xhtml"><span><b class="fas fa-user w3-text-deep-orange"></b></span>   <b class="w3-text-deep-orange" style="padding-left:9px" > Olá, #{loginBean.dadosUsuario}</b></a></li>
+                    <li class="icone"><a href="login.xhtml"><span><b class="far fa-user w3-text-purple"></b></span>   <b class="w3-text-purple" style="padding-left:9px" > Olá, #{loginBean.dadosUsuario}</b></a></li>
 
                     <div class="w3-padding">
-
                         <div id="demoDrop" >
-
                             <h:form>
-                                <b class="fas fa-power-off " style="margin-left:10px;color:#919ca1"></b>
+                                <b class="fas fa-power-off" style="margin-left:10px;color:#fe5000"></b>
                                 <h:commandLink 
                                     action="#{loginBean.sair()}"
                                     value="Sair"                                     
-                                    style="font-size: 18px;padding-left:20px;color:#919ca1"> 
+                                    style="font-size: 18px;padding-left:20px;color:#fe5000"> 
                                 </h:commandLink>
                             </h:form>
                         </div>
                     </div>
-
-
                 </ul>
 
-
             </div>
- 
-            <div class="w3-main" style="margin-left:200px" id="main" >      
+
+            <h:form>   
+                <p:growl id="growl" showDetail="true"  />  
+
+            </h:form>
+
+            <div class="w3-main" style="margin-left:200px" id="main" >   
+
+
 
                 <div class="w3-mobile w3-white w3-section w3-row-padding w3-left " style="width:100%;padding-top:50px;padding-left:0;padding-right:0; ">
 
@@ -232,7 +235,7 @@
                                             </tr>
                                             <tr>
                                                 <td>Links</td>
-                                                <td class="w3-text-black">#{clienteBean.cliente.dominioList.size()}</td> 
+                                                <td class="w3-text-black">#{clienteBean.cliente.linkList.size()}</td> 
                                             </tr>
                                             <tr>
                                                 <td>Usuario</td>
@@ -324,9 +327,9 @@
 
                                 <br></br>
 
-                                <p:commandButton  update="formcadCliente, dataCliente" value="Cadastrar" ajax="true" action="#{clienteBean.adicionar()}" class="botao w3-right">                                    
+                                <p:commandButton  update="formcadCliente, dataCliente" value="Cadastrar" ajax="false" action="#{clienteBean.adicionar()}" class="botao w3-right">                                    
                                 </p:commandButton>
-                                <p:commandButton update="formcadCliente, dataCliente" value="Atualizar" action="#{clienteBean.atualizar()}"     class="botao w3-right">
+                                <p:commandButton update="formcadCliente, dataCliente" value="Atualizar" ajax="false" action="#{clienteBean.atualizar()}"     class="botao w3-right">
                                 </p:commandButton>
                                 <p:commandButton value="Excluir" onclick="abreModal('m003')"  class="botao w3-right">                                    
                                 </p:commandButton>
@@ -375,6 +378,16 @@
                 </div>
             </div>
         </div>
+
+        <style>
+            .ui-growl-item-container{
+
+                background-color: #121313; 
+                border-radius:8px;
+                font-size: 16px;
+                color: #00f1ff; 
+            }
+        </style>
 
 
         <!-- fim main -->

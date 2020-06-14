@@ -40,9 +40,10 @@
                 </div>
 
                 <ul>
-                    <li class="icone"><a href="dashboard.xhtml"><span><b class="fas fa-server w3-text-blue-grey"></b></span>   <b class="textoMenu" style="color:#0bd6e2" >Dashboard</b></a></li>
-                    <li class="icone"><a href="index.xhtml"><span><b class="fas fa-home w3-text-blue-grey"></b></span>   <b class="textoMenu" >Home</b></a></li>                   
-                    <li class="icone"><a href="dispositivos.xhtml"><span><b class="fas fa-clone w3-text-blue-grey"></b></span>   <b class="textoMenu" >Arquivos</b></a></li>
+                    <li class="icone"><a href="dashboard.xhtml"><span><b class="fas fa-stream w3-text-blue-grey"></b></span>   <b class="textoMenu" style="color:#0bd6e2" >Dashboard</b></a></li>
+                    <li class="icone"><a href="index.xhtml"><span><b class="fas fa-hdd w3-text-blue-grey"></b></span>   <b class="textoMenu" >Dispositivos</b></a></li>                   
+                    <li class="icone"><a href="dispositivos.xhtml"  onclick="rc()" ><span><b class="fas fa-clone w3-text-blue-grey"></b></span>   <b class="textoMenu" >Arquivos</b></a></li>
+                    <li class="icone"><a href="map.xhtml"><span><b class="fas fa-sitemap w3-text-blue-grey"></b></span>   <b class="textoMenu" >Map</b></a></li>
                     <li class="icone"><a><span><b class="fas fa-camera-retro w3-text-blue-grey" ></b></span>   <b class="textoMenu" >Fotos</b></a></li>
                     <li class="icone"><a href="login.xhtml"><span><b class="far fa-user w3-text-purple"></b></span>   <b class="w3-text-purple" style="padding-left:9px" > Olá, #{loginBean.dadosUsuario}</b></a></li>
 
@@ -116,7 +117,8 @@
                                     <h:column>
 
                                         <div onclick="acord('D' + #{dis.iddispositivo})" id="BTD#{dis.iddispositivo}" class="w3-border-bottom w3-round-large w3-hover-light-blue w3-block w3-left-align item">
-                                            <i class="fas fa-dot-circle" style="color:#3E5182;padding-top:16px;padding-left: 12px"></i> <b>#{dis.nome}</b>
+                                            <i class="fas fa-dot-circle" style="color:#3E5182;padding-top:16px;padding-left: 12px"></i> <b class="iconeConfig">#{dis.nome}</b>
+                                            
 
                                             <h:panelGroup rendered="#{true == true}">
                                                 <h:commandLink  

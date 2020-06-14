@@ -32,7 +32,7 @@ public class LoginFilter implements Filter,Serializable {
         Usuario user = null;
         HttpSession sess = ((HttpServletRequest) request).getSession(false);
         
-        
+         
 
         if (sess != null) {
             user = (Usuario) sess.getAttribute("usuarioLogado");

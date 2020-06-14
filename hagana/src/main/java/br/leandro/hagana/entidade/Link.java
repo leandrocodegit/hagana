@@ -6,6 +6,7 @@
 package br.leandro.hagana.entidade;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -38,7 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Link.findByTipo", query = "SELECT d FROM Link d WHERE d.tipo = :tipo"),
     @NamedQuery(name = "Link.findByUsuario", query = "SELECT d FROM Link d WHERE d.usuario = :usuario"),
     @NamedQuery(name = "Link.findBySenha", query = "SELECT d FROM Link d WHERE d.senha = :senha")})
-public class Link implements Serializable {
+public class Link extends Device implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -69,15 +73,18 @@ public class Link implements Serializable {
     @Size(max = 45)
     @Column(name = "senha")
     private String senha;
+    @Column(name = "dataCriacao")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataCriacao;
     @JoinColumn(name = "conta_FK", referencedColumnName = "conta")
     @ManyToOne
     private Cliente contaFK;
-    @JoinColumn(name = "data_FK", referencedColumnName = "iddata")
-    @ManyToOne
-    private Data dataFK;
     @JoinColumn(name = "usuario_FK", referencedColumnName = "idusuario")
     @ManyToOne
     private Usuario usuarioFK;
+    @JoinColumn(name = "local_FK", referencedColumnName = "idlocal")
+    @ManyToOne
+    private Local localFK;
 
     public Link() {
     }
@@ -132,10 +139,12 @@ public class Link implements Serializable {
         this.velocidade = velocidade;
     }
 
+    @Override
     public Integer getTipo() {
         return tipo;
     }
 
+    @Override
     public void setTipo(Integer tipo) {
         this.tipo = tipo;
     }
@@ -164,25 +173,54 @@ public class Link implements Serializable {
         this.contaFK = contaFK;
     }
 
-    public Data getDataFK() {
-        return dataFK;
-    }
-
-    public void setDataFK(Data dataFK) {
-        this.dataFK = dataFK;
-    }
-
+    @Override
     public Usuario getUsuarioFK() {
         return usuarioFK;
     }
 
+    @Override
     public void setUsuarioFK(Usuario usuarioFK) {
         this.usuarioFK = usuarioFK;
     }
 
+    @Override
+    public Date getDataCriacao() {
+        return dataCriacao;
+    }
+
+    @Override
+    public void setDataCriacao(Date dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
+    @Override
+    public Local getLocalFK() {
+        return localFK;
+    }
+
+    @Override
+    public void setLocalFK(Local localFK) {
+        this.localFK = localFK;
+    }
+
     public String getPortaUPLink() {
-        
+
         return idlink + "L";
+    }
+
+    @Override
+    public String getNome() {
+        return operadora;
+    }
+
+    @Override
+    public String getIp() {
+        return host;
+    }
+
+    @Override
+    public String getPort_conect() {
+        return velocidade;
     }
 
     @Override

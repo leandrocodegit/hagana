@@ -8,13 +8,12 @@ package br.leandro.hagana.bean;
 import br.leandro.hagana.controler.ClienteDAO;
 import br.leandro.hagana.entidade.Cliente;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
 
@@ -23,7 +22,7 @@ import javax.faces.context.FacesContext;
  * @author leand
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class ClienteBean implements Serializable {
 
     private static final long serialVersionUID = 12855655321L;
@@ -36,6 +35,9 @@ public class ClienteBean implements Serializable {
     @PostConstruct
     public void init() { 
             clienteList = ClienteDAO.getInstance().getclientes();
+            if (SessionContext.getInstance().getClienteSelecionado() == null) {               
+               message("Atenção!", "Selecionar um cliente para começar.");
+            }
     }
 
     public HtmlDataTable getDataTable() {
@@ -104,12 +106,13 @@ public class ClienteBean implements Serializable {
         if(cliente != null){
             ClienteDAO.getInstance().delete(cliente.getConta());
             clienteList = ClienteDAO.getInstance().getclientes();
+            message("Sucesso!", "Removido conta.");
         }
     }
 
     public void atualizar() {
         ClienteDAO.getInstance().atualizar(cliente);
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Conta atualizada com sucesso!"));
+        message("Sucesso!", "Atualizado.");
     }
 
     public void adicionar() {
@@ -117,17 +120,23 @@ public class ClienteBean implements Serializable {
         cliente.setDataCriacao(new Date());
         cliente.setUsuarioFK(SessionContext.getInstance().getUsuarioLogado());
         if (ClienteDAO.getInstance().insert(cliente) != null) {
-            FacesContext.getCurrentInstance().addMessage(null,
-                    new FacesMessage("Cliente adicionado com sucesso! "));
+           
             clienteList = ClienteDAO.getInstance().getclientes();
+             message("Sucesso!", "Adicionado.");
             // criarPasta(cli);
         } else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro  ao  gravar!", " "));
+            message("Falha!", "Erro ao gravar.");
         }
     }
 
     public void limpar() {       
         cliente = new Cliente();
+    }
+    
+    public void message(String mensagem, String conteudo) {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(mensagem, conteudo));
     }
 
 }

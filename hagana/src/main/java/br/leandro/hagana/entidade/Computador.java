@@ -6,6 +6,7 @@
 package br.leandro.hagana.entidade;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -32,14 +35,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Computador.findByIdcomputador", query = "SELECT c FROM Computador c WHERE c.idcomputador = :idcomputador"),
     @NamedQuery(name = "Computador.findByNome", query = "SELECT c FROM Computador c WHERE c.nome = :nome"),
     @NamedQuery(name = "Computador.findByIos", query = "SELECT c FROM Computador c WHERE c.ios = :ios"),
-    @NamedQuery(name = "Computador.findByLocal", query = "SELECT c FROM Computador c WHERE c.local = :local"),
     @NamedQuery(name = "Computador.findByIp", query = "SELECT c FROM Computador c WHERE c.ip = :ip"),
     @NamedQuery(name = "Computador.findByTipoIP", query = "SELECT c FROM Computador c WHERE c.tipoIP = :tipoIP"),
     @NamedQuery(name = "Computador.findByTv", query = "SELECT c FROM Computador c WHERE c.tv = :tv"),
     @NamedQuery(name = "Computador.findByAn", query = "SELECT c FROM Computador c WHERE c.an = :an"),
     @NamedQuery(name = "Computador.findBySenhaADM", query = "SELECT c FROM Computador c WHERE c.senhaADM = :senhaADM"),
     @NamedQuery(name = "Computador.findBySenhaRMT", query = "SELECT c FROM Computador c WHERE c.senhaRMT = :senhaRMT")})
-public class Computador implements Serializable {
+public class Computador extends Device implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -52,9 +54,6 @@ public class Computador implements Serializable {
     private String nome;
     @Column(name = "IOS")
     private Integer ios;
-    @Size(max = 45)
-    @Column(name = "local")
-    private String local;
     @Size(max = 40)
     @Column(name = "IP")
     private String ip;
@@ -72,17 +71,23 @@ public class Computador implements Serializable {
     @Column(name = "port_conect")
     private String port_conect;
     @Size(max = 45)
+    @Column(name = "tipo")
+    private Integer tipo;
+    @Column(name = "dataCriacao")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataCriacao;
+    @Size(max = 45)
     @Column(name = "senhaRMT")
     private String senhaRMT;
     @JoinColumn(name = "cliente_FK", referencedColumnName = "conta")
     @ManyToOne
     private Cliente clienteFK;
-    @JoinColumn(name = "data_FK", referencedColumnName = "iddata")
-    @ManyToOne
-    private Data dataFK;
     @JoinColumn(name = "usuario_FK", referencedColumnName = "idusuario")
     @ManyToOne
     private Usuario usuarioFK;
+    @JoinColumn(name = "local_FK", referencedColumnName = "idlocal")
+    @ManyToOne
+    private Local localFK;
 
     public Computador() {
     }
@@ -99,10 +104,12 @@ public class Computador implements Serializable {
         this.idcomputador = idcomputador;
     }
 
+    @Override
     public String getNome() {
         return nome;
     }
 
+    @Override
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -115,18 +122,12 @@ public class Computador implements Serializable {
         this.ios = ios;
     }
 
-    public String getLocal() {
-        return local;
-    }
-
-    public void setLocal(String local) {
-        this.local = local;
-    }
-
+    @Override
     public String getIp() {
         return ip;
     }
 
+    @Override
     public void setIp(String ip) {
         this.ip = ip;
     }
@@ -134,11 +135,7 @@ public class Computador implements Serializable {
     public Integer getTipoIP() {
         return tipoIP;
     }
-
-    public void setTipoIP(Integer tipoIP) {
-        this.tipoIP = tipoIP;
-    }
-
+ 
     public String getTv() {
         return tv;
     }
@@ -171,10 +168,12 @@ public class Computador implements Serializable {
         this.senhaRMT = senhaRMT;
     }
 
+    @Override
     public String getPort_conect() {
         return port_conect;
     }
 
+    @Override
     public void setPort_conect(String port_conect) {
         this.port_conect = port_conect;
     }
@@ -186,28 +185,51 @@ public class Computador implements Serializable {
     public void setClienteFK(Cliente clienteFK) {
         this.clienteFK = clienteFK;
     }
-
-    public Data getDataFK() {
-        return dataFK;
+    @Override
+    public Integer getTipo() {
+        return tipo;
     }
 
-    public void setDataFK(Data dataFK) {
-        this.dataFK = dataFK;
+    @Override
+    public void setTipo(Integer tipo) {
+        this.tipo = tipo;
     }
 
+    @Override
+    public Date getDataCriacao() {
+        return dataCriacao;
+    }
+
+    @Override
+    public void setDataCriacao(Date dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+
+    @Override
     public Usuario getUsuarioFK() {
         return usuarioFK;
     }
 
+    @Override
     public void setUsuarioFK(Usuario usuarioFK) {
         this.usuarioFK = usuarioFK;
     }
- 
+
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (idcomputador != null ? idcomputador.hashCode() : 0);
         return hash;
+    }
+
+    @Override
+    public Local getLocalFK() {
+        return localFK;
+    }
+
+    @Override
+    public void setLocalFK(Local localFK) {
+        this.localFK = localFK;
     }
 
     @Override

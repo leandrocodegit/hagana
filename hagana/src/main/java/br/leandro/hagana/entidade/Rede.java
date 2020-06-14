@@ -6,6 +6,7 @@
 package br.leandro.hagana.entidade;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -39,7 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Rede.findByModelo", query = "SELECT r FROM Rede r WHERE r.modelo = :modelo"),
     @NamedQuery(name = "Rede.findBySenhaPadrao", query = "SELECT r FROM Rede r WHERE r.senhaPadrao = :senhaPadrao"),
     @NamedQuery(name = "Rede.findByIpPadrao", query = "SELECT r FROM Rede r WHERE r.ipPadrao = :ipPadrao")})
-public class Rede implements Serializable {
+public class Rede extends Device implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -74,15 +77,15 @@ public class Rede implements Serializable {
     private String ipPadrao;
     @Column(name = "port_conect")
     private String port_conect;
+    @Column(name = "dataCriacao")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataCriacao;
     @JoinColumn(name = "arquivo_FK", referencedColumnName = "idarquivo")
     @ManyToOne
     private Arquivo arquivoFK;
     @JoinColumn(name = "conta_FK", referencedColumnName = "conta")
     @ManyToOne(optional = false)
     private Cliente contaFK;
-    @JoinColumn(name = "data_FK", referencedColumnName = "iddata")
-    @ManyToOne
-    private Data dataFK;
     @JoinColumn(name = "fabricante_FK", referencedColumnName = "idfabricante")
     @ManyToOne
     private Fabricante fabricanteFK;
@@ -113,26 +116,32 @@ public class Rede implements Serializable {
         this.idrede = idrede;
     }
 
+    @Override
     public Integer getTipo() {
         return tipo;
     }
 
+    @Override
     public void setTipo(Integer tipo) {
         this.tipo = tipo;
     }
 
+    @Override
     public String getNome() {
         return nome;
     }
 
+    @Override
     public void setNome(String nome) {
         this.nome = nome;
     }
 
+    @Override
     public String getIp() {
         return ip;
     }
 
+    @Override
     public void setIp(String ip) {
         this.ip = ip;
     }
@@ -177,10 +186,22 @@ public class Rede implements Serializable {
         this.ipPadrao = ipPadrao;
     }
 
+    @Override
+    public Date getDataCriacao() {
+        return dataCriacao;
+    }
+
+    @Override
+    public void setDataCriacao(Date dataCriacao) {
+        this.dataCriacao = dataCriacao;
+    }
+    
+    @Override
     public String getPort_conect() {
         return port_conect;
     }
 
+    @Override
     public void setPort_conect(String port_conect) {
         this.port_conect = port_conect;
     }
@@ -201,14 +222,6 @@ public class Rede implements Serializable {
         this.contaFK = contaFK;
     }
 
-    public Data getDataFK() {
-        return dataFK;
-    }
-
-    public void setDataFK(Data dataFK) {
-        this.dataFK = dataFK;
-    }
-
     public Fabricante getFabricanteFK() {
         return fabricanteFK;
     }
@@ -217,18 +230,22 @@ public class Rede implements Serializable {
         this.fabricanteFK = fabricanteFK;
     }
 
+    @Override
     public Local getLocalFK() {
         return localFK;
     }
 
+    @Override
     public void setLocalFK(Local localFK) {
         this.localFK = localFK;
     }
 
+    @Override
     public Usuario getUsuarioFK() {
         return usuarioFK;
     }
 
+    @Override
     public void setUsuarioFK(Usuario usuarioFK) {
         this.usuarioFK = usuarioFK;
     }

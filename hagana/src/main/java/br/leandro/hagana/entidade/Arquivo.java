@@ -6,6 +6,7 @@
 package br.leandro.hagana.entidade;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -19,6 +20,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -65,11 +68,11 @@ public class Arquivo implements Serializable {
     private String fileName;
     @Column(name = "read")
     private Boolean read;
+    @Column(name = "dataCriacao")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataCriacao;
     @OneToMany(mappedBy = "arquivoFK")
     private List<Rede> redeList;
-    @JoinColumn(name = "data_FK", referencedColumnName = "iddata")
-    @ManyToOne
-    private Data dataFK;
     @JoinColumn(name = "usuario_FK", referencedColumnName = "idusuario")
     @ManyToOne
     private Usuario usuarioFK;
@@ -144,14 +147,14 @@ public class Arquivo implements Serializable {
         this.redeList = redeList;
     }
 
-    public Data getDataFK() {
-        return dataFK;
+    public Date getDataCriacao() {
+        return dataCriacao;
     }
 
-    public void setDataFK(Data dataFK) {
-        this.dataFK = dataFK;
+    public void setDataCriacao(Date dataCriacao) {
+        this.dataCriacao = dataCriacao;
     }
-
+ 
     public Usuario getUsuarioFK() {
         return usuarioFK;
     }
