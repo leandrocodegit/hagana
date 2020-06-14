@@ -66,15 +66,15 @@ public class Cliente implements Serializable {
     @JoinColumn(name = "usuarioFK", referencedColumnName = "idusuario")
     @ManyToOne(optional = false)
     private Usuario usuarioFK;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contaFK")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clienteFK")
     private List<Rede> redeList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "contaFK")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "clienteFK")
     private List<Dispositivo> dispositivoList;
-    @OneToMany(mappedBy = "contaFK")
+    @OneToMany(mappedBy = "clienteFK")
     private List<Foto> fotoList;
-    @OneToMany(mappedBy = "contaFK")
+    @OneToMany(mappedBy = "clienteFK")
     private List<Link> linkList;
-    @OneToMany(mappedBy = "contaFK")
+    @OneToMany(mappedBy = "clienteFK")
     private List<Local> localList;
 
     public Cliente() {

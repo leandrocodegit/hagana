@@ -40,9 +40,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Dispositivo.findByPortaWEB", query = "SELECT d FROM Dispositivo d WHERE d.portaWEB = :portaWEB"),
     @NamedQuery(name = "Dispositivo.findByOutrasPortas", query = "SELECT d FROM Dispositivo d WHERE d.outrasPortas = :outrasPortas"),
     @NamedQuery(name = "Dispositivo.findByModelo", query = "SELECT d FROM Dispositivo d WHERE d.modelo = :modelo"),
-    @NamedQuery(name = "Dispositivo.findBySenha", query = "SELECT d FROM Dispositivo d WHERE d.senha = :senha"),
-    @NamedQuery(name = "Dispositivo.findBySenhaPadrao", query = "SELECT d FROM Dispositivo d WHERE d.senhaPadrao = :senhaPadrao"),
-    @NamedQuery(name = "Dispositivo.findByIpPadrao", query = "SELECT d FROM Dispositivo d WHERE d.ipPadrao = :ipPadrao")})
+    @NamedQuery(name = "Dispositivo.findBySenha", query = "SELECT d FROM Dispositivo d WHERE d.senha = :senha")})
 public class Dispositivo extends Device implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -62,10 +60,10 @@ public class Dispositivo extends Device implements Serializable {
     private String nome;
     @Size(max = 8)
     @Column(name = "portaTCP")
-    private String portaTCP;
+    private Integer portaTCP;
     @Size(max = 8)
     @Column(name = "portaWEB")
-    private String portaWEB;
+    private Integer portaWEB;
     @Size(max = 45)
     @Column(name = "outrasPortas")
     private String outrasPortas;
@@ -76,19 +74,16 @@ public class Dispositivo extends Device implements Serializable {
     @Column(name = "senha")
     private String senha;
     @Size(max = 45)
-    @Column(name = "senhaPadrao")
-    private String senhaPadrao;
-    @Size(max = 45)
-    @Column(name = "ipPadrao")
-    private String ipPadrao;
+    @Column(name = "login")
+    private String login;
     @Column(name = "port_conect")
     private String port_conect;
     @Column(name = "dataCriacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataCriacao;
-    @JoinColumn(name = "conta_FK", referencedColumnName = "conta")
+    @JoinColumn(name = "cliente_FK", referencedColumnName = "conta")
     @ManyToOne(optional = false)
-    private Cliente contaFK;   
+    private Cliente clienteFK;  
     @JoinColumn(name = "fabricante_FK", referencedColumnName = "idfabricante")
     @ManyToOne
     private Fabricante fabricanteFK;
@@ -144,19 +139,19 @@ public class Dispositivo extends Device implements Serializable {
         this.nome = nome;
     }
 
-    public String getPortaTCP() {
+    public Integer getPortaTCP() {
         return portaTCP;
     }
 
-    public void setPortaTCP(String portaTCP) {
+    public void setPortaTCP(Integer portaTCP) {
         this.portaTCP = portaTCP;
     }
 
-    public String getPortaWEB() {
+    public Integer getPortaWEB() {
         return portaWEB;
     }
 
-    public void setPortaWEB(String portaWEB) {
+    public void setPortaWEB(Integer portaWEB) {
         this.portaWEB = portaWEB;
     }
 
@@ -168,36 +163,34 @@ public class Dispositivo extends Device implements Serializable {
         this.outrasPortas = outrasPortas;
     }
 
+    @Override
     public String getModelo() {
         return modelo;
     }
 
+    @Override
     public void setModelo(String modelo) {
         this.modelo = modelo;
     }
 
+    @Override
     public String getSenha() {
         return senha;
     }
 
+    @Override
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
-    public String getSenhaPadrao() {
-        return senhaPadrao;
+ 
+    @Override
+    public String getLogin() {
+        return login;
     }
 
-    public void setSenhaPadrao(String senhaPadrao) {
-        this.senhaPadrao = senhaPadrao;
-    }
-
-    public String getIpPadrao() {
-        return ipPadrao;
-    }
-
-    public void setIpPadrao(String ipPadrao) {
-        this.ipPadrao = ipPadrao;
+    @Override
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     @Override
@@ -220,18 +213,22 @@ public class Dispositivo extends Device implements Serializable {
         this.dataCriacao = dataCriacao;
     }
 
-    public Cliente getContaFK() {
-        return contaFK;
+    @Override
+    public Cliente getClienteFK() {
+        return clienteFK;
     }
 
-    public void setContaFK(Cliente contaFK) {
-        this.contaFK = contaFK;
+    @Override
+    public void setClienteFK(Cliente clienteFK) {
+        this.clienteFK = clienteFK;
     }
 
+    @Override
     public Fabricante getFabricanteFK() {
         return fabricanteFK;
     }
 
+    @Override
     public void setFabricanteFK(Fabricante fabricanteFK) {
         this.fabricanteFK = fabricanteFK;
     }

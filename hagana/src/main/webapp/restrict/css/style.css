@@ -103,13 +103,17 @@ ul li:hover a, .menu ul li.active a{
 a{
     text-decoration:none;
 }
+iconeTablePosition{
+    height:30px;
+    margin-top: 5px;
+}
 
 .icone
 {
 
     border-bottom:1px dotted #e6e5e5;
     box-shadow: 0 0 0.5px #dadbdb; 
-    height:60px;}
+    }
 
 .corIconeMenu
 {
@@ -231,7 +235,7 @@ input,  select
     border-radius: 5px;
     max-width: 300px;
 }
- 
+
 
 input:hover
 {
@@ -239,16 +243,16 @@ input:hover
 }
 
 .w3-hover-light-blue:hover a{
-  color: white;  
+    color: white;  
 } 
 
 .w3-hover-light-blue:hover b{
-  color: white;  
+    color: white;  
 } 
 .w3-hover-light-blue:hover span{
-  color: white;  
+    color: white;  
 }
- 
+
 .iconeHead
 {
     color: #364257;
@@ -267,8 +271,8 @@ input:hover
 
 .iconeConfig
 {
-    color: #757379;    
-    text-decoration: none; 
+    color: #53778a;    
+    text-decoration: none;
 }
 
 .iconeConfig:hover{
@@ -276,11 +280,12 @@ input:hover
 }
 
 .item:hover b{
-    color: white;  
+   color: white;    
 }
-
+ 
 .item b{
-    color: #757379;  
+    color: #53778a;  
+    font-size: 14px;
 }
 
 .item:hover .iconeConfig{
@@ -360,5 +365,37 @@ input:hover
 .ui-autocomplete-panel{
     background: white;
 }
+#tableDis tr{
+    height: 28px;  
+}
+
+#tableDis{
+    width: 100%;  
+    font-family: 'Roboto Slab';
+}
+#tableDis tr:hover{
+    
+    box-shadow: 0 0 5px #470f77;
+    border-radius: 5px;
+    
+}
+#tableDis tr:hover td{
+    color:  #ff4400;
+} 
+select{
+    color: #007ab9;
+    font-size: 16px;
+}
+.textoTable{
+    color: #22262f;
+    font-size: 14px;
+
+}
+.textLabel{
+    color: #67818f;
+    padding-left: 8px; 
+}
+
+
 
 

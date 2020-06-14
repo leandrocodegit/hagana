@@ -73,6 +73,7 @@
                 <a class="w3-btn w3-white w3-border w3-border-blue w3-round-xlarge w3-text-blue" href="clientes.xhtml"  style="font-size:16px;text-decoration: none;margin: 5px">#{clienteBean.clienteSelecionado.conta}</a>
             </footer>
 
+            <p:growl id="growl" showDetail="true"/>  
 
             <div class="w3-main" style="margin-left:200px" id="main" >      
 
@@ -82,6 +83,7 @@
                         <a class="w3-button w3-xlarge w3-round-large w3-text-white w3-hover-pink" href="clientes.xhtml"  
                            style="font-size:16px;text-decoration: none;margin-left: -12px;background: #0bd6e2">#{loginBean.dadosCliente}</a>
                     </div>
+
 
                     <!-- Inicio dispositivos -->
                     <div class="w3-twothird"  style="padding:0px;">
@@ -117,19 +119,18 @@
                                     <h:column>
 
                                         <div onclick="acord('D' + #{dis.iddispositivo})" id="BTD#{dis.iddispositivo}" class="w3-border-bottom w3-round-large w3-hover-light-blue w3-block w3-left-align item">
-                                            <i class="fas fa-dot-circle" style="color:#3E5182;padding-top:16px;padding-left: 12px"></i> <b class="iconeConfig">#{dis.nome}</b>
+                                            <i class="fas fa-dot-circle" style="color:#77afcc;padding-top:16px;padding-left: 12px"></i> <b class="iconeConfig">#{dis.nome}</b>
 
 
                                             <h:panelGroup rendered="#{true == true}">
-                                                <h:commandLink  
-                                                    action="#{dispositivoBean.setDispositivo(dis)}"
+                                                <p:commandLink  
+                                                    actionListener="#{dispositivoBean.selecionarDispositivo()}" ajax="true" update="formCadDis"
                                                     title="Editar dispositivo" style=";padding-right:18px;font-size:15px;padding-top:16px"
                                                     class="iconeConfig w3-right fas fa-cog"
-                                                    onclick="abreModal('mDispostivo')">
-                                                    <f:ajax render="formCadDis" />
+                                                    onclick="abreModal('mDispostivo')">                                    
 
 
-                                                </h:commandLink>
+                                                </p:commandLink>
                                             </h:panelGroup>
                                         </div>
 
@@ -140,15 +141,16 @@
 
                                             <table id="tableDis">
                                                 <tr>
-                                                    <td>Nome:</td>
+                                                    <td class="textLabel">Nome:</td>
                                                     <td class="w3-text-deep-orange">#{dis.nome}</td>
-
+                                                    <td></td>
+                                                    <td></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Tipo:</td>
+                                                    <td class="textLabel">Tipo:</td>
                                                     <td>
                                                         <h:form>
-                                                            <h:selectOneMenu  value="#{dis.tipo}" disabled="true"  class="w3-select w3-border-0" style="height: 40px" >
+                                                            <h:selectOneMenu  value="#{dis.tipo}" disabled="true"  class="w3-border-0" style="height:30px;background: none;margin-left: -5px" >
                                                                 <f:selectItem itemLabel="" itemValue="0"/>
                                                                 <f:selectItem itemLabel="Antena TAG" itemValue="1" />
                                                                 <f:selectItem itemLabel="Alarme IP" itemValue="2" />
@@ -161,89 +163,107 @@
                                                         </h:form>
 
                                                     </td>
+                                                    <td></td>
+                                                    <td></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>IP/Host:</td>
-                                                    <td class="w3-text-blue">#{dis.ip}</td>
-                                                    <td>
-                                                        <h:commandLink  class="fas fa-cog w3-right w3-large " 
-                                                                    title="Local" target="_blank" 
-                                                                    style="color:#010648;margin-right: 10px;margin-top: 4px;height:10px ">
-                                                        <f:setPropertyActionListener value="#{dis}" target="{dispositivosMB.dispositivosLinkLocal}"  />
+                                                    <td class="textLabel">IP/Host:</td>
+                                                    <td class="textoTable">#{dis.ip}</td>
+                                                    <td style="width: 30px">
+                                                        <h:commandLink  class="fas fa-cog w3-right w3-large iconeTablePosition " 
+                                                                        title="Local" target="_blank" 
+                                                                        style="color:#010648;margin-right: 10px;">
 
-                                                    </h:commandLink>
-                                                    <h:commandLink class="fas fa-satellite-dish w3-right  w3-large " 
-                                                                   title="Remoto"  target="_blank" 
-                                                                   style="color:#05D72C;margin-right: 10px;margin-top: 4px;height:10px " >
-                                                        <f:setPropertyActionListener value="#{dis}" target="{dispositivosMB.dispositivosLinkRemoto}"  />
-                                                    </h:commandLink>
+
+                                                        </h:commandLink>
+                                                    </td>
+                                                    <td style="width: 30px">
+                                                        <h:commandLink class="fas fa-satellite-dish w3-right  w3-large iconeTablePosition " 
+                                                                       title="Remoto"  target="_blank" 
+                                                                       style="color:#05D72C;margin-right: 10px;" >
+                                                           <!-- <f:setPropertyActionListener value="#{dis}" target="{dispositivosMB.dispositivosLinkRemoto}"  />-->
+                                                        </h:commandLink>
                                                     </td>
 
                                                 </tr>
                                                 <tr>
-                                                    <td>Local</td>
-                                                    <td class="w3-text-blue">#{dis.localFK.nome}</td>
+                                                    <td class="textLabel">Local</td>
+                                                    <td class="textoTable">#{dis.localFK.nome}</td>
+                                                    <td></td>
+                                                    <td></td>
                                                 </tr>   
                                                 <tr>
-                                                    <td>Port conect</td>
-                                                    <td class="w3-text-blue">#{dis.port_conect}</td>
+                                                    <td class="textLabel">Port conect</td>
+                                                    <td class="textoTable">#{dis.port_conect}</td>
+                                                    <td></td>
+                                                    <td></td>
                                                 </tr>
-                                                  <tr>
-                                                    <td>Porta WEB</td>
-                                                    <td class="w3-text-blue">#{dis.portaWEB}</td>
+                                                <tr>
+                                                    <td class="textLabel">Porta WEB</td>
+                                                    <td class="textoTable">#{dis.portaWEB}</td>
+                                                    <td></td>
+                                                    <td></td>
                                                 </tr>
-                                                  <tr>
-                                                    <td>Porta TCP</td>
-                                                    <td class="w3-text-blue">#{dis.portaTCP}</td>
-                                                    <td>
+                                                <tr>
+                                                    <td class="textLabel">Porta TCP</td>
+                                                    <td class="textoTable">#{dis.portaTCP}</td>
+                                                    <td style="width: 30px"></td>
+                                                    <td style="width: 30px">
                                                         <h:commandLink id="f2" actionListener="#{dispositivosMB.atualizarLista()}"
-                                                                   title="Testar portas" 
-                                                                   style="padding-right:10px;padding-top:1px;font-size: 18px;height: 25px"
-                                                                   class="w3-right fas fa-question-circle icone "
-                                                                   onclick="abreModal('m001')" >
-                                                        <f:ajax  render=":formTestePortas" />
+                                                                       title="Testar portas" 
+                                                                       style="padding-right:10px;padding-top:3px;font-size: 18px;"
+                                                                       class="w3-right fas fa-question-circle iconeTablePosition "
+                                                                       onclick="abreModal('m001')" >
+                                                            <f:ajax  render=":formTestePortas" />
 
-                                                    </h:commandLink>
+                                                        </h:commandLink>
                                                     </td>
                                                 </tr>
-                                                  <tr>
-                                                    <td>Senha</td>
-                                                    <td class="w3-text-blue">#{dis.senha}</td>
-                                                </tr>
-                                                  <tr>
-                                                    <td>Modelo</td>
-                                                    <td class="w3-text-blue">#{dis.modelo}</td>
-                                                </tr>
-                                                  <tr>
-                                                    <td>fabricante</td>
-                                                    <td class="w3-text-blue">#{dis.fabricanteFK.nome}</td>
-                                                </tr>
-                                                  <tr>
-                                                    <td>IP padrão</td>
-                                                    <td class="w3-text-blue">#{dis.ipPadrao}</td>
-                                                </tr>
-                                                  <tr>
-                                                    <td>Senha Padrão</td>
-                                                    <td class="w3-text-blue">#{dis.senhaPadrao}</td>
+                                                <h:panelGroup rendered="#{loginBean.usuario.verSenhas == true}">
+                                                <tr>
+                                                    <td class="textLabel">Login</td>
+                                                    <td class="textoTable">#{dis.login}</td>
+                                                    <td></td>
+                                                    <td></td>
                                                 </tr>                                                
                                                 <tr>
-                                                    <td>Data</td>
-                                                    <td class="w3-text-blue">#{dis.dataCriacao}</td>
+                                                    <td class="textLabel">Senha</td>                                                    
+                                                    <td class="textoTable">#{dis.senha}</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                 </h:panelGroup>
+                                                <tr>
+                                                    <td class="textLabel">fabricante</td>
+                                                    <td class="textoTable">#{dis.fabricanteFK.nome}</td>
+                                                    <td></td>
+                                                    <td></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Usuario</td>
-                                                    <td class="w3-text-blue">#{dis.usuarioFK.nome}</td>
+                                                    <td class="textLabel">Modelo</td>
+                                                    <td class="textoTable">#{dis.modelo}</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td class="textLabel">Data</td>
+                                                    <td class="textoTable">#{dis.dataCriacao}</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="textLabel">Usuario</td>
+                                                    <td class="textoTable">#{dis.usuarioFK.nome}</td>
+                                                    <td></td>
+                                                    <td></td>
                                                 </tr>
                                             </table>
 
                                             <br></br>
-                                                
-                                            </div>
-                                       
-                                                    
-                                                 
-                                            
-                                      
+                                            <br></br>
+
+                                        </div>                                                                            
 
                                         <!-- fim caixa dispositivos -->
 
@@ -253,16 +273,6 @@
                             </h:form>
                         </div>
 
-                        <style>
-                            #tableDis tr{
-                                height: 25px;  
-                            }
-                           
-                            #tableDis{
-                                width: 100%;  
-                            }
-
-                        </style>
                         <!-- Fim grid dispositivos -->
 
                     </div>
@@ -396,7 +406,7 @@
                 </div>
             </div>
 
-            <div id="mDispostivo" class="w3-modal">
+            <div id="mDispostivo" class="w3-modal">  
                 <div class="w3-modal-content w3-animate-zoom "  >
 
                     <div  class=" w3-white w3-border-bottom w3-border-rigth " >
@@ -409,16 +419,17 @@
                         <br></br>
 
                         <div class=" w3-left w3-white w3-mobile "  style="width:100%">
-                            <div class=""  >
+                            <div>
                                 <h:form id="formCadDis">
 
                                     <table class="w3-table">
 
                                         <tr>
                                             <td class="w3-right-align"><b>Nome:</b></td>
-                                            <td><p:inputText id="nome" value="#{dispositivoBean.dispositivo.nome}" required="true" class="inp"> 
+                                            <td><p:inputText id="nome" type="text" value="#{dispositivoBean.dispositivo.nome}" required="true" class="inp"> 
                                                     <f:validateLength minimum="2" />
                                                 </p:inputText></td>
+                                            <p:message for="nome" styleClass="validate"/>
                                         </tr>
                                         <tr>
                                             <td class="w3-right-align"><b>Tipo:</b></td>
@@ -438,9 +449,24 @@
                                         </tr>
                                         <tr>
                                             <td class="w3-right-align"><b>IP</b></td>
-                                            <td><p:inputText id="ip" value="#{dispositivoBean.dispositivo.ip}" required="true" class="inp"/></td>
-
+                                            <td><p:inputText id="ip" value="#{dispositivoBean.dispositivo.ip}" required="true" class="inp"  >
+                                                    <f:validateLength minimum="2" />
+                                                </p:inputText>
+                                                <p:message for="ip" styleClass="validate"/>
+                                            </td>
                                         </tr>
+                                        <tr>
+                                            <td class="w3-right-align"><b>Port conect</b></td>
+                                            <td>
+
+                                                <h:selectOneMenu class="form-control inp" value="#{dispositivoBean.dispositivo.port_conect}" >                                                     
+                                                    <f:selectItems var="porta" value="#{clienteBean.deviceList}" itemValue="#{porta.portaUPLink}"  itemLabel="#{porta.nome}" />                                       
+                                                </h:selectOneMenu>
+
+
+                                            </td>
+                                        </tr>
+                                        
                                         <tr>
                                             <td class="w3-right-align"><b>Porta TCP:</b></td>
                                             <td><p:inputText type="number"  value="#{dispositivoBean.dispositivo.portaTCP}" class="inp" style="width:  90px"/></td>
@@ -452,12 +478,9 @@
                                         </tr>
                                         <tr>
                                             <td class="w3-right-align"><b>Senha:</b></td>
-                                            <td><h:inputText value="#{dispositivoBean.dispositivo.senha}" class="inp"/></td>
+                                            <td><p:inputText type="password" value="#{dispositivoBean.dispositivo.senha}" class="inp"/></td>
                                         </tr>
-                                        <tr>
-                                            <td class="w3-right-align"><b>Modelo:</b></td>
-                                            <td><h:inputText value="#{dispositivoBean.dispositivo.modelo}" class="inp"/></td>
-                                        </tr>
+
                                         <tr>
                                             <td class="w3-right-align"><b>Fabricante:</b></td>
                                             <td>
@@ -472,6 +495,10 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td class="w3-right-align"><b>Modelo:</b></td>
+                                            <td><h:inputText value="#{dispositivoBean.dispositivo.modelo}" class="inp"/></td>
+                                        </tr>
+                                        <tr>
                                             <td class="w3-right-align"><b>Local</b></td>
                                             <td>
 
@@ -484,29 +511,18 @@
 
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td class="w3-right-align"><b>IP padrão:</b></td>
-                                            <td><h:inputText value="#{dispositivoBean.dispositivo.ipPadrao}" class="inp"></h:inputText></td>
-                                        </tr>
-                                        <tr>
-                                            <td class="w3-right-align"><b>Senha padrão:</b></td>
-                                            <td><h:inputText value="#{dispositivoBean.dispositivo.senhaPadrao}" class="inp"></h:inputText></td>
-                                        </tr>
+
                                     </table>
 
 
                                     <br></br>
                                     <div class="w3-center">
-
-                                        <h:commandButton value="Adicionar"   action="#{dispositivoBean.adicionar()}" class="botao w3-center">
-                                        </h:commandButton>
-                                        <h:commandButton value="Atualizar"  action="#{dispositivoBean.atualizar()}" class="botao w3-center" onmousemove="acordFechar('D' + #{dispositivoBean.dispositivo.iddispositivo})">
-
-                                        </h:commandButton>                                    
-                                        <h:commandButton value="Excluir"  onclick="abreModal('ex01')" onmousemove="acordFechar('D' + #{dispositivoBean.dispositivoFom.iddispositivo})" class="botao w3-center">
-                                            <f:ajax render="dataDis"/>
-                                        </h:commandButton>
-
+                                        <p:commandButton  update="formCadDis"  value="Cadastrar" ajax="true" action="#{dispositivoBean.adicionar()}" class="botao w3-right">                                    
+                                        </p:commandButton>
+                                        <p:commandButton  value="Atualizar" ajax="false" action="#{dispositivoBean.atualizar()}"     class="botao w3-right">
+                                        </p:commandButton>
+                                        <p:commandButton value="Excluir" onclick="abreModal('ex01')"  class="botao w3-right">                                   
+                                        </p:commandButton>
                                     </div>
 
                                     <br></br>
@@ -525,7 +541,7 @@
 
                                                 </p:commandButton>
                                                 <p:commandButton   value="Não"  class="botaoExcluir w3-right"
-                                                                   onclick="document.getElementById('ex01').style.display = 'none'" >
+                                                                   onclick="document.getElementById('ex01').style.display = 'none'">
                                                 </p:commandButton>
                                             </div>
                                         </div>
@@ -540,6 +556,22 @@
                     </div>
                 </div>
             </div>
+
+            <style>
+                .validate{
+                    background-color: white; 
+                    font-size: 14px; 
+                    color: #ff006b;
+                    border: none;
+                }
+                .ui-growl-item-container{
+
+                    background-color: #121313; 
+                    border-radius:8px;
+                    font-size: 16px;
+                    color: #00f1ff; 
+                }
+            </style>
 
         </div>  
         <!-- fim main -->
@@ -597,7 +629,7 @@
 
                 if (x.className.indexOf(" w3-show ") === -1) {
                     x.className = x.className.replace(" w3-hide ", " w3-show ");
-                    bt.className = bt.className.replace("", " w3-card-2 w3-lime ");
+                    bt.className = bt.className.replace("", " w3-card-2 w3-sand ");
                 } else {
                     x.className = x.className.replace(" w3-show ", " w3-hide ");
 

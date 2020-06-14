@@ -3,14 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.leandro.hagana.bean;
+package br.leandro.hagana.entidade;
 
 /**
  *
  * @author leand
  */
-public interface CRUD {
+public interface DeviceImp {
     
+    public Integer getId();
+    public Integer setId();
     
     
 }

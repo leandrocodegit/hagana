@@ -56,9 +56,9 @@ public class Foto implements Serializable {
     @Column(name = "dataCriacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataCriacao;
-    @JoinColumn(name = "conta_FK", referencedColumnName = "conta")
-    @ManyToOne
-    private Cliente contaFK;
+    @JoinColumn(name = "cliente_FK", referencedColumnName = "conta")
+    @ManyToOne(optional = false)
+    private Cliente clienteFK;
     @JoinColumn(name = "usuario_FK", referencedColumnName = "idusuario")
     @ManyToOne
     private Usuario usuarioFK;
@@ -109,15 +109,14 @@ public class Foto implements Serializable {
     public void setDataCriacao(Date dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
-
-    public Cliente getContaFK() {
-        return contaFK;
+ 
+    public Cliente getClienteFK() {
+        return clienteFK;
     }
-
-    public void setContaFK(Cliente contaFK) {
-        this.contaFK = contaFK;
+ 
+    public void setClienteFK(Cliente clienteFK) {
+        this.clienteFK = clienteFK;
     }
-
     public Usuario getUsuarioFK() {
         return usuarioFK;
     }

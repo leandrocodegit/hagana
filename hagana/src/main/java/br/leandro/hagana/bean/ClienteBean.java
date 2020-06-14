@@ -7,6 +7,7 @@ package br.leandro.hagana.bean;
 
 import br.leandro.hagana.controler.ClienteDAO;
 import br.leandro.hagana.entidade.Cliente;
+import br.leandro.hagana.entidade.Device;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -29,15 +30,16 @@ public class ClienteBean implements Serializable {
 
     private HtmlDataTable dataTable;
     private List<Cliente> clienteList;
+    private List<Device>  deviceList;
     private Cliente cliente;
     private String pesquisa;
 
     @PostConstruct
-    public void init() { 
-            clienteList = ClienteDAO.getInstance().getclientes();
-            if (SessionContext.getInstance().getClienteSelecionado() == null) {               
-               message("Atenção!", "Selecionar um cliente para começar.");
-            }
+    public void init() {
+        clienteList = ClienteDAO.getInstance().getclientes();
+        if (SessionContext.getInstance().getClienteSelecionado() == null) {
+            message("Atenção!", "Selecionar um cliente para começar.");
+        }
     }
 
     public HtmlDataTable getDataTable() {
@@ -59,6 +61,7 @@ public class ClienteBean implements Serializable {
     public Cliente getCliente() {
         return cliente;
     }
+
     public Cliente getClienteSelecionado() {
         return SessionContext.getInstance().getClienteSelecionado();
     }
@@ -66,19 +69,25 @@ public class ClienteBean implements Serializable {
     public void setCliente(Cliente cliente) {
         this.cliente = (Cliente) dataTable.getRowData();
     }
-    
 
-    public void buscar() {       
+    public void setDeviceList(List<Device> deviceList) {
+        this.deviceList = deviceList;
+    }
+
+    public List<Device> getDeviceList() {
+        return ClienteDAO.getInstance().getDevicesList(SessionContext.getInstance().getClienteSelecionado());
+    }
+
+    public void buscar() {
         clienteList = ClienteDAO.getInstance().pesquisar(pesquisa);
 
         if (pesquisa.equals("")) {
             clienteList = ClienteDAO.getInstance().getclientes();
         }
-        if(clienteList.size() == 0)
-        {
+        if (clienteList.size() == 0) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Nenhum resultado encontrado!"));
         }
- 
+
     }
 
     public String getPesquisa() {
@@ -93,17 +102,16 @@ public class ClienteBean implements Serializable {
 
         cliente = (Cliente) dataTable.getRowData();
         SessionContext.getInstance().setClienteSelecionado(cliente);
-         
+
         if (SessionContext.getInstance().getClienteSelecionado() != null) {
 
-        
         }
 
         return "/restrict/index.xhtml?faces-redirect=true";
     }
 
     public void deletar() {
-        if(cliente != null){
+        if (cliente != null) {
             ClienteDAO.getInstance().delete(cliente.getConta());
             clienteList = ClienteDAO.getInstance().getclientes();
             message("Sucesso!", "Removido conta.");
@@ -116,23 +124,23 @@ public class ClienteBean implements Serializable {
     }
 
     public void adicionar() {
-         
+
         cliente.setDataCriacao(new Date());
         cliente.setUsuarioFK(SessionContext.getInstance().getUsuarioLogado());
         if (ClienteDAO.getInstance().insert(cliente) != null) {
-           
+
             clienteList = ClienteDAO.getInstance().getclientes();
-             message("Sucesso!", "Adicionado.");
+            message("Sucesso!", "Adicionado.");
             // criarPasta(cli);
         } else {
             message("Falha!", "Erro ao gravar.");
         }
     }
 
-    public void limpar() {       
+    public void limpar() {
         cliente = new Cliente();
     }
-    
+
     public void message(String mensagem, String conteudo) {
 
         FacesContext context = FacesContext.getCurrentInstance();

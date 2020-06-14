@@ -11,15 +11,21 @@ import java.util.Date;
  *
  * @author leand
  */
-public class Device {
-    
+public class Device implements DeviceImp {
+
     private String nome;
     private Integer tipo;
     private Local localFK;
     private String ip;
     private String port_conect;
     private Date dataCriacao;
+    private String login;
+    private String senha;
+    private String modelo;
+    private String portaUPLink;
     private Usuario usuarioFK;
+    private Fabricante fabricanteFK;
+    private Cliente clienteFK;
 
     public String getNome() {
         return nome;
@@ -44,7 +50,7 @@ public class Device {
     public void setLocalFK(Local localFK) {
         this.localFK = localFK;
     }
- 
+
     public String getIp() {
         return ip;
     }
@@ -69,6 +75,38 @@ public class Device {
         this.dataCriacao = dataCriacao;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public String getPortaUPLink() {
+        return portaUPLink;
+    }
+
+    public void setPortaUPLink(String portaUPLink) {
+        this.portaUPLink = portaUPLink;
+    }
+
     public Usuario getUsuarioFK() {
         return usuarioFK;
     }
@@ -77,5 +115,30 @@ public class Device {
         this.usuarioFK = usuarioFK;
     }
 
-     
+    public Fabricante getFabricanteFK() {
+        return fabricanteFK;
+    }
+
+    public void setFabricanteFK(Fabricante fabricanteFK) {
+        this.fabricanteFK = fabricanteFK;
+    }
+
+    public Cliente getClienteFK() {
+        return clienteFK;
+    }
+
+    public void setClienteFK(Cliente clienteFK) {
+        this.clienteFK = clienteFK;
+    }
+
+    @Override
+    public Integer getId() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Integer setId() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

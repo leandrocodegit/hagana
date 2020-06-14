@@ -5,10 +5,12 @@
  */
 package br.leandro.hagana.bean;
 
+import br.leandro.hagana.controler.ClienteDAO;
 import br.leandro.hagana.entidade.Cliente;
 import br.leandro.hagana.entidade.Device;
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -28,6 +30,7 @@ public class DashboradBean implements Serializable {
 
     private MindmapNode root;
     private Device device;
+    private List<Device> devicesList;
     private MindmapNode selectedNode;
     private HashMap<String, MindmapNode> rede = new HashMap<String, MindmapNode>();
     private HashMap<String, MindmapNode> link = new HashMap<String, MindmapNode>();
@@ -51,8 +54,17 @@ public class DashboradBean implements Serializable {
         Cliente cliente = SessionContext.getInstance().getClienteSelecionado();
 
         if (cliente != null) {
+            
+            devicesList = ClienteDAO.getInstance().getDevicesListAll(cliente);
+            
+            
+            for (int i = 0; i < devicesList.size(); i++) {
+            
+            }
+            
             for (int i = 0; i < cliente.getLinkList().size(); i++) {
 
+                System.out.println("Porta conectada Link " + cliente.getLinkList().get(i).getPortaUPLink());
                 MindmapNode lk;
                 if (i == 0) {
                     lk = new DefaultMindmapNode(cliente.getLinkList().get(i).getOperadora().toUpperCase(), cliente.getLinkList().get(i).getPortaUPLink(), "00add1", true);
@@ -60,7 +72,8 @@ public class DashboradBean implements Serializable {
                     lk = new DefaultMindmapNode(cliente.getLinkList().get(i).getOperadora().toUpperCase(), cliente.getLinkList().get(i).getPortaUPLink(), "cdd9db", true);
                 }
 
-                link.put(cliente.getLinkList().get(i).getPortaUPLink(), lk);
+                
+                rede.put(cliente.getRedeList().get(i).getPortaUPLink(), lk);
                 root.addNode(lk);
                 dispositivos.put(cliente.getLinkList().get(i).getPortaUPLink(), cliente.getLinkList().get(i));
 
@@ -68,6 +81,7 @@ public class DashboradBean implements Serializable {
 
             for (int i = 0; i < cliente.getRedeList().size(); i++) {
 
+                System.out.println("Porta conectada rede " + cliente.getRedeList().get(i).getPort_conect());
                 String color = "5b0386";
                 if (cliente.getRedeList().get(i).getTipo() == 11 || cliente.getRedeList().get(i).getTipo() == 12) {
                     color = "364257";
@@ -75,21 +89,13 @@ public class DashboradBean implements Serializable {
 
                 MindmapNode rd = new DefaultMindmapNode(cliente.getRedeList().get(i).getNome().toUpperCase(), cliente.getRedeList().get(i).getPortaUPLink(), color, true);
                 rede.put(cliente.getRedeList().get(i).getPortaUPLink(), rd);
-
-                if (cliente.getRedeList().get(i).getPort_conect().contains("L")) {
-                    MindmapNode md = link.get(cliente.getRedeList().get(i).getPort_conect());
+                
+                    MindmapNode md = rede.get(cliente.getRedeList().get(i).getPort_conect());
                     if (md != null) {
+                        
                         md.addNode(rd);
                     }
-                } else {
-                    if (!cliente.getRedeList().get(i).getPort_conect().equals("")) {
-                        MindmapNode md = rede.get(cliente.getRedeList().get(i).getPort_conect());
-                        System.out.println("Switch " + cliente.getRedeList().get(i).getNome());
-                        if (md != null) {
-                            md.addNode(rd);
-                        }
-                    }
-                }
+             
                 dispositivos.put(cliente.getRedeList().get(i).getPortaUPLink(), cliente.getRedeList().get(i));
 
             }

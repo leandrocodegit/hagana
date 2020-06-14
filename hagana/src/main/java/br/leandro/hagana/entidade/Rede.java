@@ -62,7 +62,7 @@ public class Rede extends Device implements Serializable {
     private String ip;
     @Size(max = 10)
     @Column(name = "portaWEB")
-    private String portaWEB;
+    private Integer portaWEB;
     @Size(max = 45)
     @Column(name = "senha")
     private String senha;
@@ -83,9 +83,9 @@ public class Rede extends Device implements Serializable {
     @JoinColumn(name = "arquivo_FK", referencedColumnName = "idarquivo")
     @ManyToOne
     private Arquivo arquivoFK;
-    @JoinColumn(name = "conta_FK", referencedColumnName = "conta")
+    @JoinColumn(name = "cliente_FK", referencedColumnName = "conta")
     @ManyToOne(optional = false)
-    private Cliente contaFK;
+    private Cliente clienteFK;
     @JoinColumn(name = "fabricante_FK", referencedColumnName = "idfabricante")
     @ManyToOne
     private Fabricante fabricanteFK;
@@ -146,26 +146,30 @@ public class Rede extends Device implements Serializable {
         this.ip = ip;
     }
 
-    public String getPortaWEB() {
+    public Integer getPortaWEB() {
         return portaWEB;
     }
 
-    public void setPortaWEB(String portaWEB) {
+    public void setPortaWEB(Integer portaWEB) {
         this.portaWEB = portaWEB;
     }
 
+    @Override
     public String getSenha() {
         return senha;
     }
 
+    @Override
     public void setSenha(String senha) {
         this.senha = senha;
     }
 
+    @Override
     public String getModelo() {
         return modelo;
     }
 
+    @Override
     public void setModelo(String modelo) {
         this.modelo = modelo;
     }
@@ -214,18 +218,21 @@ public class Rede extends Device implements Serializable {
         this.arquivoFK = arquivoFK;
     }
 
-    public Cliente getContaFK() {
-        return contaFK;
+    @Override
+    public Cliente getClienteFK() {
+        return clienteFK;
     }
 
-    public void setContaFK(Cliente contaFK) {
-        this.contaFK = contaFK;
+    @Override
+    public void setClienteFK(Cliente clienteFK) {
+        this.clienteFK = clienteFK;
     }
-
+    @Override
     public Fabricante getFabricanteFK() {
         return fabricanteFK;
     }
 
+    @Override
     public void setFabricanteFK(Fabricante fabricanteFK) {
         this.fabricanteFK = fabricanteFK;
     }
@@ -250,6 +257,7 @@ public class Rede extends Device implements Serializable {
         this.usuarioFK = usuarioFK;
     }
 
+    @Override
     public String getPortaUPLink() {
         return idrede + "R";
     }

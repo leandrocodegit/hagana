@@ -6,14 +6,17 @@
 package br.leandro.hagana.bean;
 
 import br.leandro.hagana.controler.ClienteDAO;
+import br.leandro.hagana.controler.DispositivoDAO;
 import br.leandro.hagana.controler.FabricanteDAO;
-import br.leandro.hagana.entidade.Cliente;
 import br.leandro.hagana.entidade.Dispositivo;
 import br.leandro.hagana.entidade.Fabricante;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
 
@@ -22,15 +25,13 @@ import javax.faces.context.FacesContext;
  * @author leand
  */
 @ManagedBean
+@ViewScoped
 public class DispositivoBean implements Serializable {
 
-    private static final long serialVersionUID = 13245855655321L;
+    private static final long serialVersionUID = 15564855655321L;
 
     private HtmlDataTable dataTable;
-    public Dispositivo dispositivo = new Dispositivo();
-    public Dispositivo dispositivoFom;
-    private List<Dispositivo> dispositivoList;
-    private List<Fabricante> fabricantes;
+    public Dispositivo dispositivo;
     private Fabricante fabricante;
 
     @PostConstruct
@@ -57,18 +58,8 @@ public HtmlDataTable getDataTable() {
         return dispositivo;
     }
 
-    public Dispositivo getDispositivoFom() {
-        return dispositivoFom;
-    }
-
-    public void setDispositivoFom(Dispositivo dispositivoFom) {
-        this.dispositivoFom = dispositivoFom;
-    }
-
     public void setDispositivo(Dispositivo dispositivo) {
-
-        this.dispositivo = (Dispositivo) dataTable.getRowData();
-        this.dispositivoFom = dispositivo;
+        this.dispositivo = dispositivo;
     }
 
     public List<Dispositivo> getDispositivoList() {
@@ -79,16 +70,17 @@ public HtmlDataTable getDataTable() {
         return FabricanteDAO.getInstance().getFabricantes();
     }
 
-    public void setFabricantes(List<Fabricante> fabricantes) {
-        this.fabricantes = fabricantes;
-    }
-
     public Fabricante getFabricante() {
         return fabricante;
     }
 
     public void setFabricante(Fabricante fabricante) {
         this.fabricante = fabricante;
+    }
+    public void selecionarDispositivo() {
+        this.dispositivo = (Dispositivo) dataTable.getRowData(); 
+        System.out.println(dispositivo.getNome());
+        
     }
 
     public void event() {
@@ -100,19 +92,42 @@ public HtmlDataTable getDataTable() {
     }
 
     public void deletar() {
-
+        if(dispositivo != null){
+            DispositivoDAO.getInstance().delete(dispositivo.getIddispositivo());
+            message("Sucesso!", "Removido conta.");
+        }
     }
 
     public void atualizar() {
-
+        DispositivoDAO.getInstance().atualizar(dispositivo);
+        message("Sucesso!", "Atualizado.");
     }
 
     public void adicionar() {
-
+         
+        dispositivo.setDataCriacao(new Date());
+        dispositivo.setUsuarioFK(SessionContext.getInstance().getUsuarioLogado());
+        dispositivo.setClienteFK(SessionContext.getInstance().getClienteSelecionado());
+        if (DispositivoDAO.getInstance().insert(dispositivo) != null) {
+           
+             message("Sucesso!", "Adicionado.");
+            // criarPasta(cli);
+        } else {
+            message("Falha!", "Erro ao adicionar.");
+        }
     }
 
-    public void limpar() {
+    public void limpar() {       
         dispositivo = new Dispositivo();
+        dispositivo.setPortaTCP(0);
+        dispositivo.setPortaWEB(80);
+        System.out.println("Limpo");
+    }
+    
+    public void message(String mensagem, String conteudo) {
+
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(mensagem, conteudo));
     }
 
 }

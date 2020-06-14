@@ -50,9 +50,9 @@ public class Local implements Serializable {
     private String nome;
     @OneToMany(mappedBy = "localFK")
     private List<Rede> redeList;
-    @JoinColumn(name = "conta_FK", referencedColumnName = "conta")
-    @ManyToOne
-    private Cliente contaFK;
+    @JoinColumn(name = "cliente_FK", referencedColumnName = "conta")
+    @ManyToOne(optional = false)
+    private Cliente clienteFK;
 
     public Local() {
     }
@@ -85,15 +85,15 @@ public class Local implements Serializable {
     public void setRedeList(List<Rede> redeList) {
         this.redeList = redeList;
     }
-
-    public Cliente getContaFK() {
-        return contaFK;
+ 
+    public Cliente getClienteFK() {
+        return clienteFK;
     }
-
-    public void setContaFK(Cliente contaFK) {
-        this.contaFK = contaFK;
+ 
+    public void setClienteFK(Cliente clienteFK) {
+        this.clienteFK = clienteFK;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 0;

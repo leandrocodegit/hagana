@@ -178,10 +178,12 @@ public class Computador extends Device implements Serializable {
         this.port_conect = port_conect;
     }
 
+    @Override
     public Cliente getClienteFK() {
         return clienteFK;
     }
 
+    @Override
     public void setClienteFK(Cliente clienteFK) {
         this.clienteFK = clienteFK;
     }

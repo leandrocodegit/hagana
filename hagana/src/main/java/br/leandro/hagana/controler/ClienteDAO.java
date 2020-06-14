@@ -6,8 +6,10 @@
 package br.leandro.hagana.controler;
 
 import br.leandro.hagana.entidade.Cliente;
+import br.leandro.hagana.entidade.Device;
 import br.leandro.hagana.entidade.Dispositivo;
 import br.leandro.hagana.entidade.Local;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -111,6 +113,49 @@ public class ClienteDAO {
             //  entityManager.close();
         }
     }
+    
+    public List<Device> getDevicesList(Cliente c) {
+        Device device;
+        List<Device> devicesList = new ArrayList<>();
+        Query query = entityManager.createNamedQuery("Cliente.findByConta");
+        query.setParameter("conta", c.getConta());
+        Cliente cliente = (Cliente) query.getSingleResult();
+        
+        for (int i = 0; i < cliente.getLinkList().size(); i++) {
+            devicesList.add((Device)cliente.getLinkList().get(i));
+            System.out.println(cliente.getLinkList().get(i).getNome());
+        }
+        for (int i = 0; i < cliente.getRedeList().size(); i++) {
+            devicesList.add((Device)cliente.getRedeList().get(i));
+            System.out.println(cliente.getRedeList().get(i).getNome());
+        }
+     
+        return devicesList;
+    }
+    
+    public List<Device> getDevicesListAll(Cliente c) {
+     
+        List<Device> devicesList = new ArrayList<>();
+        Query query = entityManager.createNamedQuery("Cliente.findByConta");
+        query.setParameter("conta", c.getConta());
+        Cliente cliente = (Cliente) query.getSingleResult();
+        
+        for (int i = 0; i < cliente.getLinkList().size(); i++) {
+            devicesList.add((Device)cliente.getLinkList().get(i));
+        }
+        for (int i = 0; i < cliente.getRedeList().size(); i++) {
+            devicesList.add((Device)cliente.getRedeList().get(i));
+        }
+        for (int i = 0; i < cliente.getDispositivoList().size(); i++) {
+            devicesList.add((Device)cliente.getDispositivoList().get(i));
+        }
+        for (int i = 0; i < cliente.getComputadorList().size(); i++) {
+            devicesList.add((Device)cliente.getComputadorList().get(i));
+        }
+     
+        return devicesList;
+    }
+    
 
     public static void main(String[] args) {
 
