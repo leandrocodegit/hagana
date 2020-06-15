@@ -223,7 +223,7 @@ public class Link extends Device implements Serializable {
 
     @Override
     public String getPort_conect() {
-        return velocidade;
+        return "Provedor";
     }
 
     @Override

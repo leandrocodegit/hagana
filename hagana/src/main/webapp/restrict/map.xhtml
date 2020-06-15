@@ -61,12 +61,10 @@
                             </h:form>
                         </div>
                     </div>
-
-
                 </ul>
-
-
             </div>
+
+
 
             <footer class=" w3-bottom">  
                 <a class="w3-btn w3-white w3-border w3-border-blue w3-round-xlarge w3-text-blue" href="clientes.xhtml"  style="font-size:16px;text-decoration: none;margin: 5px">#{clienteBean.clienteSelecionado.conta}</a>
@@ -164,7 +162,7 @@
 
                         <!-- Fim map -->
 
-
+                        <p:growl id="growl" showDetail="true"  /> 
 
 
                     </div>
@@ -178,13 +176,18 @@
                 margin-left: 120px;
             }
             path{
-                stroke-width:2; 
+                stroke-width:4;  
+                stroke: #404040;
             }
             ellipse{  
                 margin-top: 50px;
-                stroke-width:0; 
-                rx:55; 
-                ry:40;
+                stroke-width:0.8; 
+                stroke: #dfdfdf;
+                rx:65; 
+                ry:50;
+            }
+            ellipse:hover{  
+                stroke: black;
             }
 
             text{ 
@@ -194,6 +197,14 @@
             tspan{  
 
                 font-size: 12px;
+            }
+            .ui-growl-item-container{
+
+                background-color: #121313; 
+                border-radius:8px;
+                font-size: 16px;
+                color: #ff0068; 
+                font-family: 'Roboto Slab';
             }
         </style>
 

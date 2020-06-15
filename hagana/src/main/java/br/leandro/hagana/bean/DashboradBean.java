@@ -8,6 +8,7 @@ package br.leandro.hagana.bean;
 import br.leandro.hagana.controler.ClienteDAO;
 import br.leandro.hagana.entidade.Cliente;
 import br.leandro.hagana.entidade.Device;
+import br.leandro.hagana.entidade.Link;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +33,7 @@ public class DashboradBean implements Serializable {
     private Device device;
     private List<Device> devicesList;
     private MindmapNode selectedNode;
+    private boolean linkSet = true;
     private HashMap<String, MindmapNode> rede = new HashMap<String, MindmapNode>();
     private HashMap<String, MindmapNode> link = new HashMap<String, MindmapNode>();
     private HashMap<String, Object> dispositivos = new HashMap<String, Object>();
@@ -39,9 +41,12 @@ public class DashboradBean implements Serializable {
     @PostConstruct
     public void init() {
         try {
-            if (SessionContext.getInstance().getClienteSelecionado() == null) {               
-               FacesContext.getCurrentInstance().getExternalContext().redirect("clientes.xhtml");
-            } 
+            if (SessionContext.getInstance().getClienteSelecionado() == null) {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("clientes.xhtml");
+            }
+            if(devicesList.isEmpty() || devicesList == null){
+                message();
+            }
         } catch (Exception ex) {
 
         }
@@ -49,86 +54,59 @@ public class DashboradBean implements Serializable {
     }
 
     public DashboradBean() {
-        root = new DefaultMindmapNode("Internet".toUpperCase(), "", "ff006b", false);
+        root = new DefaultMindmapNode("Internet".toUpperCase(), "", "8ee203", false);
 
         Cliente cliente = SessionContext.getInstance().getClienteSelecionado();
 
         if (cliente != null) {
-            
+
             devicesList = ClienteDAO.getInstance().getDevicesListAll(cliente);
-            
-            
+
+            //Cria lista com todos dipositivos do tipo MindmapNode
             for (int i = 0; i < devicesList.size(); i++) {
-            
-            }
-            
-            for (int i = 0; i < cliente.getLinkList().size(); i++) {
 
-                System.out.println("Porta conectada Link " + cliente.getLinkList().get(i).getPortaUPLink());
-                MindmapNode lk;
-                if (i == 0) {
-                    lk = new DefaultMindmapNode(cliente.getLinkList().get(i).getOperadora().toUpperCase(), cliente.getLinkList().get(i).getPortaUPLink(), "00add1", true);
-                } else {
-                    lk = new DefaultMindmapNode(cliente.getLinkList().get(i).getOperadora().toUpperCase(), cliente.getLinkList().get(i).getPortaUPLink(), "cdd9db", true);
-                }
-
-                
-                rede.put(cliente.getRedeList().get(i).getPortaUPLink(), lk);
-                root.addNode(lk);
-                dispositivos.put(cliente.getLinkList().get(i).getPortaUPLink(), cliente.getLinkList().get(i));
-
-            }
-
-            for (int i = 0; i < cliente.getRedeList().size(); i++) {
-
-                System.out.println("Porta conectada rede " + cliente.getRedeList().get(i).getPort_conect());
                 String color = "5b0386";
-                if (cliente.getRedeList().get(i).getTipo() == 11 || cliente.getRedeList().get(i).getTipo() == 12) {
+                if (devicesList.get(i).getTipo() == 9) {
+                    color = "ff006b";
+                } else if (devicesList.get(i).getTipo() == 11 || devicesList.get(i).getTipo() == 12) {
                     color = "364257";
-                }
-
-                MindmapNode rd = new DefaultMindmapNode(cliente.getRedeList().get(i).getNome().toUpperCase(), cliente.getRedeList().get(i).getPortaUPLink(), color, true);
-                rede.put(cliente.getRedeList().get(i).getPortaUPLink(), rd);
-                
-                    MindmapNode md = rede.get(cliente.getRedeList().get(i).getPort_conect());
-                    if (md != null) {
-                        
-                        md.addNode(rd);
+                } else if (devicesList.get(i).getPortaUPLink().contains("L")) {
+                    if (linkSet) {
+                        color = "2b1153";
+                        linkSet = false;
+                    } else {
+                        color = "cdd9db";
                     }
-             
-                dispositivos.put(cliente.getRedeList().get(i).getPortaUPLink(), cliente.getRedeList().get(i));
+
+                } else if (devicesList.get(i).getPortaUPLink().contains("D")) {
+                    color = "00b39c";
+                } else if (devicesList.get(i).getPortaUPLink().contains("C")) {
+                    color = "ff4800";
+                }
+
+                MindmapNode deviceModel = new DefaultMindmapNode(devicesList.get(i).getNome().toUpperCase(), devicesList.get(i).getPortaUPLink(), color, true);
+                dispositivos.put(devicesList.get(i).getPortaUPLink(), devicesList.get(i));
+                rede.put(devicesList.get(i).getPortaUPLink(), deviceModel);
 
             }
 
-            for (int i = 0; i < cliente.getDispositivoList().size(); i++) {
+            //Faz as ligações de todos dispositivos
+            for (int i = 0; i < devicesList.size(); i++) {
 
-                MindmapNode rd = new DefaultMindmapNode(cliente.getDispositivoList().get(i).getNome().toUpperCase(), cliente.getDispositivoList().get(i) + "D", "00b39c", true);
+                String portaLink = devicesList.get(i).getPort_conect();
+                MindmapNode md = rede.get(portaLink);
+                MindmapNode rd = rede.get(devicesList.get(i).getPortaUPLink());
 
-                MindmapNode md = rede.get(cliente.getDispositivoList().get(i).getPort_conect());
-                System.out.println("Dispositivo " + cliente.getDispositivoList().get(i).getNome().toUpperCase());
-
+                if (devicesList.get(i).getPortaUPLink().contains("L")) {
+                    root.addNode(rd);
+                    continue;
+                }
                 if (md != null) {
                     md.addNode(rd);
                 }
-                dispositivos.put(cliente.getDispositivoList().get(i) + "D", cliente.getDispositivoList().get(i));
-
             }
 
-            for (int i = 0; i < cliente.getComputadorList().size(); i++) {
-
-                MindmapNode rd = new DefaultMindmapNode("PC - " + cliente.getComputadorList().get(i).getNome().toUpperCase(), cliente.getComputadorList().get(i) + "C", "ff4800", true);
-
-                MindmapNode md = rede.get(cliente.getComputadorList().get(i).getPort_conect());
-                System.out.println("Computador " + cliente.getComputadorList().get(i).getNome());
-
-                if (md != null) {
-                    md.addNode(rd);
-                }
-                dispositivos.put(cliente.getComputadorList().get(i) + "C", cliente.getComputadorList().get(i));
-
-            }
         }
-
     }
 
     public Device getDevice() {
@@ -165,6 +143,7 @@ public class DashboradBean implements Serializable {
     public void message() {
 
         FacesContext context = FacesContext.getCurrentInstance();
-        context.addMessage(null, new FacesMessage("Selecione um cliente", "para ver o map"));
+        context.addMessage(null, new FacesMessage("Advertência!", "O map para essa conta não foi configurado corretamente!"));
+        
     }
 }

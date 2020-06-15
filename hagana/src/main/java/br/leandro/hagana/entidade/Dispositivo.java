@@ -212,6 +212,10 @@ public class Dispositivo extends Device implements Serializable {
     public void setDataCriacao(Date dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
+    @Override
+    public String getPortaUPLink() {
+        return iddispositivo + "D";
+    }
 
     @Override
     public Cliente getClienteFK() {

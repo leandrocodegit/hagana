@@ -135,7 +135,7 @@ public class Computador extends Device implements Serializable {
     public Integer getTipoIP() {
         return tipoIP;
     }
- 
+
     public String getTv() {
         return tv;
     }
@@ -187,6 +187,7 @@ public class Computador extends Device implements Serializable {
     public void setClienteFK(Cliente clienteFK) {
         this.clienteFK = clienteFK;
     }
+
     @Override
     public Integer getTipo() {
         return tipo;
@@ -207,6 +208,11 @@ public class Computador extends Device implements Serializable {
         this.dataCriacao = dataCriacao;
     }
 
+    @Override
+    public String getPortaUPLink() {
+        return idcomputador + "C";
+    }
+ 
     @Override
     public Usuario getUsuarioFK() {
         return usuarioFK;
