@@ -43,7 +43,7 @@
                     <li class="icone"><a href="dashboard.xhtml"><span><b class="fas fa-stream w3-text-blue-grey"></b></span>   <b class="textoMenu" style="color:#0bd6e2" >Dashboard</b></a></li>
                     <li class="icone"><a href="index.xhtml"><span><b class="fas fa-hdd w3-text-blue-grey"></b></span>   <b class="textoMenu" >Dispositivos</b></a></li>                   
                     <li class="icone"><a href="dispositivos.xhtml"  onclick="rc()" ><span><b class="fas fa-clone w3-text-blue-grey"></b></span>   <b class="textoMenu" >Arquivos</b></a></li>
-                    <li class="icone"><a href="map.xhtml"><span><b class="fas fa-sitemap w3-text-blue-grey"></b></span>   <b class="textoMenu" >Map</b></a></li>
+                    <li class="icone"><a href="map.xhtml"><span><b class="fas fa-sitemap w3-text-blue-grey"></b></span>   <b class="textoMenu" >Mapa</b></a></li>
                     <li class="icone"><a><span><b class="fas fa-camera-retro w3-text-blue-grey" ></b></span>   <b class="textoMenu" >Fotos</b></a></li>
                     <li class="icone"><a href="login.xhtml"><span><b class="far fa-user w3-text-purple"></b></span>   <b class="w3-text-purple" style="padding-left:9px" > Olá, #{loginBean.dadosUsuario}</b></a></li>
 
@@ -62,9 +62,9 @@
                 </ul>
 
             </div>
- 
-                <p:growl id="growl" showDetail="true"  /> 
-      
+
+            <p:growl id="growl" showDetail="true"  /> 
+
 
             <div class="w3-main" style="margin-left:200px" id="main" >   
 
@@ -86,6 +86,7 @@
                                 <h:panelGroup rendered="#{true == true}">
                                     <h:commandLink     action="#{clienteBean.limpar()}" 
                                                        title="Adicionar cliente"  
+                                                       value="Ok"
                                                        onclick="abreModal('cadCliente')"
                                                        style="word-spacing:10px;padding-right:0px;padding-left: 0px;margin-top:12px; text-decoration: none"
                                                        class="iconeHead fas fa-plus-circle w3-right ">
@@ -163,9 +164,7 @@
                                 </h:dataTable>
 
                             </h:form>
-                            <p:messages id="messages" showDetail="true" closable="true">
-                                <p:autoUpdate />
-                            </p:messages>
+        
 
                         </div>
 
@@ -273,7 +272,7 @@
                     <br></br>
 
                     <div class=" w3-left w3-white" style="width: 100%" >
-                        <div class=" w3-center" style="width:85%" >
+                        <div class=" w3-center">
                             <h:form id="formcadCliente">
 
 
@@ -283,16 +282,19 @@
                                         <td class="w3-right-align w3-large"><b>Conta:</b></td>
                                         <td><p:inputText id="conta" value="#{clienteBean.cliente.conta}" required="true" class="inp"> 
                                                 <f:validateLength minimum="2" />
-                                            </p:inputText></td>
-                                        <td><p:message for="conta" display="icon" class="inpValida" /></td>
+                                            </p:inputText>
+                                            <p:message for="conta" styleClass="validate" />  
+                                        </td>                                                                               
                                     </tr>
 
                                     <tr>
                                         <td class="w3-right-align w3-large"><b>Nome:</b></td>
                                         <td><p:inputText id="nome" value="#{clienteBean.cliente.nome}" required="true" class="inp"> 
                                                 <f:validateLength minimum="2" />
-                                            </p:inputText></td>
-                                        <td><p:message for="nome" display="icon" class="inpValida" /></td>
+                                            </p:inputText>
+                                            <p:message for="nome" styleClass="validate" />
+                                        </td>
+
                                     </tr>
 
                                     <tr>
@@ -310,29 +312,30 @@
                                                 <f:selectItem itemLabel="Outros" itemValue="8" />
                                             </h:selectOneMenu>
                                         </td>
-
                                     </tr>
-
 
                                     <tr>
                                         <td class="w3-right-align w3-large"><b>Endereço</b></td>
                                         <td><p:inputText id="end" value="#{clienteBean.cliente.endereco}" required="true" class="inp"> 
                                                 <f:validateLength minimum="2" />
-                                            </p:inputText></td>
-                                        <td><p:message for="end" display="icon" class="inpValida" /></td>
+                                            </p:inputText>
+                                            <p:message for="end" styleClass="validate" />
+                                        </td>
+
                                     </tr>
 
                                 </table> 
 
                                 <br></br>
+                                <div class="w3-center">                                    
+                                    <p:commandButton value="Excluir" onclick="abreModal('m003')"  class="botao">                                    
+                                    </p:commandButton>
+                                    <p:commandButton update="formcadCliente, dataCliente" value="Atualizar" ajax="false" action="#{clienteBean.atualizar()}"     class="botao">
+                                    </p:commandButton>
+                                    <p:commandButton  update="formcadCliente, dataCliente" value="Cadastrar" ajax="true" action="#{clienteBean.adicionar()}" class="botao">                                    
+                                    </p:commandButton>
 
-                                <p:commandButton  update="formcadCliente, dataCliente" value="Cadastrar" ajax="false" action="#{clienteBean.adicionar()}" class="botao w3-right">                                    
-                                </p:commandButton>
-                                <p:commandButton update="formcadCliente, dataCliente" value="Atualizar" ajax="false" action="#{clienteBean.atualizar()}"     class="botao w3-right">
-                                </p:commandButton>
-                                <p:commandButton value="Excluir" onclick="abreModal('m003')"  class="botao w3-right">                                    
-                                </p:commandButton>
-
+                                </div>
 
                                 <br></br>
                                 <br></br>
@@ -379,6 +382,12 @@
         </div>
 
         <style>
+            .validate{
+                background-color: white; 
+                font-size: 14px; 
+                color: #ff006b;
+                border: none;
+            }
             .ui-growl-item-container{
 
                 background-color: #121313; 

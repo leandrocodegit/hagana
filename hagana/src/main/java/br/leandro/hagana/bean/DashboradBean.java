@@ -8,14 +8,13 @@ package br.leandro.hagana.bean;
 import br.leandro.hagana.controler.ClienteDAO;
 import br.leandro.hagana.entidade.Cliente;
 import br.leandro.hagana.entidade.Device;
-import br.leandro.hagana.entidade.Link;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
-import javax.annotation.PostConstruct;
+import javax.annotation.PostConstruct; 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.mindmap.DefaultMindmapNode;
@@ -26,13 +25,14 @@ import org.primefaces.model.mindmap.MindmapNode;
  * @author leand
  */
 @ManagedBean
-@ViewScoped
+@SessionScoped
 public class DashboradBean implements Serializable {
 
     private MindmapNode root;
+    private MindmapNode selectedNode;
+    private MindmapNode comutador;
     private Device device;
     private List<Device> devicesList;
-    private MindmapNode selectedNode;
     private boolean linkSet = true;
     private HashMap<String, MindmapNode> rede = new HashMap<String, MindmapNode>();
     private HashMap<String, MindmapNode> link = new HashMap<String, MindmapNode>();
@@ -44,7 +44,7 @@ public class DashboradBean implements Serializable {
             if (SessionContext.getInstance().getClienteSelecionado() == null) {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("clientes.xhtml");
             }
-            if(devicesList.isEmpty() || devicesList == null){
+            if (devicesList.isEmpty() || devicesList == null) {
                 message();
             }
         } catch (Exception ex) {
@@ -66,9 +66,10 @@ public class DashboradBean implements Serializable {
             for (int i = 0; i < devicesList.size(); i++) {
 
                 String color = "5b0386";
-                if (devicesList.get(i).getTipo() == 9) {
+                boolean select = true;
+                if (devicesList.get(i).getTipo() == 10 || devicesList.get(i).getTipo() == 11) {
                     color = "ff006b";
-                } else if (devicesList.get(i).getTipo() == 11 || devicesList.get(i).getTipo() == 12) {
+                } else if (devicesList.get(i).getTipo() == 12 || devicesList.get(i).getTipo() == 13) {
                     color = "364257";
                 } else if (devicesList.get(i).getPortaUPLink().contains("L")) {
                     if (linkSet) {
@@ -77,16 +78,16 @@ public class DashboradBean implements Serializable {
                     } else {
                         color = "cdd9db";
                     }
-
                 } else if (devicesList.get(i).getPortaUPLink().contains("D")) {
                     color = "00b39c";
                 } else if (devicesList.get(i).getPortaUPLink().contains("C")) {
                     color = "ff4800";
                 }
 
-                MindmapNode deviceModel = new DefaultMindmapNode(devicesList.get(i).getNome().toUpperCase(), devicesList.get(i).getPortaUPLink(), color, true);
+                MindmapNode deviceModel = new DefaultMindmapNode(devicesList.get(i).getNome().toUpperCase(), devicesList.get(i).getPortaUPLink(), color, select);
                 dispositivos.put(devicesList.get(i).getPortaUPLink(), devicesList.get(i));
                 rede.put(devicesList.get(i).getPortaUPLink(), deviceModel);
+                comutador = deviceModel;
 
             }
 
@@ -102,10 +103,11 @@ public class DashboradBean implements Serializable {
                     continue;
                 }
                 if (md != null) {
-                    md.addNode(rd);
+                    md.addNode(rd);                     
                 }
             }
-
+          
+           
         }
     }
 
@@ -117,7 +119,7 @@ public class DashboradBean implements Serializable {
         this.device = device;
     }
 
-    public MindmapNode getRoot() {
+    public MindmapNode getRoot() {  
         return root;
     }
 
@@ -128,22 +130,25 @@ public class DashboradBean implements Serializable {
     public void setSelectedNode(MindmapNode selectedNode) {
         this.selectedNode = selectedNode;
         device = (Device) dispositivos.get(selectedNode.getData().toString());
+        System.out.println("Click");
     }
 
     public void onNodeSelect(SelectEvent<MindmapNode> event) {
         device = (Device) dispositivos.get(event.getObject().getData().toString());
+        System.out.println("Click");
     }
 
     public void onNodeDblselect(SelectEvent<MindmapNode> event) {
 
         this.selectedNode = event.getObject();
         device = (Device) dispositivos.get(event.getObject().getData().toString());
+        System.out.println("Click");
     }
 
     public void message() {
 
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage("Advertência!", "O map para essa conta não foi configurado corretamente!"));
-        
+
     }
 }

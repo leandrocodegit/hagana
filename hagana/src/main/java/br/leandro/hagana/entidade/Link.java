@@ -171,6 +171,7 @@ public class Link extends Device implements Serializable {
     public void setClienteFK(Cliente clienteFK) {
         this.clienteFK = clienteFK;
     }
+
     public void setContaFK(Cliente clienteFK) {
         this.clienteFK = clienteFK;
     }
@@ -207,7 +208,6 @@ public class Link extends Device implements Serializable {
 
     @Override
     public String getPortaUPLink() {
-
         return idlink + "L";
     }
 
@@ -225,7 +225,7 @@ public class Link extends Device implements Serializable {
     public String getPort_conect() {
         return "Provedor";
     }
-
+ 
     @Override
     public int hashCode() {
         int hash = 0;

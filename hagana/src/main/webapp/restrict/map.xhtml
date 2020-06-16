@@ -10,13 +10,10 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> </link>
     <link href="https://vjs.zencdn.net/7.6.5/video-js.css" rel="stylesheet"> </link>
+
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-
     <link href="/hagana/restrict/css/style.css" rel="stylesheet" type="text/css"/>
 
 
@@ -25,8 +22,6 @@
     </h:head>
 
     <h:body>
-
-
 
         <div class="w3-main"  >
             <div class="w3-card  menu w3-top" style="padding-left:6px;">
@@ -43,14 +38,13 @@
                     <li class="icone"><a href="dashboard.xhtml"><span><b class="fas fa-stream w3-text-blue-grey"></b></span>   <b class="textoMenu" style="color:#0bd6e2" >Dashboard</b></a></li>
                     <li class="icone"><a href="index.xhtml"><span><b class="fas fa-hdd w3-text-blue-grey"></b></span>   <b class="textoMenu" >Dispositivos</b></a></li>                   
                     <li class="icone"><a href="dispositivos.xhtml"  onclick="rc()" ><span><b class="fas fa-clone w3-text-blue-grey"></b></span>   <b class="textoMenu" >Arquivos</b></a></li>
-                    <li class="icone"><a href="map.xhtml"><span><b class="fas fa-sitemap w3-text-blue-grey"></b></span>   <b class="textoMenu" >Map</b></a></li>
+                    <li class="icone"><a href="map.xhtml"><span><b class="fas fa-sitemap w3-text-blue-grey"></b></span>   <b class="textoMenu" >Mapa</b></a></li>
                     <li class="icone"><a><span><b class="fas fa-camera-retro w3-text-blue-grey" ></b></span>   <b class="textoMenu" >Fotos</b></a></li>
                     <li class="icone"><a href="login.xhtml"><span><b class="far fa-user w3-text-purple"></b></span>   <b class="w3-text-purple" style="padding-left:9px" > Olá, #{loginBean.dadosUsuario}</b></a></li>
 
                     <div class="w3-padding">
 
                         <div id="demoDrop" >
-
                             <h:form>
                                 <b class="fas fa-power-off" style="margin-left:10px;color:#fe5000"></b>
                                 <h:commandLink 
@@ -63,8 +57,6 @@
                     </div>
                 </ul>
             </div>
-
-
 
             <footer class=" w3-bottom">  
                 <a class="w3-btn w3-white w3-border w3-border-blue w3-round-xlarge w3-text-blue" href="clientes.xhtml"  style="font-size:16px;text-decoration: none;margin: 5px">#{clienteBean.clienteSelecionado.conta}</a>
@@ -82,7 +74,6 @@
 
                     <!-- Inicio dispositivos -->
                     <div>
-
                         <div  style="height: 400px; position: fixed;margin-top: 150px">
                             <p:panel id="output">
 
@@ -91,7 +82,6 @@
                                     <tr>
                                         <td>Nome:</td>
                                         <td class="w3-text-deep-orange">#{dashboradBean.device.nome}</td>
-
                                     </tr>
                                     <tr>
                                         <td>Tipo:</td>
@@ -106,22 +96,22 @@
                                                     <f:selectItem itemLabel="Controladora" itemValue="5" />
                                                     <f:selectItem itemLabel="DVR/NVR" itemValue="6" />
                                                     <f:selectItem itemLabel="Intefone IP" itemValue="7" />
-                                                    <f:selectItem itemLabel="Antena" itemValue="8" />
-                                                    <f:selectItem itemLabel="Roteador" itemValue="9"/>
-                                                    <f:selectItem itemLabel="Roteador WIFI" itemValue="10" />  
-                                                    <f:selectItem itemLabel="Switch" itemValue="11" /> 
-                                                    <f:selectItem itemLabel="Switch POE" itemValue="12" /> 
-                                                    <f:selectItem itemLabel="Desktop" itemValue="13" />
-                                                    <f:selectItem itemLabel="Notebook" itemValue="14" />
-                                                    <f:selectItem itemLabel="Rapsbary" itemValue="15" />
-                                                    <f:selectItem itemLabel="Servidor" itemValue="16" />
-                                                    <f:selectItem itemLabel="ADSL" itemValue="17" />  
-                                                    <f:selectItem itemLabel="Cabo" itemValue="18"/>
-                                                    <f:selectItem itemLabel="Fibra optica" itemValue="19" /> 
-                                                    <f:selectItem itemLabel="Radio" itemValue="20" /> 
+                                                    <f:selectItem itemLabel="Modulo guarita" itemValue="8" />
+                                                    <f:selectItem itemLabel="Antena" itemValue="9" />
+                                                    <f:selectItem itemLabel="Roteador" itemValue="10"/>
+                                                    <f:selectItem itemLabel="Roteador WIFI" itemValue="11" />  
+                                                    <f:selectItem itemLabel="Switch" itemValue="12" /> 
+                                                    <f:selectItem itemLabel="Switch POE" itemValue="13" /> 
+                                                    <f:selectItem itemLabel="Desktop" itemValue="14" />
+                                                    <f:selectItem itemLabel="Notebook" itemValue="15" />
+                                                    <f:selectItem itemLabel="Rapsbary" itemValue="16" />
+                                                    <f:selectItem itemLabel="Servidor" itemValue="17" />
+                                                    <f:selectItem itemLabel="ADSL" itemValue="18" />  
+                                                    <f:selectItem itemLabel="Cabo" itemValue="19"/>
+                                                    <f:selectItem itemLabel="Fibra optica" itemValue="20" /> 
+                                                    <f:selectItem itemLabel="Radio" itemValue="21" /> 
                                                 </h:selectOneMenu>
                                             </h:form>
-
                                         </td>
                                     </tr>
                                     <tr>
@@ -136,7 +126,7 @@
                                     <tr>
                                         <td>Port conect</td>
                                         <td class="w3-text-blue">#{dashboradBean.device.port_conect}</td>
-                                    </tr>
+                                    </tr>                       
                                     <tr>
                                         <td>Data</td>
                                         <td class="w3-text-blue">#{dashboradBean.device.dataCriacao}</td>
@@ -146,7 +136,6 @@
                                         <td class="w3-text-blue">#{dashboradBean.device.usuarioFK.nome}</td>
                                     </tr>
                                 </table>
-
                             </p:panel>
                         </div>
                         <!-- Inicio map -->
@@ -156,19 +145,15 @@
                                 <p:ajax event="select" listener="#{dashboradBean.onNodeSelect}" update="output"/>
                                 <p:ajax event="dblselect" listener="#{dashboradBean.onNodeDblselect}" update="output" />
                             </p:mindmap>
-
-
                         </h:form>
 
                         <!-- Fim map -->
 
                         <p:growl id="growl" showDetail="true"  /> 
 
-
                     </div>
                 </div>
             </div>
-
         </div>
 
         <style>
@@ -180,19 +165,18 @@
                 stroke: #404040;
             }
             ellipse{  
-                margin-top: 50px;
                 stroke-width:0.8; 
                 stroke: #dfdfdf;
                 rx:65; 
                 ry:50;
             }
-            ellipse:hover{  
-                stroke: black;
+            ellipse:hover  {  
+                fill:#1adce8;
             }
 
             text{ 
-                stroke-width:1; 
-                stroke:white; 
+                fill:white;
+                font-size:14px;
             }
             tspan{  
 

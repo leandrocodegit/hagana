@@ -115,7 +115,7 @@ public class Rede extends Device implements Serializable {
     public void setIdrede(Integer idrede) {
         this.idrede = idrede;
     }
-
+ 
     @Override
     public Integer getTipo() {
         return tipo;
