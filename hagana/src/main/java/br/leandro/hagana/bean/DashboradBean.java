@@ -14,8 +14,8 @@ import java.util.List;
 import javax.annotation.PostConstruct; 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.mindmap.DefaultMindmapNode;
 import org.primefaces.model.mindmap.MindmapNode;
@@ -25,7 +25,7 @@ import org.primefaces.model.mindmap.MindmapNode;
  * @author leand
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class DashboradBean implements Serializable {
 
     private MindmapNode root;
@@ -37,6 +37,7 @@ public class DashboradBean implements Serializable {
     private HashMap<String, MindmapNode> rede = new HashMap<String, MindmapNode>();
     private HashMap<String, MindmapNode> link = new HashMap<String, MindmapNode>();
     private HashMap<String, Object> dispositivos = new HashMap<String, Object>();
+ 
 
     @PostConstruct
     public void init() {
@@ -44,9 +45,14 @@ public class DashboradBean implements Serializable {
             if (SessionContext.getInstance().getClienteSelecionado() == null) {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("clientes.xhtml");
             }
+            
             if (devicesList.isEmpty() || devicesList == null) {
                 message();
             }
+            else{
+                load();
+            }
+           
         } catch (Exception ex) {
 
         }
@@ -54,7 +60,14 @@ public class DashboradBean implements Serializable {
     }
 
     public DashboradBean() {
+          load();
+    }
+    
+    
+
+    private void load() {
         root = new DefaultMindmapNode("Internet".toUpperCase(), "", "8ee203", false);
+        System.out.println("load");
 
         Cliente cliente = SessionContext.getInstance().getClienteSelecionado();
 
@@ -105,10 +118,11 @@ public class DashboradBean implements Serializable {
                 if (md != null) {
                     md.addNode(rd);                     
                 }
-            }
-          
+            }     
            
         }
+        linkSet = true;
+         
     }
 
     public Device getDevice() {
@@ -121,6 +135,9 @@ public class DashboradBean implements Serializable {
 
     public MindmapNode getRoot() {  
         return root;
+    }
+    public MindmapNode getComutador() {  
+        return comutador;
     }
 
     public MindmapNode getSelectedNode() {

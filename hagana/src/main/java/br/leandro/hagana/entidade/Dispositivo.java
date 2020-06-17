@@ -216,7 +216,15 @@ public class Dispositivo extends Device implements Serializable {
     public String getPortaUPLink() {
         return iddispositivo + "D";
     }
+    @Override
+    public boolean isDhcp() {
+        return dhcp;
+    }
 
+    @Override
+    public void setDhcp(boolean dhcp) {
+        this.dhcp = dhcp;
+    }
     @Override
     public Cliente getClienteFK() {
         return clienteFK;

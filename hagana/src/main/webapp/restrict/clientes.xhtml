@@ -70,9 +70,9 @@
 
 
 
-                <div class="w3-mobile w3-white w3-section w3-row-padding w3-left " style="width:100%;padding-top:50px;padding-left:0;padding-right:0; ">
+                <div class="w3-mobile w3-section w3-row-padding w3-left " style="width:100%;padding-top:50px;padding-left:0;padding-right:0; ">
 
-                    <div class="" style="height:40px;margin-bottom: 15px;margin-left:0px" id="navCliente">                        
+                    <div class="" style="height:40px;margin-bottom: 20px;margin-left:5px" id="navCliente">                        
                         <a class="w3-button w3-xlarge w3-round-large w3-text-white w3-hover-pink" href="clientes.xhtml"  
                            style="font-size:16px;text-decoration: none;margin-left: -12px;background: #0bd6e2">#{loginBean.dadosCliente}</a>
                     </div>
@@ -80,23 +80,20 @@
                     <!-- Inicio dispositivos -->
                     <div class="w3-twothird" style="padding:0px;margin-bottom: 20px">
                         <!-- Head dispositivos -->
-                        <header id="DH1" class="w3-container w3-border-bottom w3-border-light-blue" style="background-color:#F7F7F3; ">
+                        <header class="w3-container w3-border-bottom w3-border-light-blue" style="background-color:#F7F7F3;height: 45px">
 
                             <h:form>
                                 <h:panelGroup rendered="#{true == true}">
                                     <h:commandLink     action="#{clienteBean.limpar()}" 
+                                                       value=" Clientes"
                                                        title="Adicionar cliente"  
-                                                       value="Ok"
-                                                       onclick="abreModal('cadCliente')"
-                                                       style="word-spacing:10px;padding-right:0px;padding-left: 0px;margin-top:12px; text-decoration: none"
-                                                       class="iconeHead fas fa-plus-circle w3-right ">
-                                        <f:ajax render="formcadCliente"/>
+                                                       onclick="abreModal('cadCliente')"  
+                                                       class="fas fa-plus-circle w3-left textoMenu">
+                                        <f:ajax render=":formCadLink"/>                      
 
                                     </h:commandLink>
                                 </h:panelGroup>
-
                             </h:form>
-                            <h3 class="textoMenu">Clientes</h3>
                         </header>
                         <br></br>
 
@@ -106,9 +103,9 @@
                         <div  style="margin: 8px">
                             <h:form id="dtable"> 
                                 <div class="w3-round-large" style="height: 45px;border: 0.5px solid #c9d8de;font-size: 22px;width: 350px;margin-bottom: -15px ">
-                                    <p:inputText value="#{clienteBean.pesquisa}" autocomplete="off" placeholder="Pesquisar" class="w3-border-0 w3-large" >               
+                                    <p:inputText value="#{clienteBean.pesquisa}" autocomplete="off" placeholder="Pesquisar" class="w3-border-0 w3-large" style="background: none;color: white" >               
                                         <p:ajax event="keyup" update="dataCliente" listener="#{clienteBean.buscar()}"/> 
-                                    </p:inputText><b class="fas fa-search" style="color: #c9d8de;font-size: 30px;margin-left: 5px;margin-top: 4px"/>  
+                                    </p:inputText><b class="fas fa-search" style="color: #ebf900;background: none;font-size: 30px;margin-left: 5px;margin-top: 4px"/>  
                                 </div>
                                 <br></br>
                                 <br></br>
@@ -116,7 +113,7 @@
 
 
                             <h:form id="dataCliente" >
-                                <h:dataTable  var="cli" binding="#{clienteBean.dataTable}" value="#{clienteBean.clienteList}" style="width: 100%;background-color:#FFF"
+                                <h:dataTable  var="cli" binding="#{clienteBean.dataTable}" value="#{clienteBean.clienteList}" style="width: 100%;"
                                               styleClass="book-table">
                                     <p:column >
 
@@ -127,7 +124,6 @@
                                             <p:commandLink                                              
                                                 title="Selecionar cliente" 
                                                 action="#{clienteBean.selecionaCliente(cli)}"
-                                                value="Selecionar"
                                                 ajax="false"
                                                 style="font-size:20px;padding-right:1px;"
                                                 class="iconeCli w3-right far fa-share-square">                                             
@@ -164,7 +160,7 @@
                                 </h:dataTable>
 
                             </h:form>
-        
+
 
                         </div>
 
@@ -173,7 +169,7 @@
                     </div>
                     <!-- Fim dispositivos -->
 
-                    <div class="w3-third w3-mobile  w3-white  " style="padding-right:1px;padding-left:0px; " >
+                    <div class="w3-third w3-mobile" style="padding-right:1px;padding-left:0px; " >
 
                         <div class="w3-row">
 
@@ -241,7 +237,7 @@
                                             </tr>
                                             <tr>
                                                 <td>Data</td>
-                                                <td class="w3-text-lime">#{clienteBean.cliente.dataCriacao}</td> 
+                                                <td class="w3-text-lime">#{clienteBean.cliente.dataFormat}</td> 
                                             </tr>
                                         </table>
                                     </h:form>

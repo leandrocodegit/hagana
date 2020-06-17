@@ -129,6 +129,8 @@ public class ClienteDAO {
             devicesList.add((Device)cliente.getRedeList().get(i));
             System.out.println(cliente.getRedeList().get(i).getNome());
         }
+        
+        
      
         return devicesList;
     }
@@ -152,7 +154,7 @@ public class ClienteDAO {
         for (int i = 0; i < cliente.getComputadorList().size(); i++) {
             devicesList.add((Device)cliente.getComputadorList().get(i));
         }
-     
+     System.out.println("Devices " + devicesList.size());
         return devicesList;
     }
     

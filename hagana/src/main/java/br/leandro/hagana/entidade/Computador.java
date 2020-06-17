@@ -66,6 +66,9 @@ public class Computador extends Device implements Serializable {
     @Column(name = "an")
     private String an;
     @Size(max = 45)
+    @Column(name = "login")
+    private String login;
+    @Size(max = 45)
     @Column(name = "senhaADM")
     private String senhaADM;
     @Column(name = "port_conect")
@@ -152,6 +155,16 @@ public class Computador extends Device implements Serializable {
         this.an = an;
     }
 
+    @Override
+    public String getLogin() {
+        return login;
+    }
+
+    @Override
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
     public String getSenhaADM() {
         return senhaADM;
     }
@@ -176,6 +189,16 @@ public class Computador extends Device implements Serializable {
     @Override
     public void setPort_conect(String port_conect) {
         this.port_conect = port_conect;
+    }
+
+    @Override
+    public boolean isDhcp() {
+        return dhcp;
+    }
+
+    @Override
+    public void setDhcp(boolean dhcp) {
+        this.dhcp = dhcp;
     }
 
     @Override
@@ -212,7 +235,7 @@ public class Computador extends Device implements Serializable {
     public String getPortaUPLink() {
         return idcomputador + "C";
     }
- 
+
     @Override
     public Usuario getUsuarioFK() {
         return usuarioFK;

@@ -5,6 +5,8 @@
  */
 package br.leandro.hagana.entidade;
 
+import br.leandro.hagana.util.Data;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -19,9 +21,11 @@ public class Device implements DeviceImp {
     private String ip;
     private String port_conect;
     private Date dataCriacao;
+    private String dataFormat;
     private String login;
     private String senha;
     private String modelo;
+    boolean dhcp;
     private String portaUPLink;
     private Usuario usuarioFK;
     private Fabricante fabricanteFK;
@@ -75,6 +79,14 @@ public class Device implements DeviceImp {
         this.dataCriacao = dataCriacao;
     }
 
+    public String getDataFormat() {
+        return Data.getDateAtualBrasil();
+    }
+
+    public void setDataFormat(String dataFormat) {
+        this.dataFormat = dataFormat;
+    }
+
     public String getLogin() {
         return login;
     }
@@ -97,6 +109,14 @@ public class Device implements DeviceImp {
 
     public void setModelo(String modelo) {
         this.modelo = modelo;
+    }
+
+    public boolean isDhcp() {
+        return dhcp;
+    }
+
+    public void setDhcp(boolean dhcp) {
+        this.dhcp = dhcp;
     }
 
     public String getPortaUPLink() {

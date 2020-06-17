@@ -5,6 +5,7 @@
  */
 package br.leandro.hagana.entidade;
 
+import br.leandro.hagana.util.Data;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -21,6 +22,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -76,6 +78,8 @@ public class Cliente implements Serializable {
     private List<Link> linkList;
     @OneToMany(mappedBy = "clienteFK")
     private List<Local> localList;
+    @Transient
+    private String dataFormat;
 
     public Cliente() {
     }
@@ -128,6 +132,15 @@ public class Cliente implements Serializable {
     public void setDataCriacao(Date dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
+
+    public String getDataFormat() {
+        return Data.getDateAtualBrasil();
+    }
+
+    public void setDataFormat(String dataFormat) {
+        this.dataFormat = dataFormat;
+    }
+    
 
     @XmlTransient
     public List<Computador> getComputadorList() {

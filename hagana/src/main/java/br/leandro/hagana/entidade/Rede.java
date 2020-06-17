@@ -39,9 +39,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Rede.findByIp", query = "SELECT r FROM Rede r WHERE r.ip = :ip"),
     @NamedQuery(name = "Rede.findByPortaWEB", query = "SELECT r FROM Rede r WHERE r.portaWEB = :portaWEB"),
     @NamedQuery(name = "Rede.findBySenha", query = "SELECT r FROM Rede r WHERE r.senha = :senha"),
-    @NamedQuery(name = "Rede.findByModelo", query = "SELECT r FROM Rede r WHERE r.modelo = :modelo"),
-    @NamedQuery(name = "Rede.findBySenhaPadrao", query = "SELECT r FROM Rede r WHERE r.senhaPadrao = :senhaPadrao"),
-    @NamedQuery(name = "Rede.findByIpPadrao", query = "SELECT r FROM Rede r WHERE r.ipPadrao = :ipPadrao")})
+    @NamedQuery(name = "Rede.findByModelo", query = "SELECT r FROM Rede r WHERE r.modelo = :modelo")})
 public class Rede extends Device implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -67,14 +65,11 @@ public class Rede extends Device implements Serializable {
     @Column(name = "senha")
     private String senha;
     @Size(max = 45)
+    @Column(name = "login")
+    private String login;
+    @Size(max = 45)
     @Column(name = "modelo")
     private String modelo;
-    @Size(max = 45)
-    @Column(name = "senhaPadrao")
-    private String senhaPadrao;
-    @Size(max = 45)
-    @Column(name = "ipPadrao")
-    private String ipPadrao;
     @Column(name = "port_conect")
     private String port_conect;
     @Column(name = "dataCriacao")
@@ -115,7 +110,7 @@ public class Rede extends Device implements Serializable {
     public void setIdrede(Integer idrede) {
         this.idrede = idrede;
     }
- 
+
     @Override
     public Integer getTipo() {
         return tipo;
@@ -165,6 +160,16 @@ public class Rede extends Device implements Serializable {
     }
 
     @Override
+    public String getLogin() {
+        return login;
+    }
+
+    @Override
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    @Override
     public String getModelo() {
         return modelo;
     }
@@ -172,22 +177,6 @@ public class Rede extends Device implements Serializable {
     @Override
     public void setModelo(String modelo) {
         this.modelo = modelo;
-    }
-
-    public String getSenhaPadrao() {
-        return senhaPadrao;
-    }
-
-    public void setSenhaPadrao(String senhaPadrao) {
-        this.senhaPadrao = senhaPadrao;
-    }
-
-    public String getIpPadrao() {
-        return ipPadrao;
-    }
-
-    public void setIpPadrao(String ipPadrao) {
-        this.ipPadrao = ipPadrao;
     }
 
     @Override
@@ -199,7 +188,7 @@ public class Rede extends Device implements Serializable {
     public void setDataCriacao(Date dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
-    
+
     @Override
     public String getPort_conect() {
         return port_conect;
@@ -208,6 +197,16 @@ public class Rede extends Device implements Serializable {
     @Override
     public void setPort_conect(String port_conect) {
         this.port_conect = port_conect;
+    }
+
+    @Override
+    public boolean isDhcp() {
+        return dhcp;
+    }
+
+    @Override
+    public void setDhcp(boolean dhcp) {
+        this.dhcp = dhcp;
     }
 
     public Arquivo getArquivoFK() {
@@ -227,6 +226,7 @@ public class Rede extends Device implements Serializable {
     public void setClienteFK(Cliente clienteFK) {
         this.clienteFK = clienteFK;
     }
+
     @Override
     public Fabricante getFabricanteFK() {
         return fabricanteFK;

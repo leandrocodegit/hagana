@@ -10,6 +10,7 @@ import br.leandro.hagana.controler.DispositivoDAO;
 import br.leandro.hagana.controler.FabricanteDAO;
 import br.leandro.hagana.entidade.Dispositivo;
 import br.leandro.hagana.entidade.Fabricante;
+import br.leandro.hagana.entidade.Local;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -33,20 +34,21 @@ public class DispositivoBean implements Serializable {
     private HtmlDataTable dataTable;
     public Dispositivo dispositivo;
     private Fabricante fabricante;
+    private String ipAnterior;
 
     @PostConstruct
     public void init() {
 
-        if (SessionContext.getInstance().getClienteSelecionado() == null){
-        try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("clientes.xhtml");
-        } catch (Exception ex) {
+        if (SessionContext.getInstance().getClienteSelecionado() == null) {
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("clientes.xhtml");
+            } catch (Exception ex) {
 
+            }
         }
     }
-}
 
-public HtmlDataTable getDataTable() {
+    public HtmlDataTable getDataTable() {
         return dataTable;
     }
 
@@ -70,6 +72,10 @@ public HtmlDataTable getDataTable() {
         return FabricanteDAO.getInstance().getFabricantes();
     }
 
+    public List<Local> getLocalList() {
+        return ClienteDAO.getInstance().findAll(SessionContext.getInstance().getClienteSelecionado()).getLocalList();
+    }
+
     public Fabricante getFabricante() {
         return fabricante;
     }
@@ -77,10 +83,21 @@ public HtmlDataTable getDataTable() {
     public void setFabricante(Fabricante fabricante) {
         this.fabricante = fabricante;
     }
+
     public void selecionarDispositivo() {
-        this.dispositivo = (Dispositivo) dataTable.getRowData(); 
+        this.dispositivo = (Dispositivo) dataTable.getRowData();
         System.out.println(dispositivo.getNome());
-        
+
+    }
+
+    public void DHCP() {
+
+        if (dispositivo.isDhcp()) {
+            ipAnterior = dispositivo.getIp();
+            dispositivo.setIp("DHCP");
+        } else {
+            dispositivo.setIp(ipAnterior);
+        }
     }
 
     public void event() {
@@ -92,38 +109,60 @@ public HtmlDataTable getDataTable() {
     }
 
     public void deletar() {
-        if(dispositivo != null){
+        if (dispositivo != null) {
             DispositivoDAO.getInstance().delete(dispositivo.getIddispositivo());
-            message("Sucesso!", "Removido conta.");
+            message("Sucesso!", "Removido dispositivo.");
         }
     }
 
     public void atualizar() {
+
+        dispositivo.setNome(dispositivo.getNome().substring(0, 1).toUpperCase() + dispositivo.getNome().substring(1).toLowerCase());
+
+        if (dispositivo.getNome().length() < 6) {
+            dispositivo.setNome(dispositivo.getNome().toUpperCase());
+        }
+
+        if (dispositivo.isDhcp()) {
+            dispositivo.setIp("DHCP");
+        }
+
         DispositivoDAO.getInstance().atualizar(dispositivo);
         message("Sucesso!", "Atualizado.");
     }
 
     public void adicionar() {
-         
+
         dispositivo.setDataCriacao(new Date());
         dispositivo.setUsuarioFK(SessionContext.getInstance().getUsuarioLogado());
         dispositivo.setClienteFK(SessionContext.getInstance().getClienteSelecionado());
+
+        dispositivo.setNome(dispositivo.getNome().substring(0, 1).toUpperCase() + dispositivo.getNome().substring(1).toLowerCase());
+
+        if (dispositivo.getNome().length() < 6) {
+            dispositivo.setNome(dispositivo.getNome().toUpperCase());
+        }
+
+        if (dispositivo.isDhcp()) {
+            dispositivo.setIp("DHCP");
+        }
+
         if (DispositivoDAO.getInstance().insert(dispositivo) != null) {
-           
-             message("Sucesso!", "Adicionado.");
+
+            message("Sucesso!", "Adicionado.");
             // criarPasta(cli);
         } else {
             message("Falha!", "Erro ao adicionar.");
         }
     }
 
-    public void limpar() {       
+    public void limpar() {
         dispositivo = new Dispositivo();
         dispositivo.setPortaTCP(0);
         dispositivo.setPortaWEB(80);
         System.out.println("Limpo");
     }
-    
+
     public void message(String mensagem, String conteudo) {
 
         FacesContext context = FacesContext.getCurrentInstance();

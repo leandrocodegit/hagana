@@ -59,7 +59,7 @@ public class Link extends Device implements Serializable {
     @NotNull
     @Size(min = 1, max = 4)
     @Column(name = "operadora")
-    private String operadora;
+    private Integer operadora;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -67,6 +67,9 @@ public class Link extends Device implements Serializable {
     private String velocidade;
     @Column(name = "tipo")
     private Integer tipo;
+    @Size(max = 45)
+    @Column(name = "login")
+    private String login;
     @Size(max = 45)
     @Column(name = "usuario")
     private String usuario;
@@ -95,7 +98,6 @@ public class Link extends Device implements Serializable {
 
     public Link(Integer idlink, String operadora, String velocidade) {
         this.idlink = idlink;
-        this.operadora = operadora;
         this.velocidade = velocidade;
     }
 
@@ -123,11 +125,11 @@ public class Link extends Device implements Serializable {
         this.host = host;
     }
 
-    public String getOperadora() {
+    public Integer getOperadora() {
         return operadora;
     }
 
-    public void setOperadora(String operadora) {
+    public void setOperadora(Integer operadora) {
         this.operadora = operadora;
     }
 
@@ -147,6 +149,15 @@ public class Link extends Device implements Serializable {
     @Override
     public void setTipo(Integer tipo) {
         this.tipo = tipo;
+    }
+
+    @Override
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getUsuario() {
@@ -212,8 +223,8 @@ public class Link extends Device implements Serializable {
     }
 
     @Override
-    public String getNome() {
-        return operadora;
+    public String getNome() {        
+        return toString();
     }
 
     @Override
@@ -225,7 +236,17 @@ public class Link extends Device implements Serializable {
     public String getPort_conect() {
         return "Provedor";
     }
- 
+
+    @Override
+    public boolean isDhcp() {
+        return dhcp;
+    }
+
+    @Override
+    public void setDhcp(boolean dhcp) {
+        this.dhcp = dhcp;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -248,7 +269,37 @@ public class Link extends Device implements Serializable {
 
     @Override
     public String toString() {
-        return "br.leandro.hagana.entidade.Dominio[ iddominio=" + idlink + " ]";
+
+        String name = "";
+
+        switch (operadora) {
+            case 1:
+                name = "Vivo";
+                break;
+            case 2:
+                name = "NET";
+                break;
+            case 3:
+                name = "Tim Live";
+                break;
+            case 4:
+                name = "Claro";
+                break;
+            case 5:
+                name = "Vogel";
+                break;
+                            case 6:
+                name = "WCS";
+                break;
+                            case 7:
+                name = "Telium";
+                break;
+                            case 8:
+                name = "Outra";
+                break;
+        }
+                      
+        return name;
     }
 
 }

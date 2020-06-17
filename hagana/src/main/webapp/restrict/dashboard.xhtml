@@ -28,7 +28,7 @@
         <div class="w3-container" id="elipse" style="padding: 50px">
 
             <h:form>
-                <p:mindmap value="#{dashboradBean.root}" style=" height: 90vh;border: 1px solid black;">
+                <p:mindmap value="#{dashboradBean.root}"  style=" height: 90vh;border: 1px solid black;">
                     <p:ajax event="select" listener="#{dashboradBean.onNodeSelect}" />
                     <p:ajax event="dblselect" listener="#{dashboradBean.onNodeDblselect}" update="output" oncomplete="PF('details').show();" />
                 </p:mindmap>
@@ -36,6 +36,13 @@
                 <p:dialog widgetVar="details" header="Node Details" resizable="false" modal="true" showEffect="fade" hideEffect="fade">
                     <h:outputText id="output" value="#{dashboradBean.selectedNode.data}" />
                 </p:dialog> 
+           
+                <p:mindmap value="#{dashboradBean.root}" style=" height: 90vh;border: 1px solid black;">
+                    <p:ajax event="select" listener="#{dashboradBean.onNodeSelect}" />
+                    <p:ajax event="dblselect" listener="#{dashboradBean.onNodeDblselect}" update="output" oncomplete="PF('details').show();" />
+                </p:mindmap>
+
+                 
             </h:form>
 
         </div>
@@ -54,9 +61,11 @@
 
 
         ellipse{  
-            stroke-width:0; 
+            stroke-width:2; 
+            stroke:white;
             rx:50; 
             ry:50;
+            box-shadow: 0 0 8px white;
         }
 
         text{ 
