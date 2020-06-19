@@ -19,17 +19,19 @@ public class Device implements DeviceImp {
     private Integer tipo;
     private Local localFK;
     private String ip;
+    protected String ipAnterior;
     private String port_conect;
     private Date dataCriacao;
-    private String dataFormat;
     private String login;
     private String senha;
     private String modelo;
-    boolean dhcp;
+    protected boolean dhcp;
+    private boolean captureSenha; 
     private String portaUPLink;
     private Usuario usuarioFK;
     private Fabricante fabricanteFK;
     private Cliente clienteFK;
+    
 
     public String getNome() {
         return nome;
@@ -63,6 +65,14 @@ public class Device implements DeviceImp {
         this.ip = ip;
     }
 
+    public String getIpAnterior() {
+        return ipAnterior;
+    }
+
+    public void setIpAnterior(String ipAnterior) {
+        this.ipAnterior = ipAnterior;
+    }
+
     public String getPort_conect() {
         return port_conect;
     }
@@ -77,14 +87,6 @@ public class Device implements DeviceImp {
 
     public void setDataCriacao(Date dataCriacao) {
         this.dataCriacao = dataCriacao;
-    }
-
-    public String getDataFormat() {
-        return Data.getDateAtualBrasil();
-    }
-
-    public void setDataFormat(String dataFormat) {
-        this.dataFormat = dataFormat;
     }
 
     public String getLogin() {
@@ -119,6 +121,14 @@ public class Device implements DeviceImp {
         this.dhcp = dhcp;
     }
 
+    public boolean isCaptureSenha() {
+        return captureSenha;
+    }
+
+    public void setCaptureSenha(boolean captureSenha) {
+        this.captureSenha = captureSenha;
+    }
+ 
     public String getPortaUPLink() {
         return portaUPLink;
     }
@@ -152,13 +162,19 @@ public class Device implements DeviceImp {
     }
 
     @Override
-    public Integer getId() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String getDataFormat() {
+        return "";
     }
 
     @Override
-    public Integer setId() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void createDHCP() {
+
+        if (dhcp) {
+            ipAnterior = ip;
+            ip = "DHCP";
+        } else {
+            ip = ipAnterior;
+        }
     }
 
 }

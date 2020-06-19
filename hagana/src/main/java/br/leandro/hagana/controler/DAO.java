@@ -5,31 +5,32 @@
  */
 package br.leandro.hagana.controler;
 
-import br.leandro.hagana.entidade.Computador;
-import java.util.List;
+import br.leandro.hagana.entidade.Cliente;
+import br.leandro.hagana.entidade.Dispositivo;
+import br.leandro.hagana.entidade.Usuario;
+import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
 
 /**
  *
  * @author leand
  */
-public class ComputadorDAO {
-
-    private static ComputadorDAO instance;
+public class DAO {
+ 
+private static DAO instance;
     protected EntityManager entityManager;
 
-    public static ComputadorDAO getInstance() {
+    public static DAO getInstance() {
         if (instance == null) {
-            instance = new ComputadorDAO();
+            instance = new DAO();
         }
 
         return instance;
     }
 
-    private ComputadorDAO() {
+    private DAO() {
         entityManager = getEntityManager();
     }
 
@@ -41,43 +42,33 @@ public class ComputadorDAO {
         }
 
         return entityManager;
-    }
-
-    public List<Computador> getdDispositivosList() {
-        Query query = entityManager.createNamedQuery("Computador.findAll");
-        return query.getResultList();
-    }
-
-    public List<Computador> pesquisar(String value) {
-        Query query = entityManager.createNamedQuery("Computador.findByNome");
-        query.setParameter("nome", value + "%");
-        System.out.println(query);
-        return query.getResultList();
-    }
-
-    public Computador insert(Computador computador) {
-
+    }    
+ 
+   synchronized public Object insert(Object device) { 
+        
         try {
             entityManager.getTransaction().begin();
-            entityManager.persist(computador);
+            entityManager.persist(device);
 
             entityManager.flush();
             entityManager.getTransaction().commit();
         } catch (Exception ex) {
             entityManager.getTransaction().rollback();
+            ex.printStackTrace();
             return null;
+            
         } finally {
             // entityManager.close();
         }
-        return computador;
+        return device;
     }
 
-    public void delete(Integer id) {
-        EntityManager entityManager = getEntityManager();
+   synchronized public void delete(Object tipeClass, Integer id) {
+        EntityManager entityManager = getEntityManager();         
         try {
             entityManager.getTransaction().begin();
-            Computador computador = entityManager.find(Computador.class, id);
-            entityManager.remove(computador);
+            Object dispositivo = entityManager.find(tipeClass.getClass(), id);
+            entityManager.remove(dispositivo);
             entityManager.flush();
             entityManager.getTransaction().commit();
         } catch (Exception ex) {
@@ -87,11 +78,11 @@ public class ComputadorDAO {
         }
     }
 
-    public void atualizar(Computador computador) {
+   synchronized public void atualizar(Object device) {
         EntityManager entityManager = getEntityManager();
         try {
             entityManager.getTransaction().begin();
-            entityManager.merge(computador);
+            entityManager.merge(device);
             entityManager.getTransaction().commit();
         } catch (Exception ex) {
             entityManager.getTransaction().rollback();
@@ -100,4 +91,21 @@ public class ComputadorDAO {
         }
     }
 
+    public static void main(String[] args) {
+
+        Dispositivo dispositivo = new Dispositivo();
+        dispositivo.setIddispositivo(2);
+        Usuario usuario = new Usuario();
+        usuario.setIdusuario(1);
+        Cliente cliente = new Cliente();
+        cliente.setConta("0001");
+        dispositivo.setNome("Novo asasas");
+        dispositivo.setUsuarioFK(usuario);
+        dispositivo.setClienteFK(cliente);
+        dispositivo.setDataCriacao(new Date());
+        
+     //  DAO.getInstance().delete(dispositivo,36);
+      
+        DAO.getInstance().atualizar(dispositivo);
+    }
 }

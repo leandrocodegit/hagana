@@ -5,6 +5,7 @@
  */
 package br.leandro.hagana.entidade;
 
+import br.leandro.hagana.util.Data;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -199,16 +200,6 @@ public class Rede extends Device implements Serializable {
         this.port_conect = port_conect;
     }
 
-    @Override
-    public boolean isDhcp() {
-        return dhcp;
-    }
-
-    @Override
-    public void setDhcp(boolean dhcp) {
-        this.dhcp = dhcp;
-    }
-
     public Arquivo getArquivoFK() {
         return arquivoFK;
     }
@@ -281,10 +272,27 @@ public class Rede extends Device implements Serializable {
         }
         return true;
     }
+    
+    @Override
+    public String getDataFormat() {
+        return Data.formatDateddMMYYYYhhmm(dataCriacao);
+    }
+
+    @Override
+    public void createDHCP() {
+
+        if (dhcp) {
+            ipAnterior = ip;
+            ip = "DHCP";
+        } else {
+            ip = ipAnterior;
+        }
+    }
+
 
     @Override
     public String toString() {
-        return "br.leandro.hagana.entidade.Rede[ idrede=" + idrede + " ]";
+        return "Rede";
     }
 
 }

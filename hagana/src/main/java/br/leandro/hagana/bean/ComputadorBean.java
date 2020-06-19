@@ -70,8 +70,8 @@ public class ComputadorBean implements Serializable {
     }
 
     public void selecionarComputador() {
-        this.computador = (Computador) dataTable.getRowData();
-
+        computador = (Computador) dataTable.getRowData();
+        computador.setCaptureSenha(SessionContext.getInstance().getUsuarioLogado().getVerSenhas());
     }
 
     public void deletar() {
@@ -95,6 +95,7 @@ public class ComputadorBean implements Serializable {
 
     public void adicionar() {
 
+        computador.setIdcomputador(0);
         computador.setDataCriacao(new Date());
         computador.setUsuarioFK(SessionContext.getInstance().getUsuarioLogado());
         computador.setClienteFK(SessionContext.getInstance().getClienteSelecionado());
@@ -104,23 +105,24 @@ public class ComputadorBean implements Serializable {
         if (computador.isDhcp()) {
             computador.setIp("DHCP");
         }
+        
+        Computador gravar = new Computador();
+        gravar = computador;
 
-        if (ComputadorDAO.getInstance().insert(computador) != null) {
+        if (ComputadorDAO.getInstance().insert(gravar) != null) {
 
             message("Sucesso!", "Adicionado.");
             // criarPasta(cli);
         } else {
             message("Falha!", "Erro ao adicionar.");
         }
-
+        limpar();
     }
 
-    public void limpar() {
-
-        Local local = new Local();
+    public void limpar() {         
         computador = new Computador();
-        computador.setLocalFK(local);
-        System.out.println("Limpo");
+        computador.setLocalFK(new Local());
+        computador.setCaptureSenha(true);       
     }
 
     public void message(String mensagem, String conteudo) {

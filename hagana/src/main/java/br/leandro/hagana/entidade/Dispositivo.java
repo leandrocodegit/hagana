@@ -5,6 +5,7 @@
  */
 package br.leandro.hagana.entidade;
 
+import br.leandro.hagana.util.Data;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -32,6 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Dispositivo.findAll", query = "SELECT d FROM Dispositivo d"),
+    @NamedQuery(name = "Cliente.findPesquisa", query = "SELECT d FROM Dispositivo d WHERE d.nome LIKE :nome OR d.modelo LIKE :modelo OR d.ip LIKE :ip"),
     @NamedQuery(name = "Dispositivo.findByIddispositivo", query = "SELECT d FROM Dispositivo d WHERE d.iddispositivo = :iddispositivo"),
     @NamedQuery(name = "Dispositivo.findByTipo", query = "SELECT d FROM Dispositivo d WHERE d.tipo = :tipo"),
     @NamedQuery(name = "Dispositivo.findByIp", query = "SELECT d FROM Dispositivo d WHERE d.ip = :ip"),
@@ -83,7 +85,7 @@ public class Dispositivo extends Device implements Serializable {
     private Date dataCriacao;
     @JoinColumn(name = "cliente_FK", referencedColumnName = "conta")
     @ManyToOne(optional = false)
-    private Cliente clienteFK;  
+    private Cliente clienteFK;
     @JoinColumn(name = "fabricante_FK", referencedColumnName = "idfabricante")
     @ManyToOne
     private Fabricante fabricanteFK;
@@ -182,7 +184,7 @@ public class Dispositivo extends Device implements Serializable {
     public void setSenha(String senha) {
         this.senha = senha;
     }
- 
+
     @Override
     public String getLogin() {
         return login;
@@ -212,19 +214,12 @@ public class Dispositivo extends Device implements Serializable {
     public void setDataCriacao(Date dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
+
     @Override
     public String getPortaUPLink() {
         return iddispositivo + "D";
     }
-    @Override
-    public boolean isDhcp() {
-        return dhcp;
-    }
 
-    @Override
-    public void setDhcp(boolean dhcp) {
-        this.dhcp = dhcp;
-    }
     @Override
     public Cliente getClienteFK() {
         return clienteFK;
@@ -264,7 +259,7 @@ public class Dispositivo extends Device implements Serializable {
     public void setUsuarioFK(Usuario usuarioFK) {
         this.usuarioFK = usuarioFK;
     }
- 
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -286,8 +281,24 @@ public class Dispositivo extends Device implements Serializable {
     }
 
     @Override
+    public String getDataFormat() {
+        return Data.formatDateddMMYYYYhhmm(dataCriacao);
+    }
+
+    @Override
+    public void createDHCP() {
+
+        if (dhcp) {
+            ipAnterior = ip;
+            ip = "DHCP";
+        } else {
+            ip = ipAnterior;
+        }
+    }
+ 
+    @Override
     public String toString() {
-        return "br.leandro.hagana.entidade.Dispositivo[ iddispositivo=" + iddispositivo + " ]";
+        return "Dispositivo";
     }
 
 }

@@ -13,8 +13,8 @@ body
 {
     width: 100%;
     height: 100%;
-       
-        
+
+
 }
 .menu
 { 
@@ -135,7 +135,7 @@ iconeTablePosition{
 
 .icone:hover  .textoMenu  
 {    
-    
+
     color:#00c6ff;
     text-decoration:none;
 
@@ -174,34 +174,40 @@ iconeTablePosition{
 
 .scrollmenu {
     margin-top:7px;
-    height:57px;
-    overflow-x: auto;
-    overflow-y: hidden;
+    height:457px;
+    overflow-x: hidden;
+    overflow-y: auto;
     white-space: nowrap;
     margin-left: 8px;
 }
 
 
-::-webkit-scrollbar {.
+::-webkit-scrollbar {
 
-                     width: 20px;
+                     
                      background-color: white;
-                     height: 15px;
-
-
+                      
 }
+
 
 ::-webkit-scrollbar-thumb 
 {
 
-    background:#00aef6; 
+    background:#abf602; 
     border-radius: 5px;
+}
+
+.disContent::-webkit-scrollbar-thumb 
+{
+
+    background:#ccd9d8; 
+    border-radius: 10px; 
+    width: 11px;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #3ef500;     
-    height: 50px;
+    background: #3a1661; 
 }
 
 @font-face {
@@ -269,7 +275,7 @@ input:hover
     text-shadow: none;
 }
 .iconeEdit{
-  color: #01bef5;  
+    color: #01bef5;  
 }
 .iconeCli{
     color: #133e5e;
@@ -285,55 +291,58 @@ input:hover
     color:#4f5658;
 }
 
-.item:hover b {
-  color: white;  
+.itemCor:hover b {
+    color: white;  
 }
-.item:hover .iconeConfig{
+.itemCor:hover .iconeConfig{
     color:white;
 }
- 
-.item:hover {
-    box-shadow: 0 0 8px white;
+
+.itemCor:hover {
+    box-shadow: 0 0 5px #858585;
     border-radius: 5px;
     background: #658a9d;
-    
+
 }
 
-.item b{
+.itemCor b{
     color:#4f5658;  
     font-size: 14px;
 }
 
+.itemDim{
 
-
-.item
-{ 
     margin-bottom:5px;
     height: 35px;
     font-size:14px;
-    word-spacing: 10px;  
-  
-  
+    word-spacing: 10px; 
     border-radius: 8px;
     border-width: 0.1px;
+    margin-right: 15px;
+
+}
+
+
+.itemCor
+{    
     background: white;
     box-shadow: 0 0 2px #b9bdbe;
-    
+
 }
 .w3-table td
 {
-    height: 40px;
+    height: 35px;
     vertical-align: 10px;
     color: #666a6e;
 }
 
 .inp{
-    height: 40px;
+    height: 35px;
     font-size: 18px;
     font-style: initial;
     font-family: Sans-serif;
     color: #0d0d0d;
-    
+
 }
 .inpValida{
     background-color: #FFFFFF;
@@ -350,12 +359,12 @@ input:hover
     border-style: none;
     border: 0px;
     color:#ffffff;
-    background-color: #233045; 
+    background-color: #391449; 
     margin-bottom: 10px;
     margin-top: 10px;                       
     font-size: 12px;
-    width: 110px;
-    height: 30px;
+    width: 100px;
+    height: 35px;
     border-radius:4px;
     padding-right: 10px;
     padding-left: 10px;
@@ -363,7 +372,7 @@ input:hover
 }
 
 .botao:hover {
-    background-color:#04EB74;
+    background-color:#77e00b;
 
 }
 
@@ -386,12 +395,20 @@ input:hover
 
 }
 
+.headModal{
+    background-color: #391449;
+    height: 47px;
+    border-style:  none none solid none;
+    border-width: 1px;
+    box-shadow: 0 0 25px #b9bdbe;
+}
+
 .ui-autocomplete-panel{
     background: white;
 }
 
 .caixa{
-   margin-bottom: 10px 
+    margin-bottom: 10px;
 }
 
 #tableDis tr{
@@ -425,7 +442,33 @@ select{
     color: #67818f;
     padding-left: 8px; 
 }
+.minimiza{
+    font-size:30px;
+    margin:8px;
+    color: #c6ff00;
+}
 
+.minimiza:hover{
+    color: #00ff48;
+    box-shadow: 0 0 5px #470f77; 
+}
 
+.cor{
+    box-shadow: 0 0 25px #b6babb;
+    background: #2a0d52;
+    border-radius: 8px;
+    margin-bottom:5px;
+    height: 35px;
+    font-size:14px;
+    word-spacing: 10px; 
+    border-radius: 8px;
+    border-width: 0.1px;
+}
+.cor b{
+    color: white;
+}
+.cor .iconeConfig{
+    color: white;
+}
 
 

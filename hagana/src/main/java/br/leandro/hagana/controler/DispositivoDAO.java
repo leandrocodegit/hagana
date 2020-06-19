@@ -67,6 +67,9 @@ public class DispositivoDAO {
             entityManager.getTransaction().commit();
         } catch (Exception ex) {
             entityManager.getTransaction().rollback();
+            ex.printStackTrace();
+            return null;
+            
         } finally {
             // entityManager.close();
         }

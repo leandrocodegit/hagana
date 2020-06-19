@@ -63,7 +63,6 @@ public class ClienteDAO {
         Query query = entityManager.createNamedQuery("Cliente.findByNome");
         query.setParameter("nome", value + "%");
         query.setParameter("conta", value + "%");
-        System.out.println(query);
         return query.getResultList();
     }
 
@@ -123,11 +122,9 @@ public class ClienteDAO {
         
         for (int i = 0; i < cliente.getLinkList().size(); i++) {
             devicesList.add((Device)cliente.getLinkList().get(i));
-            System.out.println(cliente.getLinkList().get(i).getNome());
         }
         for (int i = 0; i < cliente.getRedeList().size(); i++) {
             devicesList.add((Device)cliente.getRedeList().get(i));
-            System.out.println(cliente.getRedeList().get(i).getNome());
         }
         
         
@@ -154,7 +151,6 @@ public class ClienteDAO {
         for (int i = 0; i < cliente.getComputadorList().size(); i++) {
             devicesList.add((Device)cliente.getComputadorList().get(i));
         }
-     System.out.println("Devices " + devicesList.size());
         return devicesList;
     }
     

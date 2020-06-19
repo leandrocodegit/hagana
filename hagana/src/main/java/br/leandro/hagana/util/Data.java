@@ -21,7 +21,7 @@ public class Data {
     private static DateTimeFormatter formatterDateSQL = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("dd/MM/YY hh:mm");
     private static DateTimeFormatter formatterHora = DateTimeFormatter.ofPattern("HH:mm");
-    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/YYYY"); 
+    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/YY hh:mm");
      private static SimpleDateFormat simpleDateFormatSQL = new SimpleDateFormat("yyyy-MM-dd"); 
     private static SimpleDateFormat simpleHoraFormat = new SimpleDateFormat("HH:mm"); 
     private static LocalDate data = LocalDate.now();
@@ -38,7 +38,7 @@ public class Data {
     public static String formatDataddMMYYYY(LocalDate data){        
         return data.format(formatterDate);
     }
-    public static String formatDateddMMYYYY(Date data){        
+    public static String formatDateddMMYYYYhhmm(Date data){        
         return simpleDateFormat.format(data);
     }
     public static String formatHora(LocalDateTime data){        

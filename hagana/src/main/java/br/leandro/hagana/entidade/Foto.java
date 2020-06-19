@@ -5,6 +5,7 @@
  */
 package br.leandro.hagana.entidade;
 
+import br.leandro.hagana.util.Data;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -33,9 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Foto.findAll", query = "SELECT f FROM Foto f"),
     @NamedQuery(name = "Foto.findByIdfoto", query = "SELECT f FROM Foto f WHERE f.idfoto = :idfoto"),
-    @NamedQuery(name = "Foto.findByNome", query = "SELECT f FROM Foto f WHERE f.nome = :nome"),
-    @NamedQuery(name = "Foto.findByUrl", query = "SELECT f FROM Foto f WHERE f.url = :url"),
-    @NamedQuery(name = "Foto.findByExtensao", query = "SELECT f FROM Foto f WHERE f.extensao = :extensao")})
+    @NamedQuery(name = "Foto.findByNome", query = "SELECT f FROM Foto f WHERE f.nome = :nome")})
 public class Foto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -47,12 +46,6 @@ public class Foto implements Serializable {
     @Size(max = 45)
     @Column(name = "nome")
     private String nome;
-    @Size(max = 45)
-    @Column(name = "url")
-    private String url;
-    @Size(max = 45)
-    @Column(name = "extensao")
-    private String extensao;
     @Column(name = "dataCriacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataCriacao;
@@ -84,22 +77,6 @@ public class Foto implements Serializable {
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getExtensao() {
-        return extensao;
-    }
-
-    public void setExtensao(String extensao) {
-        this.extensao = extensao;
     }
 
     public Date getDataCriacao() {
@@ -144,10 +121,14 @@ public class Foto implements Serializable {
         }
         return true;
     }
+     
+    public String getDataFormat() {
+        return Data.formatDateddMMYYYYhhmm(dataCriacao);
+    }
 
     @Override
     public String toString() {
-        return "br.leandro.hagana.entidade.Foto[ idfoto=" + idfoto + " ]";
+        return "Foto";
     }
 
 }

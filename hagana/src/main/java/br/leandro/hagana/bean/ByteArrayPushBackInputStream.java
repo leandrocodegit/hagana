@@ -3,16 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.leandro.hagana.entidade;
+package br.leandro.hagana.bean;
 
 /**
  *
  * @author leand
  */
-public interface DeviceImp {
-    
-    public void createDHCP(); 
-    public String getDataFormat();
-    
+class ByteArrayPushBackInputStream {
     
 }

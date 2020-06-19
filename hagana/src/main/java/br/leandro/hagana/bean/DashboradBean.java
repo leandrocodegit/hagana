@@ -67,8 +67,7 @@ public class DashboradBean implements Serializable {
 
     private void load() {
         root = new DefaultMindmapNode("Internet".toUpperCase(), "", "8ee203", false);
-        System.out.println("load");
-
+        
         Cliente cliente = SessionContext.getInstance().getClienteSelecionado();
 
         if (cliente != null) {
@@ -146,20 +145,17 @@ public class DashboradBean implements Serializable {
 
     public void setSelectedNode(MindmapNode selectedNode) {
         this.selectedNode = selectedNode;
-        device = (Device) dispositivos.get(selectedNode.getData().toString());
-        System.out.println("Click");
+        device = (Device) dispositivos.get(selectedNode.getData().toString());        
     }
 
     public void onNodeSelect(SelectEvent<MindmapNode> event) {
-        device = (Device) dispositivos.get(event.getObject().getData().toString());
-        System.out.println("Click");
+        device = (Device) dispositivos.get(event.getObject().getData().toString());        
     }
 
     public void onNodeDblselect(SelectEvent<MindmapNode> event) {
 
         this.selectedNode = event.getObject();
-        device = (Device) dispositivos.get(event.getObject().getData().toString());
-        System.out.println("Click");
+        device = (Device) dispositivos.get(event.getObject().getData().toString());       
     }
 
     public void message() {

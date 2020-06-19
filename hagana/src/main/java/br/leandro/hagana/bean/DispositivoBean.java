@@ -34,7 +34,6 @@ public class DispositivoBean implements Serializable {
     private HtmlDataTable dataTable;
     public Dispositivo dispositivo;
     private Fabricante fabricante;
-    private String ipAnterior;
 
     @PostConstruct
     public void init() {
@@ -86,19 +85,10 @@ public class DispositivoBean implements Serializable {
 
     public void selecionarDispositivo() {
         this.dispositivo = (Dispositivo) dataTable.getRowData();
-        System.out.println(dispositivo.getNome());
-
+        this.dispositivo.setCaptureSenha(SessionContext.getInstance().getUsuarioLogado().getVerSenhas());
+         
     }
 
-    public void DHCP() {
-
-        if (dispositivo.isDhcp()) {
-            ipAnterior = dispositivo.getIp();
-            dispositivo.setIp("DHCP");
-        } else {
-            dispositivo.setIp(ipAnterior);
-        }
-    }
 
     public void event() {
 
@@ -133,9 +123,11 @@ public class DispositivoBean implements Serializable {
 
     public void adicionar() {
 
+        dispositivo.setIddispositivo(null);
         dispositivo.setDataCriacao(new Date());
         dispositivo.setUsuarioFK(SessionContext.getInstance().getUsuarioLogado());
         dispositivo.setClienteFK(SessionContext.getInstance().getClienteSelecionado());
+        
 
         dispositivo.setNome(dispositivo.getNome().substring(0, 1).toUpperCase() + dispositivo.getNome().substring(1).toLowerCase());
 
@@ -146,21 +138,30 @@ public class DispositivoBean implements Serializable {
         if (dispositivo.isDhcp()) {
             dispositivo.setIp("DHCP");
         }
+        
+        
+       Dispositivo gravar = new Dispositivo();
+       gravar = dispositivo;
 
-        if (DispositivoDAO.getInstance().insert(dispositivo) != null) {
+        if (DispositivoDAO.getInstance().insert(gravar) != null) {
 
             message("Sucesso!", "Adicionado.");
             // criarPasta(cli);
         } else {
             message("Falha!", "Erro ao adicionar.");
         }
+        
+        limpar();
     }
 
-    public void limpar() {
-        dispositivo = new Dispositivo();
+    public void limpar() { 
+       
         dispositivo.setPortaTCP(0);
         dispositivo.setPortaWEB(80);
-        System.out.println("Limpo");
+        dispositivo.setLocalFK(new Local());
+        dispositivo.setFabricanteFK(new Fabricante());
+        dispositivo.setCaptureSenha(true);
+         
     }
 
     public void message(String mensagem, String conteudo) {

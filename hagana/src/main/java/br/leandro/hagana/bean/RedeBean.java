@@ -69,8 +69,9 @@ public class RedeBean implements Serializable {
     }
 
     public void selecionarRede() {
-        this.rede = (Rede) dataTable.getRowData();
-
+         rede = (Rede) dataTable.getRowData();
+         rede.setCaptureSenha(SessionContext.getInstance().getUsuarioLogado().getVerSenhas());
+  
     }
 
     public void deletar() {
@@ -94,6 +95,7 @@ public class RedeBean implements Serializable {
 
     public void adicionar() {
 
+        rede.setIdrede(0);
         rede.setDataCriacao(new Date());
         rede.setUsuarioFK(SessionContext.getInstance().getUsuarioLogado());
         rede.setClienteFK(SessionContext.getInstance().getClienteSelecionado());
@@ -103,7 +105,9 @@ public class RedeBean implements Serializable {
         if (rede.isDhcp()) {
             rede.setIp("DHCP");
         }
-
+        
+       Rede gravar = new Rede();
+       gravar = rede;
         if (RedeDAO.getInstance().insert(rede) != null) {
 
             message("Sucesso!", "Adicionado.");
@@ -114,12 +118,10 @@ public class RedeBean implements Serializable {
 
     }
 
-    public void limpar() {
-
-        Local local = new Local();
-        rede = new Rede();
-        rede.setLocalFK(local);
-        System.out.println("Limpo");
+    public void limpar() { 
+        
+        rede.setLocalFK(new Local());
+        rede.setCaptureSenha(true);
     }
 
     public void message(String mensagem, String conteudo) {

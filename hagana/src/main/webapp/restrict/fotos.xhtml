@@ -1,0 +1,437 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> </link>
+    <link href="https://vjs.zencdn.net/7.6.5/video-js.css" rel="stylesheet"> </link>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+    <link href="/hagana/restrict/css/style.css" rel="stylesheet" type="text/css"/>
+
+
+    <h:head>
+        <title>Fotos</title>
+    </h:head>
+
+    <h:body>
+
+
+
+        <div class="w3-main"  >
+            <div class="w3-card  menu w3-top" style="padding-left:6px;">
+                <button id="openNav" class="w3-xlarge w3-button w3-hover-white btBar w3-border-0" onclick="w3_open()" style="outline: none" >&#9776;</button>              
+            </div>
+            <div class="w3-sidebar w3-card-4  w3-collapse w3-animate-left" style="width:200px;"  id="sideBar" >
+                <div class="btBarGradiente  ">
+                    <div class="w3-container " onclick="w3_close()">
+                        <i class="fas fa-angle-left" style="font-size:30px;padding-top:4%;color: white; "></i>
+                    </div>
+                </div>
+
+                <ul>
+                    <li class="icone"><a href="dashboard.xhtml"><span><b class="fas fa-stream w3-text-blue-grey"></b></span>   <b class="textoMenu" style="color:#0bd6e2" >Dashboard</b></a></li>
+                    <li class="icone"><a href="index.xhtml"><span><b class="fas fa-hdd w3-text-blue-grey"></b></span>   <b class="textoMenu" >Dispositivos</b></a></li>                   
+                    <li class="icone"><a href="dispositivos.xhtml"  onclick="rc()" ><span><b class="fas fa-clone w3-text-blue-grey"></b></span>   <b class="textoMenu" >Arquivos</b></a></li>
+                    <li class="icone"><a href="map.xhtml"><span><b class="fas fa-sitemap w3-text-blue-grey"></b></span>   <b class="textoMenu" >Mapa</b></a></li>
+                    <li class="icone"><a href="fotos.xhtml"><span><b class="fas fa-camera-retro w3-text-blue-grey" ></b></span>   <b class="textoMenu" >Fotos</b></a></li>
+                    <li class="icone"><a href="login.xhtml"><span><b class="far fa-user w3-text-purple"></b></span>   <b class="w3-text-purple" style="padding-left:9px" > Olá, #{loginBean.dadosUsuario}</b></a></li>
+
+                    <div class="w3-padding">
+
+                        <div id="demoDrop" >
+
+                            <h:form>
+                                <b class="fas fa-power-off" style="margin-left:10px;color:#fe5000"></b>
+                                <h:commandLink 
+                                    action="#{loginBean.sair()}"
+                                    value="Sair"                                     
+                                    style="font-size: 18px;padding-left:20px;color:#fe5000"> 
+                                </h:commandLink>
+                            </h:form>
+                        </div>
+                    </div>
+
+
+                </ul>
+            </div>
+
+            <footer class=" w3-bottom">
+                <h:panelGroup rendered="#{true == true}">
+                    <h:form>
+                        <p:commandLink onclick="document.getElementById('mAddFoto').style.display = 'block'"  class="w3-left w3-padding w3-round-xlarge  w3-pink w3-card-2 w3-border-bottom  w3-button w3-block w3-left-align  w3-hover-blue " style="margin:5px;height: 45px;font-size:14px;word-spacing:10px;width:65px">
+                            <i class="fas fa-camera" style="color:#FFF;font-size:26px"></i> <b></b>
+
+                        </p:commandLink>
+                    </h:form>
+                </h:panelGroup>
+            </footer>
+
+            <p:growl id="growl" showDetail="true"/>  
+
+            <div class="w3-main" style="margin-left:200px;" id="main" >      
+
+                <div class="w3-mobile w3-section w3-row-padding w3-left " style="width:100%;padding-top:50px;padding-left:0px;padding-right:0;padding-bottom: 5px ">
+
+                    <div class="" style="height:40px;margin-bottom: 20px;margin-left:5px" id="navCliente">                        
+                        <a class="w3-button w3-xlarge w3-round-large w3-text-white w3-hover-pink" href="clientes.xhtml"  
+                           style="font-size:16px;text-decoration: none;margin-left: -12px;background: #0bd6e2">#{loginBean.dadosCliente}</a>
+                    </div>
+
+                    <!-- Inicio dispositivos -->
+                    <div class="w3-container"  style="padding:0px;">
+                        <!-- Head dispositivos -->
+                        <header class="w3-container w3-border-bottom w3-border-light-blue" style="">
+
+                            <h:form>
+                                <h:panelGroup rendered="#{true == true}">
+                                    <h:commandLink     action="#{dispositivoBean.limpar()}" 
+                                                       title="Adicionar foto"  
+                                                       onclick="document.getElementById('mAddFoto').style.display = 'block'"
+                                                       style="word-spacing:10px;padding-right:0px;padding-left: 0px;margin-top:12px; "
+                                                       class="iconeHead fas fa-plus-circle w3-right ">
+                                        <f:ajax  render="formCadDis" />
+
+                                    </h:commandLink>
+                                </h:panelGroup>
+
+                            </h:form>
+                            <h3 class="textoMenu">Fotos</h3>
+                        </header>
+
+                        <!-- Head dispositivos -->
+
+                        <!-- Inicio grid dispositivos -->
+
+
+                        <div class="disContent w3-container" style="overflow-x: hidden;overflow-y: auto;height: 100vh;margin-bottom: 10px">
+                            <div class="w3-row">
+
+                                <h:panelGroup  id="listaVideos">  
+
+                                    <ui:repeat value="#{fotoBean.fotoList}" var="foto">
+
+
+                                        <div class="w3-col s3 w3-center w3-padding w3-mobile">
+
+                                            <div id="bord" class="w3-white">
+
+                                                <div class="w3-center">
+                                                    <h4 style="color:#40423d;padding:  15px;font-family: 'Roboto Slab';">#{foto.nome}</h4>                                                     
+                                                    <img src="arquivos/contas/#{foto.clienteFK.conta}/imagens/_#{foto.idfoto}.jpg" style="width:80%"/>
+                                                    <br/>
+                                                    <div> 
+                                                        <button class="botaoFoto fas fa-times-circle"> </button>
+                                                        <button class="botaoFoto far fas fa-info-circle" onclick="acord('F' + #{foto.idfoto})"> </button>                                                        
+                                                        <a class="botaoFoto  fas fa-download" href="http://localhost:8080/hagana/faces/restrict/arquivos/contas/#{foto.clienteFK.conta}/imagens/#{foto.idfoto}.jpg" download="#{foto.nome}"></a>
+                                                        <button class="botaoFoto far fas fa-expand-arrows-alt " onclick="expandir('#{foto.nome}', '#{foto.idfoto}', '#{foto.clienteFK.conta}')"> </button>
+
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            <div id="F#{foto.idfoto}" class="w3-hide w3-card-2">
+                                                <br/>
+
+                                                <table class="w3-table w3-large">
+
+                                                    <tr>
+                                                        <td>Nome:</td>
+                                                        <td class="w3-text-deep-orange">#{foto.nome}</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Usuário:</td>
+                                                        <td class="w3-text-blue">#{foto.usuarioFK.nome}</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Data:</td>
+                                                        <td class="w3-text-blue">#{foto.dataFormat}</td>
+                                                    </tr>
+                                                </table>
+                                                <br/>
+                                            </div>
+
+                                        </div>
+
+                                    </ui:repeat>
+
+                                </h:panelGroup> 
+                                <!-- fim caixa dispositivos -->
+                                <br/>
+                                <br/>
+
+                            </div>
+
+                            <!-- Fim grid dispositivos -->
+                        </div>
+
+                    </div>
+                    <!-- Fim dispositivos --> 
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <div id="mAddFoto" class="w3-modal " >
+            <div class="w3-modal-content"  style="width: 500px;margin-top: 150px">
+
+                <div class="headModal">
+                    <i class="fas fa-times-circle w3-right minimiza" onclick="document.getElementById('mAddFoto').style.display = 'none'"> </i>
+                    <p id="nomeFoto" class="w3-text-white w3-center w3-padding" style="font-family: 'Roboto Slab';font-size: 18px">Adicionar foto</p>
+                </div>
+
+
+                <div class="w3-container" >
+                    <br/>
+                    <br/>
+
+
+                    <h:form id="formFile" enctype="multipart/form-data">
+
+                        <p:inputText id="nome" type="text" value="#{uploadBean.nome}"  
+                                     autocomplete="off" 
+                                     required="true" 
+                                     class="inp"
+                                     placeholder="Local da foto"  
+                                     style="width: 100%;height: 50px;max-width: 550px;"> 
+                            <f:validateLength minimum="2" />
+                        </p:inputText>
+                        <p:message for="nome" styleClass="validate"/>
+                        <br/>
+                        <br/>
+
+                        <h:inputFile id="arquivo" 
+                                     value="#{uploadBean.arquivo}" 
+                                     required="true" 
+                                     style="max-width: 550px;"
+                                     class="inputFoto"
+                                     label="Arquivo" />
+
+                        <br/> 
+
+                        <div class="w3-right">
+
+                            <p:commandButton value="cancelar"
+                                             onclick="document.getElementById('m002').style.display = 'none'"
+                                             class="botao"/>
+                            <h:commandButton value="Importar" 
+                                             action="#{uploadBean.importa()}"
+                                             class="botao">
+                                <f:ajax execute="@form" render="formFile" />
+                            </h:commandButton>
+                        </div>
+
+
+                        <br></br>
+                        <br></br>
+                        <p:messages  showDetail="true" closable="true"/>
+                    </h:form>
+
+                    <br/>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="expand" class="w3-modal w3-center">
+            <div class="w3-container" style="padding-left:  5%;padding-right: 5%;margin-top:  -4%;">   
+                <div class="headModal">
+                    <i class="fas fa-times-circle w3-right minimiza" onclick="document.getElementById('expand').style.display = 'none'"> </i>
+                    <p id="nomeFoto" class="w3-text-white w3-center w3-padding" style="font-family: 'Roboto Slab';font-size: 18px"></p>
+                </div>
+                <div class="w3-container w3-center">
+                    <img id="fotoExpand" src="" style="width: 100%;"/>
+                </div>                    
+            </div>
+        </div>
+
+        <style>
+
+            .validate{
+                background-color: white; 
+                font-size: 14px; 
+                color: #ff006b;
+                border: none;
+            }
+            .ui-growl-item-container{
+
+                background-color: #121313; 
+                border-radius:8px;
+                font-size: 16px;
+                color: #00f1ff; 
+            }
+            .botaoFoto
+            {
+                border-style: none;
+                color: #4d4c55;
+                border-radius: 100px; 
+                background: none;
+                font-size: 22px;
+                margin: 12px;
+            }
+            .botaoFoto:hover{
+                color: #b1f705;
+            }
+            #bord{
+                box-shadow: 0 0 10px #a2a2a2;
+                border-radius: 4px; 
+            }
+            #bord:hover{
+                box-shadow: 0 0 10px #9bff00;
+            }
+            .inputFoto{
+
+                background: url(../img/cam.png) no-repeat 10px center ;
+                width: 100%;
+                height: 50px;
+                cursor: pointer;
+                border: none;
+                font-size: 12px;                 
+                color: white;
+                background-color: #ff0063;
+                display: none; 
+                padding-top: 12px;  
+                font-family: 'Roboto Slab';
+
+            }
+            .inputFoto:hover
+            {
+                background-color:#77e00b; 
+            }
+
+
+            .inputFoto::-webkit-file-upload-button {
+                visibility: hidden;
+            }
+
+            #arquivo{
+                background: red;
+            }
+
+
+        </style>
+
+
+        <script>
+
+            function carregarDetalhes(usuario, data) {
+                document.getElementById("usuario").innerHTML = usuario;
+                document.getElementById("data").innerHTML = data;
+                document.getElementById('detalhes').style.display = 'block';
+            }
+
+            function acord(id) {
+                var x = document.getElementById(id);
+
+                var bt = document.getElementById('F' + id);
+
+                if (x.className.indexOf(" w3-show ") === -1) {
+                    x.className = x.className.replace(" w3-hide ", " w3-show ");
+                    bt.className = bt.className.replace("itemCor", " cor ");
+
+                } else {
+                    x.className = x.className.replace(" w3-show ", " w3-hide ");
+                    bt.className = bt.className.replace("cor", "itemCor");
+                }
+
+            }
+
+        </script>
+
+        <!-- fim main -->
+        <br></br>  
+
+
+        <script>
+
+
+            function w3_open() {
+
+                document.getElementById("sideBar").style.display = "block";
+                var x = document.getElementById("main");
+
+                x.className = x.className.replace("  w3-white  ", " w3-hide ");
+                document.getElementById("sideBar").style.width = "200px";
+                document.getElementById("main").style.marginLeft = "200px";
+
+
+            }
+
+            function w3_close() {
+                document.getElementById("sideBar").style.display = "none";
+                var x = document.getElementById("sideBar");
+
+                x.className = x.className.replace("w3-hide", " w3-white ");
+                document.getElementById("sideBar").style.width = "0px";
+                document.getElementById("main").style.marginLeft = "0px";
+
+            }
+
+            $(function () {
+                var $refreshButton = $('#refresh');
+                var $results = $('#css_result');
+
+                function refresh() {
+                    var css = $('style.cp-pen-styles').text();
+                    $results.html(css);
+                }
+
+                refresh();
+                $refreshButton.click(refresh);
+
+                // Select all the contents when clicked
+                $results.click(function () {
+                    $(this).select();
+                });
+            });
+
+
+            function acord(id) {
+                var x = document.getElementById(id);
+
+                var bt = document.getElementById(id);
+
+                if (x.className.indexOf("w3-show") === -1) {
+                    x.className = x.className.replace("w3-hide", "w3-show");
+                } else {
+                    x.className = x.className.replace("w3-show", "w3-hide");
+
+                }
+
+            }
+
+            function expandir(nome, url, conta) {
+                document.getElementById("expand").style.display = 'block';
+                document.getElementById("nomeFoto").innerHTML = nome;
+                document.getElementById('fotoExpand').src = "arquivos/contas/" + conta + "/imagens/" + url + ".jpg";
+            }
+            function acordFechar(id) {
+                var x = document.getElementById(id);
+                x.className = x.className.replace(" w3-show ", " w3-hide ");
+            }
+
+
+
+        </script>
+    </h:body>
+
+
+
+</html>
+
+

@@ -66,6 +66,7 @@ public class RedeDAO {
             entityManager.getTransaction().commit();
         } catch (Exception ex) {
             entityManager.getTransaction().rollback();
+            return null;
         } finally {
             // entityManager.close();
         }

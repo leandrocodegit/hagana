@@ -44,7 +44,7 @@
                     <li class="icone"><a href="index.xhtml"><span><b class="fas fa-hdd w3-text-blue-grey"></b></span>   <b class="textoMenu" >Dispositivos</b></a></li>                   
                     <li class="icone"><a href="dispositivos.xhtml"  onclick="rc()" ><span><b class="fas fa-clone w3-text-blue-grey"></b></span>   <b class="textoMenu" >Arquivos</b></a></li>
                     <li class="icone"><a href="map.xhtml"><span><b class="fas fa-sitemap w3-text-blue-grey"></b></span>   <b class="textoMenu" >Mapa</b></a></li>
-                    <li class="icone"><a><span><b class="fas fa-camera-retro w3-text-blue-grey" ></b></span>   <b class="textoMenu" >Fotos</b></a></li>
+                    <li class="icone"><a href="fotos.xhtml"><span><b class="fas fa-camera-retro w3-text-blue-grey" ></b></span>   <b class="textoMenu" >Fotos</b></a></li>
                     <li class="icone"><a href="login.xhtml"><span><b class="far fa-user w3-text-purple"></b></span>   <b class="w3-text-purple" style="padding-left:9px" > Olá, #{loginBean.dadosUsuario}</b></a></li>
 
                     <div class="w3-padding">
@@ -103,7 +103,7 @@
                         <div  style="margin: 8px">
                             <h:form id="dtable"> 
                                 <div class="w3-round-large" style="height: 45px;border: 0.5px solid #c9d8de;font-size: 22px;width: 350px;margin-bottom: -15px ">
-                                    <p:inputText value="#{clienteBean.pesquisa}" autocomplete="off" placeholder="Pesquisar" class="w3-border-0 w3-large" style="background: none;color: white" >               
+                                    <p:inputText value="#{clienteBean.pesquisa}" autocomplete="off" placeholder="Pesquisar" class="w3-border-0 w3-large" style="background: none;color: #302e2f" >               
                                         <p:ajax event="keyup" update="dataCliente" listener="#{clienteBean.buscar()}"/> 
                                     </p:inputText><b class="fas fa-search" style="color: #ebf900;background: none;font-size: 30px;margin-left: 5px;margin-top: 4px"/>  
                                 </div>
@@ -258,12 +258,10 @@
 
                 <div  class="  w3-white w3-border-bottom w3-border-rigth" >
 
-
-                    <div class="w3-container w3-light-blue w3-large">
-                        <i class="fas fa-times-circle w3-right minimiza" onclick="document.getElementById('cadCliente').style.display = 'none'" style="font-size:20px;padding-top: 10px"></i>
-                        <h3 class="w3-text-white ">Cadastrar novo cliente</h3>
+                    <div class="headModal">
+                        <i class="fas fa-times-circle w3-right minimiza" onclick="document.getElementById('cadCliente').style.display = 'none'"></i>
+                        <p class="w3-text-white w3-center w3-padding" style="font-family: 'Roboto Slab';font-size: 18px">Cadastrar novo cliente</p>
                     </div>
-
 
                     <br></br>
 
@@ -276,7 +274,7 @@
 
                                     <tr>
                                         <td class="w3-right-align w3-large"><b>Conta:</b></td>
-                                        <td><p:inputText id="conta" value="#{clienteBean.cliente.conta}" required="true" class="inp"> 
+                                        <td><p:inputText id="conta" value="#{clienteBean.cliente.conta}" autocomplete="off" required="true" class="inp"> 
                                                 <f:validateLength minimum="2" />
                                             </p:inputText>
                                             <p:message for="conta" styleClass="validate" />  
@@ -285,7 +283,7 @@
 
                                     <tr>
                                         <td class="w3-right-align w3-large"><b>Nome:</b></td>
-                                        <td><p:inputText id="nome" value="#{clienteBean.cliente.nome}" required="true" class="inp"> 
+                                        <td><p:inputText id="nome" value="#{clienteBean.cliente.nome}" autocomplete="off" required="true" class="inp"> 
                                                 <f:validateLength minimum="2" />
                                             </p:inputText>
                                             <p:message for="nome" styleClass="validate" />
@@ -312,7 +310,7 @@
 
                                     <tr>
                                         <td class="w3-right-align w3-large"><b>Endereço</b></td>
-                                        <td><p:inputText id="end" value="#{clienteBean.cliente.endereco}" required="true" class="inp"> 
+                                        <td><p:inputText id="end" value="#{clienteBean.cliente.endereco}" autocomplete="off" required="true" class="inp"> 
                                                 <f:validateLength minimum="2" />
                                             </p:inputText>
                                             <p:message for="end" styleClass="validate" />

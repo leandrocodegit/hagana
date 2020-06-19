@@ -44,7 +44,7 @@
                     <li class="icone"><a href="index.xhtml"><span><b class="fas fa-hdd w3-text-blue-grey"></b></span>   <b class="textoMenu" >Dispositivos</b></a></li>                   
                     <li class="icone"><a href="dispositivos.xhtml"  onclick="rc()" ><span><b class="fas fa-clone w3-text-blue-grey"></b></span>   <b class="textoMenu" >Arquivos</b></a></li>
                     <li class="icone"><a href="map.xhtml"><span><b class="fas fa-sitemap w3-text-blue-grey"></b></span>   <b class="textoMenu" >Mapa</b></a></li>
-                    <li class="icone"><a><span><b class="fas fa-camera-retro w3-text-blue-grey" ></b></span>   <b class="textoMenu" >Fotos</b></a></li>
+                    <li class="icone"><a href="fotos.xhtml"><span><b class="fas fa-camera-retro w3-text-blue-grey" ></b></span>   <b class="textoMenu" >Fotos</b></a></li>
                     <li class="icone"><a href="login.xhtml"><span><b class="far fa-user w3-text-purple"></b></span>   <b class="w3-text-purple" style="padding-left:9px" > Olá, #{loginBean.dadosUsuario}</b></a></li>
 
                     <div class="w3-padding">
@@ -104,11 +104,11 @@
                             </h:form>
 
                         </header>
-                        <br/>
+                         
                         <!-- Head dispositivos -->
 
                         <!-- Inicio grid dispositivos -->
-                        <div  style="margin: 8px">
+                        <div class="scrollmenu disContent w3-container">
                             <h:form id="formDis">
                                 <h:dataTable id="dataDis" var="dis" binding="#{dispositivoBean.dataTable}" value="#{dispositivoBean.dispositivoList}" style="width: 100%;margin-top: 10px"
                                              styleClass="book-table"
@@ -116,7 +116,7 @@
                                              rowClasses="book-table-odd-row,book-table-even-row">
                                     <h:column>
 
-                                        <div onclick="acord('D' + #{dis.iddispositivo})" id="BTD#{dis.iddispositivo}" class="cor w3-block w3-left-align item">
+                                        <div onclick="acord('D' + #{dis.iddispositivo})" id="BTD#{dis.iddispositivo}" class="itemCor itemDim w3-block w3-left-align">
                                             <i class="far fa-dot-circle iconeEdit" style="padding-top:10px;padding-left: 12px"></i> <b class="iconeConfig">#{dis.nome}</b>
 
 
@@ -134,7 +134,7 @@
 
                                         <!-- caixa dispositivos -->
 
-                                        <div id="D#{dis.iddispositivo}" class="w3-round-large w3-card w3-hide w3-animate-left w3-container w3-white w3-border-bottom w3-border-rigth caixa" style="width: 100%;margin-top:10px;padding-left:15px">
+                                        <div id="D#{dis.iddispositivo}" class="w3-round-large w3-card w3-hide w3-animate-left w3-container w3-white w3-border-bottom w3-border-rigth caixa" style="width: 100%;padding-left:15px">
                                             <br></br>
 
                                             <table id="tableDis">
@@ -296,11 +296,10 @@
                                             </h:commandLink>
                                         </h:panelGroup>
                                     </h:form>
-                                </header>
-                                <br/>
+                                </header>                               
 
                                 <!-- Inicio grid compuador -->
-                                <div  style="margin: 8px">
+                                  <div class="scrollmenu disContent w3-container">
                                     <h:form id="formComp">
                                         <h:dataTable id="dataComp" var="comp" binding="#{computadorBean.dataTable}" value="#{computadorBean.computadorList}" style="width: 100%;margin-top: 10px"
                                                      styleClass="book-table"
@@ -310,7 +309,7 @@
 
                                             <h:column>
 
-                                                <div onclick="acord('C' + #{comp.idcomputador})" id="BTC#{comp.idcomputador}" class="w3-block w3-left-align item">
+                                                <div onclick="acord('C' + #{comp.idcomputador})" id="BTC#{comp.idcomputador}" class="itemCor itemDim w3-block w3-left-align">
                                                     <i class="fas fa-desktop iconeEdit" style="padding-top:10px;padding-left: 12px"></i> <b class="iconeConfig">#{comp.nome}</b>
 
 
@@ -487,7 +486,7 @@
 
                                             <h:column>
 
-                                                <div onclick="acord('R' + #{rede.idrede})" id="BTR#{rede.idrede}" class="w3-block w3-left-align item">
+                                                <div onclick="acord('R' + #{rede.idrede})" id="BTR#{rede.idrede}" class="itemCor itemDim w3-block w3-left-align">
                                                     <i class="far fa-hdd iconeEdit" style="padding-top:10px;padding-left: 12px"></i> <b class="iconeConfig">#{rede.nome}</b>
 
 
@@ -608,8 +607,8 @@
 
                     <div id="arq002" class="w3-modal " >
                         <div class="w3-modal-content"  style="width: 500px;margin-top: 150px">
-                            <header class="w3-container w3-light-blue" style="background-color:#F7F7F3;margin-bottom:20px;"> 
-                                <i class="fas fa-times-circle w3-right minimiza" onclick="document.getElementById('arq002').style.display = 'none'" style="font-size:20px;padding-top: 10px;"></i>
+                            <header class="headModal"> 
+                                <i class="fas fa-times-circle w3-right minimiza" onclick="document.getElementById('arq002').style.display = 'none'"> </i>
                                 <h4 style="color: #FFF">Enviar arquivo</h4>
                             </header>
                             <div class="w3-container"  style="width: 100%;padding-right: 10px;padding-left: 10px;">
@@ -673,9 +672,9 @@
                             <header class="w3-container w3-card w3-border-ligth-grey w3-border-bottom w3-border-lime" style="background-color:#F7F7F3;height: 45px">
                                 <h:form>
                                     <h:panelGroup rendered="#{true == true}">
-                                        <h:commandLink     action="#{redeBean.limpar()}" 
+                                        <h:commandLink     action="#{linkBean.limpar()}" 
                                                            value=" Link"
-                                                           title="Adicionar equipamento"  onclick="abreModal('mRLink')" 
+                                                           title="Adicionar equipamento"  onclick="abreModal('mLink')" 
                                                            class="fas fa-plus-circle w3-left textoMenu">
                                             <f:ajax render=":formCadLink"/>                      
 
@@ -698,7 +697,7 @@
 
                                         <h:column>
 
-                                            <div onclick="acord('L' + #{link.idlink})" id="BTL#{link.idlink}" class="w3-block w3-left-align item">
+                                            <div onclick="acord('L' + #{link.idlink})" id="BTL#{link.idlink}" class="itemCor itemDim w3-block w3-left-align">
                                                 <i class="fas fa-cloud" style="color:#bfe700;padding-top:10px;padding-left: 12px"></i> <b class="iconeConfig">#{link.toString()}</b>
 
 
@@ -725,14 +724,13 @@
                                                         <td class="textLabel">Tipo:</td>
                                                         <td>
                                                             <h:form>
-                                                                <h:selectOneMenu  value="#{link.operadora}" disabled="true"  class="w3-border-0" style="height:30px;background: none;margin-left: -5px" >
+                                                                <h:selectOneMenu  value="#{link.tipoRede}" disabled="true"  class="w3-border-0" style="height:30px;background: none;margin-left: -5px" >
                                                                     <f:selectItem itemLabel="Fibra" itemValue="1" />
                                                                     <f:selectItem itemLabel="Cabo" itemValue="2"/>
                                                                     <f:selectItem itemLabel="ADSL" itemValue="3" />  
                                                                     <f:selectItem itemLabel="Radio" itemValue="4" />                                          
                                                                 </h:selectOneMenu>
                                                             </h:form>
-
                                                         </td>
                                                         <td></td>
                                                         <td></td>
@@ -759,19 +757,19 @@
                                                     </tr> 
                                                     <tr>
                                                         <td class="textLabel">Velocidade:</td>
-                                                        <td class="textoTable">#{link.velocidade}</td>                                     
+                                                        <td class="textoTable">#{link.velocidade}MB</td>                                     
                                                     </tr>
 
                                                     <tr>
                                                         <td class="textLabel">IP/Host:</td>
-                                                        <td class="textoTable">#{link.host}</td>                                     
+                                                        <td class="textoTable">#{link.ip}</td>                                     
                                                     </tr>
                                                     <tr>
                                                         <td class="textLabel">Porta Teste:</td>
                                                         <td class="textoTable">#{link.porta}</td>                                     
                                                     </tr>
                                                     <tr>
-                                                        <td class="textLabel">Local</td>
+                                                        <td class="textLabel">Local:</td>
                                                         <td class="textoTable">#{link.localFK.nome}</td>
                                                         <td></td>
                                                         <td></td>
@@ -779,13 +777,13 @@
 
                                                     <h:panelGroup rendered="#{loginBean.usuario.verSenhas == true}">
                                                         <tr>
-                                                            <td class="textLabel">Login</td>
+                                                            <td class="textLabel">Login:</td>
                                                             <td class="textoTable">#{link.login}</td>
                                                             <td></td>
                                                             <td></td>
                                                         </tr>                                                
                                                         <tr>
-                                                            <td class="textLabel">Senha</td>                                                    
+                                                            <td class="textLabel">Senha:</td>                                                    
                                                             <td class="textoTable">#{link.senha}</td>
                                                             <td></td>
                                                             <td></td>
@@ -793,13 +791,13 @@
                                                     </h:panelGroup>
 
                                                     <tr>
-                                                        <td class="textLabel">Data</td>
+                                                        <td class="textLabel">Data:</td>
                                                         <td class="textoTable">#{link.dataFormat}</td>
                                                         <td></td>
                                                         <td></td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="textLabel">Usuario</td>
+                                                        <td class="textLabel">Usuario:</td>
                                                         <td class="textoTable">#{link.usuarioFK.nome}</td>
                                                         <td></td>
                                                         <td></td>
@@ -832,8 +830,8 @@
 
                     <div  class=" w3-white w3-border-bottom w3-border-rigth " >
 
-                        <div style="background-color: #233045; height: 47px">
-                            <i class="fas fa-times-circle w3-right minimiza" onclick="document.getElementById('mDispostivo').style.display = 'none'" style="font-size:30px;margin:8px;color: white"></i>
+                        <div class="headModal">
+                            <i class="fas fa-times-circle w3-right minimiza" onclick="document.getElementById('mDispostivo').style.display = 'none'"></i>
 
                             <p class="w3-text-white w3-center w3-padding" style="font-family: 'Roboto Slab';font-size: 18px">Cadastrar novo dispositivo</p>
                         </div>
@@ -848,7 +846,7 @@
 
                                         <tr>
                                             <td class="w3-right-align"><b>Nome:</b></td>
-                                            <td><p:inputText id="nome" type="text" value="#{dispositivoBean.dispositivo.nome}" required="true" class="inp"> 
+                                            <td><p:inputText id="nome" type="text" value="#{dispositivoBean.dispositivo.nome}" autocomplete="off" required="true" class="inp"> 
                                                     <f:validateLength minimum="2" />
                                                 </p:inputText>
                                                 <p:message for="nome" styleClass="validate"/>
@@ -859,7 +857,7 @@
                                             <td class="w3-right-align"><b>Tipo:</b></td>
                                             <td>
 
-                                                <h:selectOneMenu value="#{dispositivoBean.dispositivo.tipo}"  class="inp" style="height: 40px" >
+                                                <h:selectOneMenu value="#{dispositivoBean.dispositivo.tipo}"  class="inp" style="height: 35px" >
                                                     <f:selectItem itemLabel="Antena TAG" itemValue="1" />
                                                     <f:selectItem itemLabel="Alarme IP" itemValue="2" />
                                                     <f:selectItem itemLabel="Biometria" itemValue="3" />
@@ -871,21 +869,21 @@
                                                 </h:selectOneMenu>
                                             </td>
 
-                                        </tr>
+                                        </tr>                           
                                         <tr>
                                             <td class="w3-right-align"><b>IP:</b></td>
-                                            <td><p:inputText id="ip" value="#{dispositivoBean.dispositivo.ip}" required="true" class="inp"  >
-                                                </p:inputText>
-
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="w3-right-align"><b>IP DHCP:</b></td>
                                             <td>
-                                                <h:selectBooleanCheckbox  style="width: 40px;height: 30px"  value="#{dispositivoBean.dispositivo.dhcp}" >
-                                                    <f:ajax render="ip" listener="#{dispositivoBean.DHCP()}"/>
-                                                </h:selectBooleanCheckbox> 
-                                            </td>                                 
+                                                <div class="w3-row" style="max-width: 420px">
+                                                    <div class="w3-col s9 inp ">
+                                                        <p:inputText id="ip" value="#{dispositivoBean.dispositivo.ip}" autocomplete="off" required="true"  class="inp">
+                                                        </p:inputText> 
+                                                    </div>
+                                                    <div class="w3-col s1 inp" style="width:50px"> <h:selectBooleanCheckbox style="width: 35px;margin: 0px; margin-left: 5px;" value="#{dispositivoBean.dispositivo.dhcp}" >
+                                                            <f:ajax render="ip" listener="#{dispositivoBean.dispositivo.createDHCP()}"/>
+                                                        </h:selectBooleanCheckbox> 
+                                                    </div>                                                      
+                                                </div>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td class="w3-right-align"><b>Porta TCP:</b></td>
@@ -897,30 +895,36 @@
                                             <td><p:inputText type="number" value="#{dispositivoBean.dispositivo.portaWEB}"  class="inp" style="width: 90px"/></td>
                                         </tr>
                                         <tr>
-                                            <td class="w3-right-align"><b>Port conect</b></td>
+                                            <td class="w3-right-align"><b>Port conect:</b></td>
                                             <td>
 
-                                                <h:selectOneMenu class="inp" value="#{dispositivoBean.dispositivo.port_conect}" style="height: 40px">                                                     
+                                                <h:selectOneMenu class="inp" value="#{dispositivoBean.dispositivo.port_conect}" style="height: 35px">                                                     
                                                     <f:selectItems var="porta" value="#{clienteBean.deviceList}" itemValue="#{porta.portaUPLink}"  itemLabel="#{porta.nome}" />                                       
                                                 </h:selectOneMenu>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="w3-right-align"><b>Login:</b></td>
-                                            <td><p:inputText type="password" value="#{dispositivoBean.dispositivo.login}" class="inp"/></td>
+                                            <td><p:inputText type="text" value="#{dispositivoBean.dispositivo.login}" class="inp"/></td>
                                         </tr>
-                                        <tr>
-                                            <td class="w3-right-align"><b>Senha:</b></td>
-                                            <td><p:inputText type="password" value="#{dispositivoBean.dispositivo.senha}" class="inp"/></td>
-                                        </tr>
-
+                                        <h:panelGroup rendered="#{dispositivoBean.dispositivo.captureSenha == false}">
+                                            <tr>
+                                                <td class="w3-right-align"><b>Senha:</b></td>
+                                                <td><p:inputText type="password" value="#{dispositivoBean.dispositivo.senha}" class="inp"/></td>
+                                            </tr>  
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{dispositivoBean.dispositivo.captureSenha == true}">
+                                            <tr>
+                                                <td class="w3-right-align"><b>Senha:</b></td>
+                                                <td><p:inputText type="text" value="#{dispositivoBean.dispositivo.senha}" class="inp"/></td>
+                                            </tr>  
+                                        </h:panelGroup>
                                         <tr>
                                             <td class="w3-right-align"><b>Fabricante:</b></td>
                                             <td>
 
-                                                <h:selectOneMenu value="#{dispositivoBean.dispositivo.fabricanteFK.idfabricante}" class="inp" style="height: 40px" >   
-                                                    <f:selectItem  itemLabel="Nenhum" itemValue="0" />
-                                                    <f:selectItems  var="fab" value="#{dispositivoBean.fabricantes}" itemValue="#{fab.idfabricante}" itemLabel="#{fab.nome}" />                                                    
+                                                <h:selectOneMenu value="#{dispositivoBean.dispositivo.fabricanteFK.idfabricante}" class="inp" style="height: 35px" >  
+                                                    <f:selectItems  var="fab" value="#{dispositivoBean.fabricantes}" itemValue="#{fab.idfabricante}" itemLabel="#{fab.nome}" />                                                   
 
                                                     <!-- <f:ajax render="resultados"/>-->
                                                 </h:selectOneMenu>
@@ -932,11 +936,10 @@
                                             <td><h:inputText value="#{dispositivoBean.dispositivo.modelo}" class="inp"/></td>
                                         </tr>
                                         <tr>
-                                            <td class="w3-right-align"><b>Local</b></td>
+                                            <td class="w3-right-align"><b>Local:</b></td>
                                             <td>
 
-                                                <h:selectOneMenu value="#{dispositivoBean.dispositivo.localFK.idlocal}"  class="inp" style="height: 40px" >   
-                                                    <f:selectItem  itemLabel="Nenhum" itemValue="0" />
+                                                <h:selectOneMenu value="#{dispositivoBean.dispositivo.localFK.idlocal}"  class="inp" style="height: 35px" >
                                                     <f:selectItems  var="local" value="#{dispositivoBean.localList}" itemValue="#{local.idlocal}" itemLabel="#{local.nome}" />                                                    
 
                                                     <!-- <f:ajax render="resultados"/>-->
@@ -944,20 +947,19 @@
 
                                             </td>
                                         </tr>
-
                                     </table>
 
 
                                     <br></br>
-                                    <div class="w3-center"> 
-                                        <p:commandButton   value="Fechar"  class="botao" onclick="document.getElementById('mDispostivo').style.display = 'none'">
-                                        </p:commandButton>
+                                    <div class="w3-right w3-padding"> 
+
                                         <p:commandButton value="Excluir" onclick="abreModal('ex01')"  class="botao">                                   
                                         </p:commandButton>
                                         <p:commandButton  value="Atualizar" ajax="false" action="#{dispositivoBean.atualizar()}" class="botao">
-                                        </p:commandButton>
+                                        </p:commandButton> 
                                         <p:commandButton  update="formCadDis, formDis"  value="Cadastrar" ajax="true" action="#{dispositivoBean.adicionar()}" class="botao">                                    
                                         </p:commandButton>
+
                                     </div>
                                     <p:messages  showDetail="true" closable="true"/>
                                     <br></br>
@@ -997,8 +999,8 @@
 
                     <div  class=" w3-white w3-border-bottom w3-border-rigth " >
 
-                        <div style="background-color: #233045; height: 47px">
-                            <i class="fas fa-times-circle w3-right minimiza" onclick="document.getElementById('mComputador').style.display = 'none'" style="font-size:30px;margin:8px;color: white"></i>
+                        <div class="headModal">
+                            <i class="fas fa-times-circle w3-right minimiza" onclick="document.getElementById('mComputador').style.display = 'none'" ></i>
 
                             <p class="w3-text-white w3-center w3-padding" style="font-family: 'Roboto Slab';font-size: 18px">Cadastrar novo computador</p>
                         </div>
@@ -1013,7 +1015,7 @@
 
                                         <tr>
                                             <td class="w3-right-align"><b>Nome:</b></td>
-                                            <td><p:inputText id="nome" type="text" value="#{computadorBean.computador.nome}" required="true" class="inp"> 
+                                            <td><p:inputText id="nome" type="text" value="#{computadorBean.computador.nome}" autocomplete="off" required="true" class="inp"> 
                                                     <f:validateLength minimum="2" />
                                                 </p:inputText>
                                                 <p:message for="nome" styleClass="validate"/>
@@ -1023,7 +1025,7 @@
                                         <tr>
                                             <td class="w3-right-align"><b>Tipo:</b></td>
                                             <td>
-                                                <h:selectOneMenu  value="#{computadorBean.computador.tipo}" class="inp" style="margin-left: -5px" >
+                                                <h:selectOneMenu  value="#{computadorBean.computador.tipo}" class="inp" style="height: 35px" >
                                                     <f:selectItem itemLabel="Desktop" itemValue="14" />
                                                     <f:selectItem itemLabel="Notebook" itemValue="15" />
                                                     <f:selectItem itemLabel="Rapsbary" itemValue="16" />
@@ -1035,7 +1037,7 @@
                                         <tr>
                                             <td class="w3-right-align"><b>IOS:</b></td>
                                             <td>
-                                                <h:selectOneMenu  value="#{computadorBean.computador.ios}" class="inp" style="margin-left: -5px" >
+                                                <h:selectOneMenu  value="#{computadorBean.computador.ios}" class="inp" style="height: 35px" >
                                                     <f:selectItem itemLabel="Windows 7" itemValue="1" />
                                                     <f:selectItem itemLabel="Windows 10" itemValue="2" />
                                                     <f:selectItem itemLabel="Windows server" itemValue="3"/>
@@ -1046,54 +1048,60 @@
                                         </tr>
                                         <tr>
                                             <td class="w3-right-align"><b>IP:</b></td>
-                                            <td><p:inputText id="ip" value="#{computadorBean.computador.ip}" required="true" class="inp"  >
-                                                </p:inputText>
-
+                                            <td>
+                                                <div class="w3-row" style="max-width: 420px">
+                                                    <div class="w3-col s9 inp ">
+                                                        <p:inputText id="ip" value="#{computadorBean.computador.ip}" autocomplete="off" required="true"  class="inp">
+                                                        </p:inputText> 
+                                                    </div>
+                                                    <div class="w3-col s1 inp" style="width:50px"> 
+                                                        <h:selectBooleanCheckbox style="width: 35px;margin: 0px; margin-left: 5px;" 
+                                                                                 value="#{computadorBean.computador.dhcp}" >
+                                                            <f:ajax render="ip" listener="#{computadorBean.computador.createDHCP()}"/>
+                                                        </h:selectBooleanCheckbox> 
+                                                    </div>                                                      
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="w3-right-align"><b>IP DHCP:</b></td>
-                                            <td>
-                                                <h:selectBooleanCheckbox style="width: 40px"  value="#{computadorBean.computador.dhcp}" ></h:selectBooleanCheckbox> 
-                                            </td>                                 
-                                        </tr>
-                                        <tr>
-                                            <td class="w3-right-align"><b>Port conect</b></td>
+                                            <td class="w3-right-align"><b>Port conect:</b></td>
                                             <td>
 
-                                                <h:selectOneMenu class="inp" value="#{computadorBean.computador.port_conect}" style="height: 40px">                                                     
+                                                <h:selectOneMenu class="inp" value="#{computadorBean.computador.port_conect}" style="height: 35px">                                                     
                                                     <f:selectItems var="porta" value="#{clienteBean.deviceList}" itemValue="#{porta.portaUPLink}"  itemLabel="#{porta.nome}" />                                       
                                                 </h:selectOneMenu>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td class="w3-right-align"><b>Login:</b></td>
-                                            <td><p:inputText type="text" value="#{computadorBean.computador.login}" class="inp"/></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="w3-right-align"><b>Senha:</b></td>
-                                            <td><p:inputText type="password" value="#{computadorBean.computador.senha}" class="inp"/></td>
-                                        </tr>
-
+                                        <h:panelGroup rendered="#{computadorBean.computador.captureSenha == false}">
+                                            <tr>
+                                                <td class="w3-right-align"><b>Senha:</b></td>
+                                                <td><p:inputText type="password" value="#{computadorBean.computador.senha}" class="inp"/></td>
+                                            </tr>  
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{computadorBean.computador.captureSenha == true}">
+                                            <tr>
+                                                <td class="w3-right-align"><b>Senha:</b></td>
+                                                <td><p:inputText type="text" value="#{computadorBean.computador.senha}" class="inp"/></td>
+                                            </tr>  
+                                        </h:panelGroup>
                                         <tr>
                                             <td class="w3-right-align"><b>Anydesk:</b></td>
-                                            <td><p:inputText type="text" value="#{computadorBean.computador.an}" class="inp"/></td>
+                                            <td><p:inputText type="text" value="#{computadorBean.computador.an}" autocomplete="off" class="inp"/></td>
                                         </tr>
 
                                         <tr>
                                             <td class="w3-right-align"><b>Teamviewer:</b></td>
-                                            <td><p:inputText type="number" value="#{computadorBean.computador.tv}" class="inp"/></td>
+                                            <td><p:inputText type="number" value="#{computadorBean.computador.tv}" autocomplete="off" class="inp"/></td>
                                         </tr>
                                         <tr>
                                             <td class="w3-right-align"><b>Senha remoto:</b></td>
                                             <td><p:inputText type="password" value="#{computadorBean.computador.senhaRMT}" class="inp"/></td>
                                         </tr>                        
                                         <tr>
-                                            <td class="w3-right-align"><b>Local</b></td>
+                                            <td class="w3-right-align"><b>Local:</b></td>
                                             <td>
 
-                                                <h:selectOneMenu value="#{computadorBean.computador.localFK.idlocal}" class="inp" style="height: 40px" >                                                   
+                                                <h:selectOneMenu value="#{computadorBean.computador.localFK.idlocal}" class="inp" style="height: 35px" >                                                   
                                                     <f:selectItems  var="comp" value="#{computadorBean.localList}" itemValue="#{comp.idlocal}" itemLabel="#{comp.nome}" />                                                   
                                                     <!-- <f:ajax render="resultados"/>-->
                                                 </h:selectOneMenu>
@@ -1105,16 +1113,14 @@
 
 
                                     <br></br>
-                                    <div class="w3-center"> 
-                                        <p:commandButton   value="Fechar"  class="botao" onclick="document.getElementById('mComputador').style.display = 'none'">
-                                        </p:commandButton>
+                                    <div class="w3-right w3-padding"> 
+
                                         <p:commandButton value="Excluir" onclick="abreModal('ex02')"  class="botao">                                   
                                         </p:commandButton>
                                         <p:commandButton  value="Atualizar" ajax="false" action="#{computadorBean.atualizar()}"     class="botao">
-                                        </p:commandButton>
+                                        </p:commandButton> 
                                         <p:commandButton  update="formCadComp"  value="Cadastrar" ajax="true" action="#{computadorBean.adicionar()}"  class="botao">                                    
                                         </p:commandButton>
-
                                     </div>
 
                                     <p:messages  showDetail="true" closable="true"/>
@@ -1156,8 +1162,8 @@
 
                     <div  class=" w3-white w3-border-bottom w3-border-rigth " >
 
-                        <div style="background-color: #233045; height: 47px">
-                            <i class="fas fa-times-circle w3-right minimiza" onclick="document.getElementById('mRede').style.display = 'none'" style="font-size:30px;margin:8px;color: white"></i>
+                        <div class="headModal">
+                            <i class="fas fa-times-circle w3-right minimiza" onclick="document.getElementById('mRede').style.display = 'none'" ></i>
 
                             <p class="w3-text-white w3-center w3-padding" style="font-family: 'Roboto Slab';font-size: 18px">Cadastrar nova rede</p>
                         </div>
@@ -1172,7 +1178,7 @@
 
                                         <tr>
                                             <td class="w3-right-align"><b>Nome:</b></td>
-                                            <td><p:inputText id="nome" type="text" value="#{redeBean.rede.nome}" required="true" class="inp"> 
+                                            <td><p:inputText id="nome" type="text" value="#{redeBean.rede.nome}" autocomplete="off" required="true" class="inp"> 
                                                     <f:validateLength minimum="2" />
                                                 </p:inputText>
                                                 <p:message for="nome" styleClass="validate"/>
@@ -1182,7 +1188,7 @@
                                         <tr>
                                             <td class="w3-right-align"><b>Tipo:</b></td>
                                             <td>
-                                                <h:selectOneMenu  value="#{redeBean.rede.tipo}" class="inp" style="margin-left: -5px;height: 40px" >
+                                                <h:selectOneMenu  value="#{redeBean.rede.tipo}" class="inp" style="margin-left: -5px;height: 35px" >
                                                     <f:selectItem itemLabel="Antena" itemValue="9" />
                                                     <f:selectItem itemLabel="Roteador" itemValue="10"/>
                                                     <f:selectItem itemLabel="Roteador WIFI" itemValue="11" />  
@@ -1193,18 +1199,23 @@
                                         </tr>
                                         <tr>
                                             <td class="w3-right-align"><b>IP:</b></td>
-                                            <td><p:inputText id="ip" value="#{redeBean.rede.ip}" required="true" class="inp"  >
-                                                </p:inputText>
+                                            <td>
+                                                <div class="w3-row" style="max-width: 420px">
+                                                    <div class="w3-col s9 inp ">
+                                                        <p:inputText id="ip" value="#{redeBean.rede.ip}" autocomplete="off" required="true"  class="inp">
+                                                        </p:inputText> 
+                                                    </div>
+                                                    <div class="w3-col s1 inp" style="width:50px"> 
+                                                        <h:selectBooleanCheckbox style="width: 35px;margin: 0px; margin-left: 5px;" 
+                                                                                 value="#{redeBean.rede.dhcp}" >
+                                                            <f:ajax render="ip" listener="#{redeBean.rede.createDHCP()}"/>
+                                                        </h:selectBooleanCheckbox> 
+                                                    </div>                                                      
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="w3-right-align"><b>IP DHCP:</b></td>
-                                            <td>
-                                                <h:selectBooleanCheckbox style="width: 40px"  value="#{redeBean.rede.dhcp}" ></h:selectBooleanCheckbox> 
-                                            </td>                                 
-                                        </tr>
-                                        <tr>
-                                            <td class="w3-right-align"><b>Port conect</b></td>
+                                            <td class="w3-right-align"><b>Port conect:</b></td>
                                             <td>
 
                                                 <h:selectOneMenu class="inp" value="#{redeBean.rede.port_conect}" style="height: 40px">                                                     
@@ -1212,21 +1223,23 @@
                                                 </h:selectOneMenu>
                                             </td>
                                         </tr>
+                                        <h:panelGroup rendered="#{redeBean.rede.captureSenha == false}">
+                                            <tr>
+                                                <td class="w3-right-align"><b>Senha:</b></td>
+                                                <td><p:inputText type="password" value="#{redeBean.rede.senha}" class="inp"/></td>
+                                            </tr>  
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{redeBean.rede.captureSenha == true}">
+                                            <tr>
+                                                <td class="w3-right-align"><b>Senha:</b></td>
+                                                <td><p:inputText type="text" value="#{redeBean.rede.senha}" class="inp"/></td>
+                                            </tr>  
+                                        </h:panelGroup>
                                         <tr>
-                                            <td class="w3-right-align"><b>Login:</b></td>
-                                            <td><p:inputText type="text" value="#{redeBean.rede.login}" class="inp"/></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="w3-right-align"><b>Senha:</b></td>
-                                            <td><p:inputText type="password" value="#{redeBean.rede.senha}" class="inp"/></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="w3-right-align"><b>Local</b></td>
+                                            <td class="w3-right-align"><b>Local:</b></td>
                                             <td>
 
-                                                <h:selectOneMenu value="#{redeBean.rede.localFK.idlocal}" class="inp" style="height: 40px" >                                                   
+                                                <h:selectOneMenu value="#{redeBean.rede.localFK.idlocal}" class="inp" style="hheight: 35px" >                                                   
                                                     <f:selectItems  var="rede" value="#{redeBean.localList}" itemValue="#{rede.idlocal}" itemLabel="#{rede.nome}" />                                                   
                                                     <!-- <f:ajax render="resultados"/>-->
                                                 </h:selectOneMenu>
@@ -1238,15 +1251,14 @@
 
 
                                     <br></br>
-                                    <div class="w3-center"> 
-                                        <p:commandButton   value="Fechar"  class="botao" onclick="document.getElementById('mRede').style.display = 'none'">
-                                        </p:commandButton>
-                                        <p:commandButton value="Excluir" onclick="abreModal('ex03')"  class="botao">                                   
-                                        </p:commandButton>
-                                        <p:commandButton  value="Atualizar" ajax="false" action="#{redeBean.atualizar()}"  update="formRede"   class="botao">
-                                        </p:commandButton>
-                                        <p:commandButton  update="formCadRede,formRede"  value="Cadastrar" ajax="true" action="#{redeBean.adicionar()}"  class="botao">                                    
-                                        </p:commandButton>
+                                    <div class="w3-right w3-padding">                                         
+                                            <p:commandButton value="Excluir" onclick="abreModal('ex03')"  class="botao">                                   
+                                            </p:commandButton>
+                                            <p:commandButton  value="Atualizar" ajax="false" action="#{redeBean.atualizar()}"  update="formRede"   class="botao">
+                                            </p:commandButton>
+                                            <p:commandButton  update="formCadRede,formRede"  value="Cadastrar" ajax="true" action="#{redeBean.adicionar()}"  class="botao">                                    
+                                            </p:commandButton>
+                              
 
                                     </div>
 
@@ -1283,16 +1295,16 @@
             <!-- fim modal rede -->
 
 
-            <!-- Modal rede -->
+            <!-- Modal link -->
             <div id="mLink" class="w3-modal">  
                 <div class="w3-modal-content w3-animate-zoom "  >
 
                     <div  class=" w3-white w3-border-bottom w3-border-rigth " >
 
-                        <div style="background-color: #233045; height: 47px">
-                            <i class="fas fa-times-circle w3-right minimiza" onclick="document.getElementById('mRede').style.display = 'none'" style="font-size:30px;margin:8px;color: white"></i>
+                        <div class="headModal">
+                            <i class="fas fa-times-circle w3-right minimiza" onclick="document.getElementById('mLink').style.display = 'none'"> </i>
 
-                            <p class="w3-text-white w3-center w3-padding" style="font-family: 'Roboto Slab';font-size: 18px">Cadastrar nova rede</p>
+                            <p class="w3-text-white w3-center w3-padding" style="font-family: 'Roboto Slab';font-size: 18px">Cadastrar novo link</p>
                         </div>
 
                         <br></br>
@@ -1304,63 +1316,70 @@
                                     <table class="w3-table">
 
                                         <tr>
-                                            <td class="w3-right-align"><b>Nome:</b></td>
-                                            <td><p:inputText id="nome" type="text" value="#{redeBean.rede.nome}" required="true" class="inp"> 
-                                                    <f:validateLength minimum="2" />
-                                                </p:inputText>
-                                                <p:message for="nome" styleClass="validate"/>
+                                            <td class="w3-right-align"><b>Operadora:</b></td>
+                                            <td>
+                                                <h:form>
+                                                    <h:selectOneMenu  value="#{linkBean.link.operadora}"  class="inp" style="height: 35px" >
+                                                        <f:selectItem itemLabel="Vivo" itemValue="1" />
+                                                        <f:selectItem itemLabel="NET" itemValue="2"/>
+                                                        <f:selectItem itemLabel="Tim Live" itemValue="3" />  
+                                                        <f:selectItem itemLabel="Claro" itemValue="4" /> 
+                                                        <f:selectItem itemLabel="Vogel" itemValue="5" /> 
+                                                        <f:selectItem itemLabel="WCS" itemValue="6" /> 
+                                                        <f:selectItem itemLabel="Telium" itemValue="7" /> 
+                                                        <f:selectItem itemLabel="Outra" itemValue="8" /> 
+                                                    </h:selectOneMenu>
+                                                </h:form>
                                             </td>
-
-                                        </tr>
+                                        </tr> 
                                         <tr>
                                             <td class="w3-right-align"><b>Tipo:</b></td>
                                             <td>
-                                                <h:selectOneMenu  value="#{redeBean.rede.tipo}" class="inp" style="margin-left: -5px;height: 40px" >
-                                                    <f:selectItem itemLabel="Antena" itemValue="9" />
-                                                    <f:selectItem itemLabel="Roteador" itemValue="10"/>
-                                                    <f:selectItem itemLabel="Roteador WIFI" itemValue="11" />  
-                                                    <f:selectItem itemLabel="Switch" itemValue="12" /> 
-                                                    <f:selectItem itemLabel="Switch POE" itemValue="13" /> 
-                                                </h:selectOneMenu>
+                                                <h:form>
+                                                    <h:selectOneMenu  value="#{linkBean.link.tipoRede}" class="inp" style="height: 35px" >
+                                                        <f:selectItem itemLabel="Fibra" itemValue="1" />
+                                                        <f:selectItem itemLabel="Cabo" itemValue="2"/>
+                                                        <f:selectItem itemLabel="ADSL" itemValue="3" />  
+                                                        <f:selectItem itemLabel="Radio" itemValue="4" />                                          
+                                                    </h:selectOneMenu>
+                                                </h:form>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td class="w3-right-align"><b>IP:</b></td>
-                                            <td><p:inputText id="ip" value="#{redeBean.rede.ip}" required="true" class="inp"  >
+                                            <td class="w3-right-align"><b>IP/Host:</b></td>
+                                            <td><p:inputText type="text" value="#{linkBean.link.ip}" autocomplete="off" class="inp"/></td>                                
+                                        </tr>
+                                        <tr>
+                                            <td class="w3-right-align"><b>Porta teste:</b></td>
+                                            <td><p:inputText type="number" value="#{linkBean.link.porta}" class="inp" style="width: 60px"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="w3-right-align"><b>Velocidade:</b></td>
+                                            <td><p:inputText id="velocidade" type="number" value="#{linkBean.link.velocidade}" required="true" class="inp" style="width: 60px">
+                                                    <f:validateLength minimum="2" />
                                                 </p:inputText>
+                                                <p:message for="velocidade" styleClass="validate"/>
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td class="w3-right-align"><b>IP DHCP:</b></td>
-                                            <td>
-                                                <h:selectBooleanCheckbox style="width: 40px"  value="#{redeBean.rede.dhcp}" ></h:selectBooleanCheckbox> 
-                                            </td>                                 
-                                        </tr>
-                                        <tr>
-                                            <td class="w3-right-align"><b>Port conect</b></td>
-                                            <td>
-
-                                                <h:selectOneMenu class="inp" value="#{redeBean.rede.port_conect}" style="height: 40px">                                                     
-                                                    <f:selectItems var="porta" value="#{clienteBean.deviceList}" itemValue="#{porta.portaUPLink}"  itemLabel="#{porta.nome}" />                                       
-                                                </h:selectOneMenu>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="w3-right-align"><b>Login:</b></td>
-                                            <td><p:inputText type="text" value="#{redeBean.rede.login}" class="inp"/></td>
-                                        </tr>
+                                        <h:panelGroup rendered="#{linkBean.link.captureSenha == false}">
+                                            <tr>
+                                                <td class="w3-right-align"><b>Senha:</b></td>
+                                                <td><p:inputText type="password" value="#{linkBean.link.senha}" class="inp"/></td>
+                                            </tr>  
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{linkBean.link.captureSenha == true}">
+                                            <tr>
+                                                <td class="w3-right-align"><b>Senha:</b></td>
+                                                <td><p:inputText type="text" value="#{linkBean.link.senha}" class="inp"/></td>
+                                            </tr>  
+                                        </h:panelGroup>
 
                                         <tr>
-                                            <td class="w3-right-align"><b>Senha:</b></td>
-                                            <td><p:inputText type="password" value="#{redeBean.rede.senha}" class="inp"/></td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="w3-right-align"><b>Local</b></td>
+                                            <td class="w3-right-align"><b>Local:</b></td>
                                             <td>
 
-                                                <h:selectOneMenu value="#{redeBean.rede.localFK.idlocal}" class="inp" style="height: 40px" >                                                   
-                                                    <f:selectItems  var="rede" value="#{redeBean.localList}" itemValue="#{rede.idlocal}" itemLabel="#{rede.nome}" />                                                   
+                                                <h:selectOneMenu value="#{linkBean.link.localFK.idlocal}" class="inp" style="height: 35px" >                                                   
+                                                    <f:selectItems  var="link" value="#{linkBean.localList}" itemValue="#{link.idlocal}" itemLabel="#{link.nome}" />                                                   
                                                     <!-- <f:ajax render="resultados"/>-->
                                                 </h:selectOneMenu>
 
@@ -1371,41 +1390,42 @@
 
 
                                     <br></br>
-                                    <div class="w3-center"> 
-                                        <p:commandButton   value="Fechar"  class="botao" onclick="document.getElementById('mRede').style.display = 'none'">
-                                        </p:commandButton>
-                                        <p:commandButton value="Excluir" onclick="abreModal('ex03')"  class="botao">                                   
-                                        </p:commandButton>
-                                        <p:commandButton  value="Atualizar" ajax="false" action="#{redeBean.atualizar()}"  update="formRede"   class="botao">
-                                        </p:commandButton>
-                                        <p:commandButton  update="formCadRede,formRede"  value="Cadastrar" ajax="true" action="#{redeBean.adicionar()}"  class="botao">                                    
-                                        </p:commandButton>
-
+                                    <div class="w3-right w3-padding"> 
+                                        <h:panelGroup rendered="#{linkBean.link.inativeBTAdd == false}">
+                                            <p:commandButton value="Excluir" onclick="abreModal('ex04')"  class="botao">                                   
+                                            </p:commandButton>
+                                            <p:commandButton  value="Atualizar" ajax="false" action="#{linkBean.atualizar()}"  update="formLink"   class="botao">
+                                            </p:commandButton>
+                                        </h:panelGroup>
+                                        <h:panelGroup rendered="#{linkBean.link.inativeBTAdd == true}">
+                                            <p:commandButton  update="formCadLink,formLink"  value="Cadastrar" ajax="true" action="#{linkBean.adicionar()}"  class="botao">                                    
+                                            </p:commandButton>
+                                        </h:panelGroup>
                                     </div>
 
                                     <p:messages  showDetail="true" closable="true"/>
                                     <br></br>
                                     <br></br>
 
-                                    <!-- Modal excluir rede -->
-                                    <div id="ex03" class="w3-modal w3-round-xlarge" >
+                                    <!-- Modal excluir link -->
+                                    <div id="ex04" class="w3-modal w3-round-xlarge" >
                                         <div class="w3-modal-content w3-round-large"  style="width: 500px;margin-top:150px">
                                             <header class="w3-container w3-pink" style="color:#FFFFFF;margin-bottom:20px;"> 
 
-                                                <h3 class="w3-text-white">Excluir dispositivo ? #{redeBean.rede.nome}</h3>
+                                                <h3 class="w3-text-white">Excluir link ? </h3>
                                             </header>
                                             <div class="w3-container"  style="width: 100%;padding-right: 10px;padding-left: 10px;">
                                                 <br></br>
-                                                <p:commandButton   value="Sim"  actionListener="#{redeBean.deletar()}"  class="botaoExcluir w3-right w3-hover-pink"   onclick="document.getElementById('m003').style.display = 'none'" >
+                                                <p:commandButton   value="Sim"  actionListener="#{linkBean.deletar()}"  class="botaoExcluir w3-right w3-hover-pink"   onclick="document.getElementById('m003').style.display = 'none'" >
 
                                                 </p:commandButton>
-                                                <p:commandButton   value="Não"  class="botaoExcluir w3-right" update="formRede"
-                                                                   onclick="document.getElementById('ex03').style.display = 'none'">
+                                                <p:commandButton   value="Não"  class="botaoExcluir w3-right" update="formLink"
+                                                                   onclick="document.getElementById('ex04').style.display = 'none'">
                                                 </p:commandButton>
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- Fim modal excluir rede -->
+                                    <!-- Fim modal excluir link -->
                                 </h:form>
                                 <br></br>
                             </div>
@@ -1413,7 +1433,7 @@
                     </div>
                 </div>
             </div>
-            <!-- fim modal rede -->
+            <!-- fim modal link -->
 
             <style>
                 .validate{
@@ -1487,11 +1507,11 @@
 
                 if (x.className.indexOf(" w3-show ") === -1) {
                     x.className = x.className.replace(" w3-hide ", " w3-show ");
-                    bt.className = bt.className.replace("cor", " w3-card-2 w3-lime ");
+                    bt.className = bt.className.replace("itemCor", " cor ");
 
                 } else {
                     x.className = x.className.replace(" w3-show ", " w3-hide ");
-                    bt.className = bt.className.replace("w3-card-2 w3-lime", "cor");
+                    bt.className = bt.className.replace("cor", "itemCor");
                 }
 
             }

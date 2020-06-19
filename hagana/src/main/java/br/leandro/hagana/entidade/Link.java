@@ -5,6 +5,7 @@
  */
 package br.leandro.hagana.entidade;
 
+import br.leandro.hagana.util.Data;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -20,7 +21,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -36,10 +36,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Link.findAll", query = "SELECT d FROM Link d"),
     @NamedQuery(name = "Link.findByIdlink", query = "SELECT d FROM Link d WHERE d.idlink = :idlink"),
     @NamedQuery(name = "Link.findByPorta", query = "SELECT d FROM Link d WHERE d.porta = :porta"),
-    @NamedQuery(name = "Link.findByHost", query = "SELECT d FROM Link d WHERE d.host = :host"),
+    @NamedQuery(name = "Link.findByHost", query = "SELECT d FROM Link d WHERE d.ip = :ip"),
     @NamedQuery(name = "Link.findByOperadora", query = "SELECT d FROM Link d WHERE d.operadora = :operadora"),
     @NamedQuery(name = "Link.findByVelocidade", query = "SELECT d FROM Link d WHERE d.velocidade = :velocidade"),
-    @NamedQuery(name = "Link.findByTipo", query = "SELECT d FROM Link d WHERE d.tipo = :tipo"),
+    @NamedQuery(name = "Link.findByTipo", query = "SELECT d FROM Link d WHERE d.tipoRede = :tipoRede"),
     @NamedQuery(name = "Link.findByUsuario", query = "SELECT d FROM Link d WHERE d.usuario = :usuario"),
     @NamedQuery(name = "Link.findBySenha", query = "SELECT d FROM Link d WHERE d.senha = :senha")})
 public class Link extends Device implements Serializable {
@@ -53,8 +53,8 @@ public class Link extends Device implements Serializable {
     @Column(name = "porta")
     private Integer porta;
     @Size(max = 45)
-    @Column(name = "host")
-    private String host;
+    @Column(name = "ip")
+    private String ip;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 4)
@@ -64,9 +64,9 @@ public class Link extends Device implements Serializable {
     @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "velocidade")
-    private String velocidade;
-    @Column(name = "tipo")
-    private Integer tipo;
+    private Integer velocidade;
+    @Column(name = "tipoRede")
+    private Integer tipoRede;
     @Size(max = 45)
     @Column(name = "login")
     private String login;
@@ -95,12 +95,7 @@ public class Link extends Device implements Serializable {
     public Link(Integer idlink) {
         this.idlink = idlink;
     }
-
-    public Link(Integer idlink, String operadora, String velocidade) {
-        this.idlink = idlink;
-        this.velocidade = velocidade;
-    }
-
+ 
     public Integer getIdlink() {
         return idlink;
     }
@@ -117,12 +112,14 @@ public class Link extends Device implements Serializable {
         this.porta = porta;
     }
 
-    public String getHost() {
-        return host;
+    @Override
+    public String getIp() {
+        return ip;
     }
 
-    public void setHost(String host) {
-        this.host = host;
+    @Override
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 
     public Integer getOperadora() {
@@ -133,29 +130,34 @@ public class Link extends Device implements Serializable {
         this.operadora = operadora;
     }
 
-    public String getVelocidade() {
+    public Integer getVelocidade() {
         return velocidade;
     }
 
-    public void setVelocidade(String velocidade) {
+    public void setVelocidade(Integer velocidade) {
         this.velocidade = velocidade;
     }
 
     @Override
     public Integer getTipo() {
-        return tipo;
+        return 0;
     }
 
-    @Override
-    public void setTipo(Integer tipo) {
-        this.tipo = tipo;
+    public Integer getTipoRede() {
+        return tipoRede;
     }
+
+    public void setTipoRede(Integer tipoRede) {
+        this.tipoRede = tipoRede;
+    }
+    
 
     @Override
     public String getLogin() {
         return login;
     }
 
+    @Override
     public void setLogin(String login) {
         this.login = login;
     }
@@ -226,25 +228,10 @@ public class Link extends Device implements Serializable {
     public String getNome() {        
         return toString();
     }
-
-    @Override
-    public String getIp() {
-        return host;
-    }
-
+ 
     @Override
     public String getPort_conect() {
         return "Provedor";
-    }
-
-    @Override
-    public boolean isDhcp() {
-        return dhcp;
-    }
-
-    @Override
-    public void setDhcp(boolean dhcp) {
-        this.dhcp = dhcp;
     }
 
     @Override
@@ -266,9 +253,13 @@ public class Link extends Device implements Serializable {
         }
         return true;
     }
-
+    
     @Override
-    public String toString() {
+    public String getDataFormat() {
+        return Data.formatDateddMMYYYYhhmm(dataCriacao);
+    }
+ 
+    public String toLink() {
 
         String name = "";
 
@@ -299,7 +290,12 @@ public class Link extends Device implements Serializable {
                 break;
         }
                       
-        return name;
+        return name ;
+    }
+    
+     @Override
+    public String toString() {
+        return "Link";
     }
 
 }

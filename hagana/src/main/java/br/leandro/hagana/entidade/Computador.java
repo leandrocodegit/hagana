@@ -5,6 +5,7 @@
  */
 package br.leandro.hagana.entidade;
 
+import br.leandro.hagana.util.Data;
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -192,16 +193,6 @@ public class Computador extends Device implements Serializable {
     }
 
     @Override
-    public boolean isDhcp() {
-        return dhcp;
-    }
-
-    @Override
-    public void setDhcp(boolean dhcp) {
-        this.dhcp = dhcp;
-    }
-
-    @Override
     public Cliente getClienteFK() {
         return clienteFK;
     }
@@ -277,8 +268,24 @@ public class Computador extends Device implements Serializable {
     }
 
     @Override
+    public String getDataFormat() {
+        return Data.formatDateddMMYYYYhhmm(dataCriacao);
+    }
+
+    @Override
+    public void createDHCP() {
+
+        if (dhcp) {
+            ipAnterior = ip;
+            ip = "DHCP";
+        } else {
+            ip = ipAnterior;
+        }
+    }
+
+    @Override
     public String toString() {
-        return "br.leandro.hagana.entidade.Computador[ idcomputador=" + idcomputador + " ]";
+        return "Computador";
     }
 
 }
