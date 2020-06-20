@@ -8,6 +8,7 @@ package br.leandro.hagana.bean;
 import br.leandro.hagana.controler.ClienteDAO;
 import br.leandro.hagana.entidade.Cliente;
 import br.leandro.hagana.entidade.Device;
+import java.io.File;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +17,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.html.HtmlDataTable;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 /**
@@ -30,7 +32,7 @@ public class ClienteBean implements Serializable {
 
     private HtmlDataTable dataTable;
     private List<Cliente> clienteList;
-    private List<Device>  deviceList;
+    private List<Device> deviceList;
     private Cliente cliente;
     private String pesquisa;
 
@@ -112,9 +114,15 @@ public class ClienteBean implements Serializable {
 
     public void deletar() {
         if (cliente != null) {
+            
+            if(deletaPasta()){
             ClienteDAO.getInstance().delete(cliente.getConta());
             clienteList = ClienteDAO.getInstance().getclientes();
             message("Sucesso!", "Removido conta.");
+            }
+            else{
+                message("Falha!", "Erro ao remover arquivos.");
+            }
         }
     }
 
@@ -130,6 +138,7 @@ public class ClienteBean implements Serializable {
         if (ClienteDAO.getInstance().insert(cliente) != null) {
 
             clienteList = ClienteDAO.getInstance().getclientes();
+            criarPasta();
             message("Sucesso!", "Adicionado.");
             // criarPasta(cli);
         } else {
@@ -145,6 +154,63 @@ public class ClienteBean implements Serializable {
 
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(mensagem, conteudo));
+    }
+
+    public boolean deletaPasta() {
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        String diretorio = ec.getRealPath("/") + "restrict\\arquivos\\contas\\" + cliente.getConta();
+        File path = new File(diretorio + "\\imagens");        
+
+        if (path.exists()) {            
+        
+        File file; 
+        String[] children = path.list();
+
+        for (int i = 0; i < children.length; i++) {
+            file = new File(path.getPath(), children[i]);
+            file.delete();
+        }
+        file = new File(path.getPath());
+        file.delete();
+        
+        path = new File(diretorio + "\\arquivos");        
+        children = path.list();
+
+        for (int i = 0; i < children.length; i++) {
+            file = new File(path.getPath(), children[i]);
+            file.delete();
+        }
+        file = new File(path.getPath());
+        file.delete();
+        
+        file = new File(diretorio);
+        file.delete();
+        
+            return true;
+        }
+        return false;
+    }
+
+    public void criarPasta() {
+
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+
+        String diretorio = ec.getRealPath("/") + "restrict\\arquivos\\contas\\" + cliente.getConta();
+
+        File arq = new File(diretorio);
+
+        if (!arq.exists()) {
+
+            arq.mkdir();
+
+            arq = new File(diretorio + "\\imagens");
+            arq.mkdir();
+
+            arq = new File(diretorio + "\\arquivos");
+            arq.mkdir();
+
+        }
+
     }
 
 }

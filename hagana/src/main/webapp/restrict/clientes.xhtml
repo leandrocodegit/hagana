@@ -48,7 +48,9 @@
                     <li class="icone"><a href="login.xhtml"><span><b class="far fa-user w3-text-purple"></b></span>   <b class="w3-text-purple" style="padding-left:9px" > Olá, #{loginBean.dadosUsuario}</b></a></li>
 
                     <div class="w3-padding">
+
                         <div id="demoDrop" >
+
                             <h:form>
                                 <b class="fas fa-power-off" style="margin-left:10px;color:#fe5000"></b>
                                 <h:commandLink 
@@ -60,7 +62,6 @@
                         </div>
                     </div>
                 </ul>
-
             </div>
 
             <p:growl id="growl" showDetail="true"  /> 
@@ -230,6 +231,10 @@
                                             <tr>
                                                 <td>Links</td>
                                                 <td class="w3-text-black">#{clienteBean.cliente.linkList.size()}</td> 
+                                            </tr>
+                                             <tr>
+                                                <td>Fotos</td>
+                                                <td class="w3-text-black">#{clienteBean.cliente.fotoList.size()}</td> 
                                             </tr>
                                             <tr>
                                                 <td>Usuario</td>

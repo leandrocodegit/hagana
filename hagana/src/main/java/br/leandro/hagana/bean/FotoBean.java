@@ -8,7 +8,7 @@ package br.leandro.hagana.bean;
 import br.leandro.hagana.controler.ClienteDAO;
 import br.leandro.hagana.controler.DAO;
 import br.leandro.hagana.entidade.Foto;
-import br.leandro.hagana.entidade.Local;
+import java.io.File;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -16,14 +16,14 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.component.html.HtmlDataTable;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 
 /**
  *
  * @author leand
  */
- @ManagedBean
+@ManagedBean
 @ViewScoped
 public class FotoBean implements Serializable {
 
@@ -41,16 +41,31 @@ public class FotoBean implements Serializable {
             }
         }
     }
-    
+
+    public Foto getFoto() {
+        return foto;
+    }
+
+    public void setFoto(Foto foto) {
+        this.foto = foto;
+    }
+
     public List<Foto> getFotoList() {
         return ClienteDAO.getInstance().findAll(SessionContext.getInstance().getClienteSelecionado()).getFotoList();
     }
- 
-    public void deletar() {
-        if (foto != null) {
-            DAO.getInstance().delete(foto, foto.getIdfoto());
+
+    public void deletar(Integer id) {
+        foto = new Foto();
+        foto.setIdfoto(id);
+        System.out.println("Removendo foto " + id);
+
+        if (deletaFotoDir()) {
+            DAO.getInstance().delete(foto, id);
             message("Sucesso!", "Removido foto.");
+        } else {
+            message("Erro!", "Falha ao remover arquivo.");
         }
+
     }
 
     public void atualizar() {
@@ -60,7 +75,7 @@ public class FotoBean implements Serializable {
         if (foto.getNome().length() < 6) {
             foto.setNome(foto.getNome().toUpperCase());
         }
- 
+
         DAO.getInstance().atualizar(foto);
         message("Sucesso!", "Atualizado foto.");
     }
@@ -71,16 +86,15 @@ public class FotoBean implements Serializable {
         foto.setDataCriacao(new Date());
         foto.setUsuarioFK(SessionContext.getInstance().getUsuarioLogado());
         foto.setClienteFK(SessionContext.getInstance().getClienteSelecionado());
-        
 
         foto.setNome(foto.getNome().substring(0, 1).toUpperCase() + foto.getNome().substring(1).toLowerCase());
 
         if (foto.getNome().length() < 6) {
             foto.setNome(foto.getNome().toUpperCase());
         }
- 
-       Foto gravar = new Foto();
-       gravar = foto;
+
+        Foto gravar = new Foto();
+        gravar = foto;
 
         if (DAO.getInstance().insert(gravar) != null) {
 
@@ -88,7 +102,25 @@ public class FotoBean implements Serializable {
             // criarPasta(cli);
         } else {
             message("Falha!", "Erro ao salvar foto.");
-        }        
+        }
+    }
+
+    //Deleta foto do diretorio
+    public boolean deletaFotoDir() {
+        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+        String diretorio = ec.getRealPath("/") + "restrict\\arquivos\\contas\\" + SessionContext.getInstance().getClienteSelecionado().getConta();
+        File path = new File(diretorio + "\\imagens");
+
+        if (path.exists() && foto != null) {
+ 
+            File file = new File(path.getPath(), String.valueOf(foto.getIdfoto()) + ".jpg");
+            file.delete();
+            file = new File(path.getPath(), "_" + String.valueOf(foto.getIdfoto()) + ".jpg");
+            file.delete();
+
+            return true;
+        }
+        return false;
     }
 
     public void message(String mensagem, String conteudo) {
@@ -98,4 +130,3 @@ public class FotoBean implements Serializable {
     }
 
 }
-
