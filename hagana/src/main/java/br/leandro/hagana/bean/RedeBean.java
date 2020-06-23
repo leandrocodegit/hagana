@@ -61,11 +61,11 @@ public class RedeBean implements Serializable {
     }
 
     public List<Rede> getRedeList() {
-        return ClienteDAO.getInstance().findAll(SessionContext.getInstance().getClienteSelecionado()).getRedeList();
+        return ClienteDAO.getInstance().findCliente(SessionContext.getInstance().getClienteSelecionado()).getRedeList();
     }
 
     public List<Local> getLocalList() {
-        return ClienteDAO.getInstance().findAll(SessionContext.getInstance().getClienteSelecionado()).getLocalList();
+        return ClienteDAO.getInstance().findCliente(SessionContext.getInstance().getClienteSelecionado()).getLocalList();
     }
 
     public void selecionarRede() {

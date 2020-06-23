@@ -51,7 +51,7 @@ public class FotoBean implements Serializable {
     }
 
     public List<Foto> getFotoList() {
-        return ClienteDAO.getInstance().findAll(SessionContext.getInstance().getClienteSelecionado()).getFotoList();
+        return ClienteDAO.getInstance().findCliente(SessionContext.getInstance().getClienteSelecionado()).getFotoList();
     }
 
     public void deletar(Integer id) {
@@ -61,6 +61,7 @@ public class FotoBean implements Serializable {
 
         if (deletaFotoDir()) {
             DAO.getInstance().delete(foto, id);
+            SessionContext.getInstance().refreshcliente();
             message("Sucesso!", "Removido foto.");
         } else {
             message("Erro!", "Falha ao remover arquivo.");
@@ -77,6 +78,7 @@ public class FotoBean implements Serializable {
         }
 
         DAO.getInstance().atualizar(foto);
+        SessionContext.getInstance().refreshcliente();
         message("Sucesso!", "Atualizado foto.");
     }
 
@@ -97,7 +99,7 @@ public class FotoBean implements Serializable {
         gravar = foto;
 
         if (DAO.getInstance().insert(gravar) != null) {
-
+            SessionContext.getInstance().refreshcliente();
             message("Sucesso!", " foto adicionada.");
             // criarPasta(cli);
         } else {

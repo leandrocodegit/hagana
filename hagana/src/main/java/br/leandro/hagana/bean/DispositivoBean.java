@@ -64,7 +64,7 @@ public class DispositivoBean implements Serializable {
     }
 
     public List<Dispositivo> getDispositivoList() {
-        return ClienteDAO.getInstance().findAll(SessionContext.getInstance().getClienteSelecionado()).getDispositivoList();
+        return ClienteDAO.getInstance().findCliente(SessionContext.getInstance().getClienteSelecionado()).getDispositivoList();
     }
 
     public List<Fabricante> getFabricantes() {
@@ -72,7 +72,7 @@ public class DispositivoBean implements Serializable {
     }
 
     public List<Local> getLocalList() {
-        return ClienteDAO.getInstance().findAll(SessionContext.getInstance().getClienteSelecionado()).getLocalList();
+        return ClienteDAO.getInstance().findCliente(SessionContext.getInstance().getClienteSelecionado()).getLocalList();
     }
 
     public Fabricante getFabricante() {

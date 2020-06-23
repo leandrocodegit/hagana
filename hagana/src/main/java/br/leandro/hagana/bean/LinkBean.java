@@ -35,12 +35,17 @@ public class LinkBean implements Serializable {
     private HtmlDataTable dataTable;
     public Link link;
     private Fabricante fabricante;
+    private List<Link> linkList;
+    private List<Local> localList;
 
     @PostConstruct
     public void init() {
 
         if (SessionContext.getInstance().getClienteSelecionado() == null) {
             try {
+                linkList = ClienteDAO.getInstance().findCliente(SessionContext.getInstance().getClienteSelecionado()).getLinkList();
+                localList = ClienteDAO.getInstance().findCliente(SessionContext.getInstance().getClienteSelecionado()).getLocalList();
+                
                 FacesContext.getCurrentInstance().getExternalContext().redirect("clientes.xhtml");
             } catch (Exception ex) {
 
@@ -65,15 +70,20 @@ public class LinkBean implements Serializable {
     }
 
     public List<Link> getLinkList() {
-        return ClienteDAO.getInstance().findAll(SessionContext.getInstance().getClienteSelecionado()).getLinkList();
+        return linkList;
     }
+
+    public void setLinkList(List<Link> linkList) {
+        this.linkList = linkList;
+    }
+ 
 
     public List<Fabricante> getFabricantes() {
         return FabricanteDAO.getInstance().getFabricantes();
     }
 
     public List<Local> getLocalList() {
-        return ClienteDAO.getInstance().findAll(SessionContext.getInstance().getClienteSelecionado()).getLocalList();
+        return localList;
     }
 
     public Fabricante getFabricante() {
@@ -93,6 +103,7 @@ public class LinkBean implements Serializable {
     public void deletar() {
         if (link != null) {
             DispositivoDAO.getInstance().delete(link.getIdlink());
+            SessionContext.getInstance().refreshcliente();
             message("Sucesso!", "Removido link.");
         }
     }
@@ -106,6 +117,7 @@ public class LinkBean implements Serializable {
         }
 
         LinkDAO.getInstance().atualizar(link);
+        SessionContext.getInstance().refreshcliente();
         message("Sucesso!", "Atualizado.");
     }
 
@@ -127,7 +139,7 @@ public class LinkBean implements Serializable {
         }
 
         if (LinkDAO.getInstance().insert(gravar) != null) {
-
+            SessionContext.getInstance().refreshcliente();
             message("Sucesso!", "Adicionado.");
             // criarPasta(cli);
         } else {

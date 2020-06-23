@@ -44,68 +44,54 @@ private static DAO instance;
         return entityManager;
     }    
  
-   synchronized public Object insert(Object device) { 
-        
-        try {
-            entityManager.getTransaction().begin();
-            entityManager.persist(device);
+    synchronized public Object insert(Object device) {
 
-            entityManager.flush();
-            entityManager.getTransaction().commit();
+        EntityManager em = getEntityManager();
+        try {
+            em = getEntityManager();
+            em.getTransaction().begin();
+            em.persist(device);
+
+            em.flush();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            entityManager.getTransaction().rollback();
+            em.getTransaction().rollback();
             ex.printStackTrace();
             return null;
-            
+
         } finally {
-            // entityManager.close();
+            em.close();
         }
         return device;
     }
 
-   synchronized public void delete(Object tipeClass, Integer id) {
-        EntityManager entityManager = getEntityManager();         
+    synchronized public void delete(Object tipeClass, Integer id) {
+        EntityManager em = getEntityManager();
         try {
-            entityManager.getTransaction().begin();
+            em.getTransaction().begin();
             Object dispositivo = entityManager.find(tipeClass.getClass(), id);
-            entityManager.remove(dispositivo);
-            entityManager.flush();
-            entityManager.getTransaction().commit();
+            em.remove(dispositivo);
+            em.flush();
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            entityManager.getTransaction().rollback();
+            em.getTransaction().rollback();
         } finally {
-            //  entityManager.close();
+            em.close();
         }
     }
 
-   synchronized public void atualizar(Object device) {
-        EntityManager entityManager = getEntityManager();
+    synchronized public Object atualizar(Object device) {
+        EntityManager em = getEntityManager();
         try {
-            entityManager.getTransaction().begin();
-            entityManager.merge(device);
-            entityManager.getTransaction().commit();
+            em.getTransaction().begin();
+            em.merge(device);
+            em.getTransaction().commit();
         } catch (Exception ex) {
-            entityManager.getTransaction().rollback();
+            em.getTransaction().rollback();
+            return null;
         } finally {
-            //  entityManager.close();
+            em.close();
         }
-    }
-
-    public static void main(String[] args) {
-
-        Dispositivo dispositivo = new Dispositivo();
-        dispositivo.setIddispositivo(2);
-        Usuario usuario = new Usuario();
-        usuario.setIdusuario(1);
-        Cliente cliente = new Cliente();
-        cliente.setConta("0001");
-        dispositivo.setNome("Novo asasas");
-        dispositivo.setUsuarioFK(usuario);
-        dispositivo.setClienteFK(cliente);
-        dispositivo.setDataCriacao(new Date());
-        
-     //  DAO.getInstance().delete(dispositivo,36);
-      
-        DAO.getInstance().atualizar(dispositivo);
+        return device;
     }
 }

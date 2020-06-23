@@ -62,11 +62,11 @@ public class ComputadorBean implements Serializable {
     }
 
     public List<Computador> getComputadorList() {
-        return ClienteDAO.getInstance().findAll(SessionContext.getInstance().getClienteSelecionado()).getComputadorList();
+        return ClienteDAO.getInstance().findCliente(SessionContext.getInstance().getClienteSelecionado()).getComputadorList();
     }
 
     public List<Local> getLocalList() {
-        return ClienteDAO.getInstance().findAll(SessionContext.getInstance().getClienteSelecionado()).getLocalList();
+        return ClienteDAO.getInstance().findCliente(SessionContext.getInstance().getClienteSelecionado()).getLocalList();
     }
 
     public void selecionarComputador() {
