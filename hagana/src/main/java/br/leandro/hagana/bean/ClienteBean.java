@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
+import javax.annotation.PostConstruct; 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -34,11 +34,12 @@ public class ClienteBean implements Serializable {
     private List<Cliente> clienteList;
     private List<Device> deviceList;
     private Cliente cliente;
-    private String pesquisa;
+    private String pesquisa; 
 
     @PostConstruct
-    public void init() {
+    public void init() { 
         clienteList = ClienteDAO.getInstance().getclientes();
+        
         if (SessionContext.getInstance().getClienteSelecionado() == null) {
             message("Atenção!", "Selecionar um cliente para começar.");
         }
@@ -82,6 +83,7 @@ public class ClienteBean implements Serializable {
 
     public void buscar() {
         clienteList = ClienteDAO.getInstance().pesquisar(pesquisa);
+       
 
         if (pesquisa.equals("")) {
             clienteList = ClienteDAO.getInstance().getclientes();
@@ -118,6 +120,7 @@ public class ClienteBean implements Serializable {
             if(deletaPasta()){
             ClienteDAO.getInstance().delete(cliente.getConta());
             clienteList = ClienteDAO.getInstance().getclientes();
+           
             message("Sucesso!", "Removido conta.");
             }
             else{

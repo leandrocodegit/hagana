@@ -18,8 +18,9 @@ import javax.persistence.Persistence;
  * @author leand
  */
 public class DAO {
- 
-private static DAO instance;
+
+   
+     private static DAO instance;
     protected EntityManager entityManager;
 
     public static DAO getInstance() {
@@ -34,7 +35,7 @@ private static DAO instance;
         entityManager = getEntityManager();
     }
 
-    private EntityManager getEntityManager() {
+    public EntityManager getEntityManager() {
         EntityManagerFactory factory
                 = Persistence.createEntityManagerFactory("com.gennis_hagana_war_PU");
         if (entityManager == null) {
@@ -42,8 +43,8 @@ private static DAO instance;
         }
 
         return entityManager;
-    }    
- 
+    }
+    
     synchronized public Object insert(Object device) {
 
         EntityManager em = getEntityManager();
@@ -93,5 +94,6 @@ private static DAO instance;
             em.close();
         }
         return device;
-    }
-}
+    } 
+} 
+        

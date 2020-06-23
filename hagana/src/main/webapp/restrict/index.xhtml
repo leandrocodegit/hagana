@@ -42,7 +42,7 @@
                 <ul>
                     <li class="icone"><a href="dashboard.xhtml"><span><b class="fas fa-stream w3-text-blue-grey"></b></span>   <b class="textoMenu" style="color:#0bd6e2" >Dashboard</b></a></li>
                     <li class="icone"><a href="index.xhtml"><span><b class="fas fa-hdd w3-text-blue-grey"></b></span>   <b class="textoMenu" >Dispositivos</b></a></li>                   
-                    <li class="icone"><a href="dispositivos.xhtml"  onclick="rc()" ><span><b class="fas fa-clone w3-text-blue-grey"></b></span>   <b class="textoMenu" >Arquivos</b></a></li>
+                    <li class="icone"><a href="arquivos.xhtml"  onclick="rc()" ><span><b class="fas fa-clone w3-text-blue-grey"></b></span>   <b class="textoMenu" >Arquivos</b></a></li>
                     <li class="icone"><a href="map.xhtml"><span><b class="fas fa-sitemap w3-text-blue-grey"></b></span>   <b class="textoMenu" >Mapa</b></a></li>
                     <li class="icone"><a href="fotos.xhtml"><span><b class="fas fa-camera-retro w3-text-blue-grey" ></b></span>   <b class="textoMenu" >Fotos</b></a></li>
                     <li class="icone"><a href="login.xhtml"><span><b class="far fa-user w3-text-purple"></b></span>   <b class="w3-text-purple" style="padding-left:9px" > Olá, #{loginBean.dadosUsuario}</b></a></li>
@@ -85,7 +85,7 @@
                     <!-- Inicio dispositivos -->
                     <div class="w3-twothird"  style="padding:0px;background: none">
                         <!-- Head dispositivos -->
-                        <header class="w3-container w3-card w3-border-bottom w3-border-light-blue" style="height: 45px">
+                        <header class="w3-container w3-border-bottom w3-border-light-blue" style="height: 45px">
 
                             <h:form>
                                 <h:panelGroup rendered="#{true == true}">
@@ -102,7 +102,7 @@
                             </h:form>
 
                         </header>
-                         
+
                         <!-- Head dispositivos -->
 
                         <!-- Inicio grid dispositivos -->
@@ -254,7 +254,7 @@
                                                     <td class="textoTable">#{dis.usuarioFK.nome}</td>
                                                     <td></td>
                                                     <td></td>
-                                                </tr>
+                                                </tr>                   
                                             </table>
 
                                             <br></br>
@@ -281,7 +281,7 @@
 
                             <div class="w3-twothird" style="width:100%; ">
 
-                                <header class="w3-container w3-card w3-border-light-blue w3-border-bottom" style="background-color:#F7F7F3;height: 46px">
+                                <header class="w3-container w3-border-lime w3-border-bottom" style="height: 45px">
                                     <h:form>
                                         <h:panelGroup rendered="#{true == true}">
                                             <h:commandLink     action="#{computadorBean.limpar()}" 
@@ -297,7 +297,7 @@
                                 </header>                               
 
                                 <!-- Inicio grid compuador -->
-                                  <div class="scrollmenu disContent w3-container">
+                                <div class="scrollmenu disContent w3-container">
                                     <h:form id="formComp">
                                         <h:dataTable id="dataComp" var="comp" binding="#{computadorBean.dataTable}" value="#{computadorBean.computadorList}" style="width: 100%;margin-top: 10px"
                                                      styleClass="book-table"
@@ -456,7 +456,7 @@
                         <div class="w3-row">
 
                             <div class=" w3-twothird " style="width:100%; ">
-                                <header class="w3-container w3-card w3-border-bottom w3-border-light-blue" style="height: 45px">               
+                                <header class="w3-container w3-border-bottom w3-border-light-blue" style="height: 45px">               
 
                                     <h:form>
                                         <h:panelGroup rendered="#{true == true}">
@@ -581,6 +581,23 @@
                                                             <td></td>
                                                             <td></td>
                                                         </tr>
+                                                        <tr>
+                                                            <td class="textLabel">File:</td>
+                                                            <td class="textoTable">#{rede.arquivoFK.fileName}</td>
+                                                            <td style="width: 30px">
+                                                                <p:commandLink  actionListener="#{redeBean.selecionarRede()}"
+                                                                                class="fas fa-upload w3-right w3-large iconeTablePosition " 
+                                                                                title="Enviar arquivo" 
+                                                                                ajax="true"
+                                                                                onclick="document.getElementById('mFile').style.display = 'block'"
+                                                                                style="color:#d9004a;margin-right: 10px;">
+                                                                   
+                                                                </p:commandLink>
+                                                            </td>
+                                                            <td style="width: 30px">
+                                                                <a class="iconeTablePosition  fas fa-download" href="arquivos/contas/#{rede.clienteFK.conta}/arquivos/#{rede.arquivoFK.fileName}" download="#{rede.arquivoFK.fileName}" style="font-size: 18px;color:#21273b;"></a>
+                                                            </td>
+                                                        </tr>
                                                     </table>
 
                                                     <br></br>
@@ -595,50 +612,68 @@
                                         </h:dataTable>
                                     </h:form>
                                 </div>
-
                                 <!-- Fim grid rede -->
-
                             </div>
+
                         </div>
                     </div>
 
+                    <!-- Load status -->
+                    <h:form id="status"> 
+                        <p:ajaxStatus  onstart="document.getElementById('load').style.display = 'block'" onsuccess="document.getElementById('load').style.display = 'none'" />
+                    </h:form>
+                    <!-- Load status -->
 
-                    <div id="arq002" class="w3-modal " >
+                    <!-- Modal file inicio -->
+                    <div id="mFile" class="w3-modal " >
                         <div class="w3-modal-content"  style="width: 500px;margin-top: 150px">
-                            <header class="headModal"> 
-                                <i class="fas fa-times-circle w3-right minimiza" onclick="document.getElementById('arq002').style.display = 'none'"> </i>
-                                <h4 style="color: #FFF">Enviar arquivo</h4>
-                            </header>
-                            <div class="w3-container"  style="width: 100%;padding-right: 10px;padding-left: 10px;">
 
-                                <h:form id="formEnviarARQ" enctype="multipart/form-data">
-                                    <br></br>
-                                    <br></br>
-                                    <p:fileUpload value="{redeMB.file}" mode="simple" update="messages"  skinSimple="true" styleClass="aaa w3-card-2 w3-hover-blue"
-                                                  label="Escolher arquivo" />
-                                    <br></br>
+                            <div class="headModal">
+                                <i class="fas fa-times-circle w3-right minimiza" onclick="document.getElementById('mFile').style.display = 'none'"> </i>
+                                <p class="w3-text-white w3-center w3-padding" style="font-family: 'Roboto Slab';font-size: 18px">Adicionar foto</p>
+                            </div>
 
-                                    <dir class="w3-right">
-                                        <p:commandButton  value="Cancelar" update="@form"
-                                                          onclick="document.getElementById('arq002').style.display = 'none'" styleClass="botao w3-card-4 w3-hover-blue">
-                                        </p:commandButton>
-                                        <p:commandButton  action="{redeMB.salvarArquivoConf()}" 
-                                                          update="@form"  
-                                                          ajax="false" 
-                                                          value="Salvar" 
-                                                          styleClass="botao w3-card-2 w3-hover-blue">
-                                        </p:commandButton> 
-                                    </dir>
-                                    <br></br>
-                                    <br></br> 
+                            <div class="w3-container" >
+                                <br/>
+                                <br/>  
+                                <h:form id="formFile" enctype="multipart/form-data"> 
 
-                                    <p:messages id="aviso" style="width: 100%" />
+                                    <br/>
+                                    <br/> 
+                                    <h:inputFile id="arquivo" 
+                                                 value="#{redeBean.file}" 
+                                                 required="true" 
+                                                 style="max-width: 550px;"
+                                                 class="inputFoto"
+                                                 label="Arquivo" />
+                                    <br/> 
+                                    <div class="w3-right">
+                                        <h:commandButton value="Enviar" 
+                                                         action="#{redeBean.uploadFile()}"
+                                                         class="botao w3-center">                                 
+                                        </h:commandButton>
+                                    </div>
 
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <p:messages  showDetail="true" closable="true"/>
                                 </h:form>
+                                <br/>
                             </div>
                         </div>
                     </div>
+                    <!-- Modal file fim -->
 
+                    <!-- Modal load inicio -->
+                    <div id="load" class="w3-modal w3-center">
+                        <div class="w3-center" style="padding: 12%"> 
+                            <div class="spinner-border spinner-layer spinner-blue-only" style="height: 100px;width: 100px;color: #00d7ff;box-shadow: 0 0 55px white;">
+                                <span class="sr-only">Enviando...</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal load fim -->
 
                     <div id="m006" class="w3-modal w3-round-xlarge" >
                         <div class="w3-modal-content w3-round-large"  style="width: 500px;margin-top:50px">
@@ -667,7 +702,7 @@
                     <div class="w3-third w3-mobile" style="padding-right:1px;padding-left:0px; " >
                         <div class=" w3-twothird " style="padding-left:0px;padding-right:1px;padding-top:0%;width:100%; ">
 
-                            <header class="w3-container w3-card w3-border-ligth-grey w3-border-bottom w3-border-lime" style="background-color:#F7F7F3;height: 45px">
+                            <header class="w3-container w3-border-ligth-grey w3-border-bottom w3-border-lime" style=" height: 45px">
                                 <h:form>
                                     <h:panelGroup rendered="#{true == true}">
                                         <h:commandLink     action="#{linkBean.limpar()}" 
@@ -1250,13 +1285,13 @@
 
                                     <br></br>
                                     <div class="w3-right w3-padding">                                         
-                                            <p:commandButton value="Excluir" onclick="abreModal('ex03')"  class="botao">                                   
-                                            </p:commandButton>
-                                            <p:commandButton  value="Atualizar" ajax="false" action="#{redeBean.atualizar()}"  update="formRede"   class="botao">
-                                            </p:commandButton>
-                                            <p:commandButton  update="formCadRede,formRede"  value="Cadastrar" ajax="true" action="#{redeBean.adicionar()}"  class="botao">                                    
-                                            </p:commandButton>
-                              
+                                        <p:commandButton value="Excluir" onclick="abreModal('ex03')"  class="botao">                                   
+                                        </p:commandButton>
+                                        <p:commandButton  value="Atualizar" ajax="false" action="#{redeBean.atualizar()}"  update="formRede"   class="botao">
+                                        </p:commandButton>
+                                        <p:commandButton  update="formCadRede,formRede"  value="Cadastrar" ajax="true" action="#{redeBean.adicionar()}"  class="botao">                                    
+                                        </p:commandButton>
+
 
                                     </div>
 
@@ -1447,6 +1482,34 @@
                     font-size: 16px;
                     color: #00f1ff; 
                 }
+                .inputFoto{
+
+                    background: url(../img/salve.png) no-repeat 10px center ;
+                    width: 100%;
+                    height: 50px;
+                    cursor: pointer;
+                    border: none;
+                    font-size: 12px;                 
+                    color: white;
+                    background-color: #ff0063;
+                    display: none; 
+                    padding-top: 12px;  
+                    font-family: 'Roboto Slab';
+
+                }
+                .inputFoto:hover
+                {
+                    background-color:#77e00b; 
+                }
+
+
+                .inputFoto::-webkit-file-upload-button {
+                    visibility: hidden;
+                }
+
+                #arquivo{
+                    background: red;
+                }
             </style>
 
         </div>  
@@ -1502,10 +1565,12 @@
                 var x = document.getElementById(id);
 
                 var bt = document.getElementById('BT' + id);
+               
 
                 if (x.className.indexOf(" w3-show ") === -1) {
                     x.className = x.className.replace(" w3-hide ", " w3-show ");
                     bt.className = bt.className.replace("itemCor", " cor ");
+                     window.location = '#BT' + id;
 
                 } else {
                     x.className = x.className.replace(" w3-show ", " w3-hide ");

@@ -24,7 +24,7 @@ public class ClienteService {
 
     @PostConstruct
     public void init() {
-        clientesList = ClienteDAO.getInstance().getclientes();
+       // clientesList = ClienteDAO.getInstance().getclientes();
     }
 
     public List<Cliente> getClientesList() {

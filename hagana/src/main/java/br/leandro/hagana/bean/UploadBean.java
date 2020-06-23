@@ -37,7 +37,7 @@ public class UploadBean implements Serializable {
     private Part file; 
     private String nome;
     private Foto foto;
-    private String diretorioCliente = "";
+    private String diretorioCliente = ""; 
 
     public Part getFile() {
         return file;
