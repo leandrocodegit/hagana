@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
+import javax.annotation.PostConstruct; 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -35,10 +35,13 @@ public class ClienteBean implements Serializable {
     private List<Device> deviceList;
     private Cliente cliente;
     private String pesquisa;
+    private ClienteDAO clienteDAO;
 
     @PostConstruct
     public void init() {
-        clienteList = ClienteDAO.getInstance().getclientes();
+        clienteDAO = new ClienteDAO();
+        clienteList = clienteDAO.getclientes();
+        
         if (SessionContext.getInstance().getClienteSelecionado() == null) {
             message("Atenção!", "Selecionar um cliente para começar.");
         }
@@ -77,14 +80,15 @@ public class ClienteBean implements Serializable {
     }
 
     public List<Device> getDeviceList() {
-        return ClienteDAO.getInstance().getDevicesList(SessionContext.getInstance().getClienteSelecionado());
+        return clienteDAO.getDevicesList(SessionContext.getInstance().getClienteSelecionado());
     }
 
     public void buscar() {
-        clienteList = ClienteDAO.getInstance().pesquisar(pesquisa);
+        clienteList = clienteDAO.pesquisar(pesquisa);
+       
 
         if (pesquisa.equals("")) {
-            clienteList = ClienteDAO.getInstance().getclientes();
+            clienteList = clienteDAO.getclientes();
         }
         if (clienteList.size() == 0) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "", "Nenhum resultado encontrado!"));
@@ -116,8 +120,9 @@ public class ClienteBean implements Serializable {
         if (cliente != null) {
             
             if(deletaPasta()){
-            ClienteDAO.getInstance().delete(cliente.getConta());
-            clienteList = ClienteDAO.getInstance().getclientes();
+            clienteDAO.delete(cliente.getConta());
+            clienteList = clienteDAO.getclientes();
+           
             message("Sucesso!", "Removido conta.");
             }
             else{
@@ -127,7 +132,7 @@ public class ClienteBean implements Serializable {
     }
 
     public void atualizar() {
-        ClienteDAO.getInstance().atualizar(cliente);
+        clienteDAO.atualizar(cliente);
         message("Sucesso!", "Atualizado.");
     }
 
@@ -135,9 +140,9 @@ public class ClienteBean implements Serializable {
 
         cliente.setDataCriacao(new Date());
         cliente.setUsuarioFK(SessionContext.getInstance().getUsuarioLogado());
-        if (ClienteDAO.getInstance().insert(cliente) != null) {
+        if (clienteDAO.insert(cliente) != null) {
 
-            clienteList = ClienteDAO.getInstance().getclientes();
+            clienteList = clienteDAO.getclientes();
             criarPasta();
             message("Sucesso!", "Adicionado.");
             // criarPasta(cli);

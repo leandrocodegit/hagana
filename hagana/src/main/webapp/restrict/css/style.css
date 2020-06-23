@@ -174,7 +174,7 @@ iconeTablePosition{
 
 .scrollmenu {
     margin-top:7px;
-    height:457px;
+    height:50vh;
     overflow-x: hidden;
     overflow-y: auto;
     white-space: nowrap;
@@ -471,4 +471,26 @@ select{
     color: white;
 }
 
-
+.botaoFoto
+            {
+                border-style: none;
+                color: #4d4c55;
+                border-radius: 100px; 
+                background: none;
+                font-size: 22px;
+                margin: 12px;
+            }
+            .botaoFoto:hover{
+                color: #b1f705;
+            }
+            #bord{
+                box-shadow: 0 0 10px #a2a2a2;
+                border-radius: 4px; 
+            }
+            #bord:hover{
+                box-shadow: 0 0 10px #9bff00;
+            }
+            header{
+                box-shadow: 5px 9px  10px #f2f2f2;
+            }
+            

@@ -38,6 +38,7 @@ public class UploadBean implements Serializable {
     private String nome;
     private Foto foto;
     private String diretorioCliente = "";
+    private DAO dao = new DAO();
 
     public Part getFile() {
         return file;
@@ -80,7 +81,7 @@ public class UploadBean implements Serializable {
                 foto.setUsuarioFK(SessionContext.getInstance().getUsuarioLogado());
                 foto.setDataCriacao(new Date());
 
-                foto = (Foto) DAO.getInstance().insert(foto);
+                foto = (Foto) dao.insert(foto);
 
                 if (foto != null) {
                     Files.copy(input, new File(diretorioCliente, String.valueOf(foto.getIdfoto()) + ".jpg").toPath());

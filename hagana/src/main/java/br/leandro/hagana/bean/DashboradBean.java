@@ -14,6 +14,7 @@ import java.util.List;
 import javax.annotation.PostConstruct; 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import org.primefaces.event.SelectEvent;
@@ -25,7 +26,7 @@ import org.primefaces.model.mindmap.MindmapNode;
  * @author leand
  */
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class DashboradBean implements Serializable {
 
     private MindmapNode root;
@@ -37,10 +38,12 @@ public class DashboradBean implements Serializable {
     private HashMap<String, MindmapNode> rede = new HashMap<String, MindmapNode>();
     private HashMap<String, MindmapNode> link = new HashMap<String, MindmapNode>();
     private HashMap<String, Object> dispositivos = new HashMap<String, Object>();
+    private ClienteDAO clienteDAO;
  
 
     @PostConstruct
     public void init() {
+         clienteDAO = new ClienteDAO();
         try {
             if (SessionContext.getInstance().getClienteSelecionado() == null) {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("clientes.xhtml");
@@ -72,7 +75,7 @@ public class DashboradBean implements Serializable {
 
         if (cliente != null) {
 
-            devicesList = ClienteDAO.getInstance().getDevicesListAll(cliente);
+            devicesList = clienteDAO.getDevicesListAll(cliente);
 
             //Cria lista com todos dipositivos do tipo MindmapNode
             for (int i = 0; i < devicesList.size(); i++) {

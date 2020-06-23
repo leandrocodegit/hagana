@@ -50,12 +50,24 @@ public class SessionContext {
     
     public Cliente getClienteSelecionado(){
         cliente = (Cliente) getAttribute("clienteSelecionado");
+        System.out.println("*********************** GET *************************");
+        if(cliente != null){
+        System.out.println("Fotos " + cliente.getFotoList().size());
+         System.out.println("computador " + cliente.getComputadorList().size());
+         System.out.println("Dispositivos " + cliente.getDispositivoList().size());
+         System.out.println("Rede " + cliente.getRedeList().size());
+        }
          return cliente;
     }
      
     public void setClienteSelecionado(Cliente cliente){
         this.cliente = cliente;
          setAttribute("clienteSelecionado", cliente);
+         System.out.println("*********************** SET *************************");
+         System.out.println("Fotos " + cliente.getFotoList().size());
+         System.out.println("computador " + cliente.getComputadorList().size());
+         System.out.println("Dispositivos " + cliente.getDispositivoList().size());
+         System.out.println("Rede " + cliente.getRedeList().size());
     }
      
     public void encerrarSessao(){   

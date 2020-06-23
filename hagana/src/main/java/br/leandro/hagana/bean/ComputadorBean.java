@@ -16,6 +16,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
@@ -32,6 +33,8 @@ public class ComputadorBean implements Serializable {
 
     private HtmlDataTable dataTable;
     public Computador computador;
+    private ClienteDAO clienteDAO = new ClienteDAO();
+    
 
     @PostConstruct
     public void init() {
@@ -62,11 +65,11 @@ public class ComputadorBean implements Serializable {
     }
 
     public List<Computador> getComputadorList() {
-        return ClienteDAO.getInstance().findAll(SessionContext.getInstance().getClienteSelecionado()).getComputadorList();
+        return clienteDAO.findAll(SessionContext.getInstance().getClienteSelecionado()).getComputadorList();
     }
 
     public List<Local> getLocalList() {
-        return ClienteDAO.getInstance().findAll(SessionContext.getInstance().getClienteSelecionado()).getLocalList();
+        return clienteDAO.findAll(SessionContext.getInstance().getClienteSelecionado()).getLocalList();
     }
 
     public void selecionarComputador() {
