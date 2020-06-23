@@ -11,169 +11,74 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> </link>
     <link href="https://vjs.zencdn.net/7.6.5/video-js.css" rel="stylesheet"> </link>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
 
     <link href="/hagana/restrict/css/style.css" rel="stylesheet" type="text/css"/>
-
-
     <h:head>
-        <title>Busca</title>
+        <title>Facelet Title</title>
     </h:head>
-
     <h:body>
 
 
 
-        <div class="w3-main"  >
-            <div class="w3-card  menu w3-top" style="padding-left:6px;">
-                <button id="openNav" class="w3-xlarge w3-button w3-hover-white btBar w3-border-0" onclick="w3_open()" style="outline: none" >&#9776;</button>              
-            </div>
-            <div class="w3-sidebar w3-card-4  w3-collapse w3-animate-left" style="width:200px;"  id="sideBar" >
-                <div class="btBarGradiente  ">
-                    <div class="w3-container " onclick="w3_close()">
-                        <i class="fas fa-angle-left" style="font-size:30px;padding-top:4%;color: white; "></i>
-                    </div>
-                </div>
+        <div class="w3-container" id="elipse" style="padding: 50px">
 
-                <ul>
-                    <li class="icone"><a href="dashboard.xhtml"><span><b class="fas fa-stream w3-text-blue-grey"></b></span>   <b class="textoMenu" style="color:#0bd6e2" >Dashboard</b></a></li>
-                    <li class="icone"><a href="index.xhtml"><span><b class="fas fa-hdd w3-text-blue-grey"></b></span>   <b class="textoMenu" >Dispositivos</b></a></li>                   
-                    <li class="icone"><a href="arquivos.xhtml"  onclick="rc()" ><span><b class="fas fa-clone w3-text-blue-grey"></b></span>   <b class="textoMenu" >Arquivos</b></a></li>
-                    <li class="icone"><a href="map.xhtml"><span><b class="fas fa-sitemap w3-text-blue-grey"></b></span>   <b class="textoMenu" >Mapa</b></a></li>
-                    <li class="icone"><a href="fotos.xhtml"><span><b class="fas fa-camera-retro w3-text-blue-grey" ></b></span>   <b class="textoMenu" >Fotos</b></a></li>
-                    <li class="icone"><a href="login.xhtml"><span><b class="far fa-user w3-text-purple"></b></span>   <b class="w3-text-purple" style="padding-left:9px" > Olá, #{loginBean.dadosUsuario}</b></a></li>
+            <h:form>
+                <p:mindmap value="#{dashboradBean.root}"  style=" height: 90vh;border: 1px solid black;">
+                    <p:ajax event="select" listener="#{dashboradBean.onNodeSelect}" />
+                    <p:ajax event="dblselect" listener="#{dashboradBean.onNodeDblselect}" update="output" oncomplete="PF('details').show();" />
+                </p:mindmap>
 
-                    <div class="w3-padding">
+                <p:dialog widgetVar="details" header="Node Details" resizable="false" modal="true" showEffect="fade" hideEffect="fade">
+                    <h:outputText id="output" value="#{dashboradBean.selectedNode.data}" />
+                </p:dialog> 
+           
+                <p:mindmap value="#{dashboradBean.root}" style=" height: 90vh;border: 1px solid black;">
+                    <p:ajax event="select" listener="#{dashboradBean.onNodeSelect}" />
+                    <p:ajax event="dblselect" listener="#{dashboradBean.onNodeDblselect}" update="output" oncomplete="PF('details').show();" />
+                </p:mindmap>
 
-                        <div id="demoDrop" >
+                 
+            </h:form>
 
-                            <h:form>
-                                <b class="fas fa-power-off" style="margin-left:10px;color:#fe5000"></b>
-                                <h:commandLink 
-                                    action="#{loginBean.sair()}"
-                                    value="Sair"                                     
-                                    style="font-size: 18px;padding-left:20px;color:#fe5000"> 
-                                </h:commandLink>
-                            </h:form>
-                        </div>
-                    </div>
-                </ul>
-
-
-            </div>
-
-
-            <footer class=" w3-bottom">  
-                <a class="w3-btn w3-white w3-border w3-border-blue w3-round-xlarge w3-text-blue" href="clientes.xhtml"  style="font-size:16px;text-decoration: none;margin: 5px">#{clienteBean.clienteSelecionado.conta}</a>
-            </footer>
-
-            <p:growl id="growl" showDetail="true"/>  
-
-            <div class="w3-main" style="margin-left:200px;" id="main" >      
-
-                <div class="w3-mobile w3-section w3-row-padding w3-left " style="width:100%;padding-top:50px;padding-left:0px;padding-right:0;padding-bottom: 5px ">
-
-                    <div class="" style="height:40px;margin-bottom: 20px;margin-left:5px" id="navCliente">                        
-                        <a class="w3-button w3-xlarge w3-round-large w3-text-white w3-hover-pink" href="clientes.xhtml"  
-                           style="font-size:16px;text-decoration: none;margin-left: -12px;background: #0bd6e2">#{loginBean.dadosCliente}</a>
-                    </div>
-
-
-
-
-                    <div class="w3-center" style="padding: 15%">
-                        <i class="fas fa-code w3-center" style='font-size:100px;color:#00d7f1'></i>
-                        <h2 style='color:#00d7f1'>( Em construção )</h2>
-                    </div>
-
-
-
-
-                </div>
-            </div>
         </div>
 
-
-        <!-- fim main -->
-        <br></br>  
-
-
-        <script>
-
-
-            function w3_open() {
-
-                document.getElementById("sideBar").style.display = "block";
-                var x = document.getElementById("main");
-
-                x.className = x.className.replace("  w3-white  ", " w3-hide ");
-                document.getElementById("sideBar").style.width = "200px";
-                document.getElementById("main").style.marginLeft = "200px";
-
-
-            }
-
-            function w3_close() {
-                document.getElementById("sideBar").style.display = "none";
-                var x = document.getElementById("sideBar");
-
-                x.className = x.className.replace("w3-hide", " w3-white ");
-                document.getElementById("sideBar").style.width = "0px";
-                document.getElementById("main").style.marginLeft = "0px";
-
-            }
-
-            $(function () {
-                var $refreshButton = $('#refresh');
-                var $results = $('#css_result');
-
-                function refresh() {
-                    var css = $('style.cp-pen-styles').text();
-                    $results.html(css);
-                }
-
-                refresh();
-                $refreshButton.click(refresh);
-
-                // Select all the contents when clicked
-                $results.click(function () {
-                    $(this).select();
-                });
-            });
-
-
-            function acord(id) {
-                var x = document.getElementById(id);
-
-                var bt = document.getElementById('BT' + id);
-
-                if (x.className.indexOf(" w3-show ") === -1) {
-                    x.className = x.className.replace(" w3-hide ", " w3-show ");
-                    bt.className = bt.className.replace("", " w3-card-2 w3-lime ");
-                } else {
-                    x.className = x.className.replace(" w3-show ", " w3-hide ");
-
-                    bt.className = bt.className.replace(" w3-card-2 w3-lime ", "");
-                }
-            }
-
-            function abreModal(id) {
-                document.getElementById(id).style.display = 'block';
-            }
-            function acordFechar(id) {
-                var x = document.getElementById(id);
-                x.className = x.className.replace(" w3-show ", " w3-hide ");
-            }
-
-
-
-        </script>
     </h:body>
 
+    <style type="text/css">
+        .ui-diagram-element {
+            border:0.1em solid #d4e06b;    
+            width:14em; 
+            height:4em;     
+            line-height:4em;
+            text-align: center;
+            margin: 20px; 
+        }
 
+
+        ellipse{  
+            stroke-width:2; 
+            stroke:white;
+            rx:50; 
+            ry:50;
+            box-shadow: 0 0 8px white;
+        }
+
+        text{ 
+            stroke-width:1; 
+            stroke:white; 
+        }
+        tspan{  
+
+            font-size: 12px;
+        }
+
+
+    </style>
 
 </html>
+

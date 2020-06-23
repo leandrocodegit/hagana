@@ -226,7 +226,7 @@ public class Link extends Device implements Serializable {
 
     @Override
     public String getNome() {        
-        return toLink();
+        return toString();
     }
  
     @Override

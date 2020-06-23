@@ -7,6 +7,8 @@ package br.leandro.hagana.controler;
 
 import br.leandro.hagana.entidade.Cliente;
 import br.leandro.hagana.entidade.Device;
+import br.leandro.hagana.entidade.Dispositivo;
+import br.leandro.hagana.entidade.Local;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -20,22 +22,22 @@ import javax.persistence.Query;
  */
 public class ClienteDAO {
 
-    private  ClienteDAO instance;
+    private static ClienteDAO instance;
     protected EntityManager entityManager;
-    
-    public ClienteDAO(){
-        System.out.println("Instance ClienteDAO()");
-    }
 
-    public  ClienteDAO getInstance() {
+    public static ClienteDAO getInstance() {
         if (instance == null) {
             instance = new ClienteDAO();
         }
 
         return instance;
     }
- 
-    public EntityManager getEntityManager() {
+
+    private ClienteDAO() {
+        entityManager = getEntityManager();
+    }
+
+    private EntityManager getEntityManager() {
         EntityManagerFactory factory
                 = Persistence.createEntityManagerFactory("com.gennis_hagana_war_PU");
         if (entityManager == null) {
@@ -46,102 +48,75 @@ public class ClienteDAO {
     }
 
     public List<Cliente> getclientes() {
-        Query query = getEntityManager().createNamedQuery("Cliente.findAll");
+        Query query = entityManager.createNamedQuery("Cliente.findAll");
         return query.getResultList();
     }
 
-    public Cliente findAll(Cliente c) { 
-        
-        EntityManager em = getEntityManager();
-        
-       // Query query = em.createNamedQuery("Cliente.findByConta");
-       // query.setParameter("conta", c.getConta());
-        Cliente cliente = (Cliente) em.find(Cliente.class, c.getConta());
-        
-        try {
-            em.refresh(cliente);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        
-        System.out.println("*********************** Buscando " + c.getConta() + " antes *************************");
-         System.out.println("Fotos " + c.getFotoList().size());
-         System.out.println("computador " + c.getComputadorList().size());
-         System.out.println("Dispositivos " + c.getDispositivoList().size());
-         System.out.println("Rede " + c.getRedeList().size());
-        System.out.println("");
-        
-        System.out.println("*********************** Buscando " + cliente.getConta() + " depois *************************");
-         System.out.println("Fotos " + cliente.getFotoList().size());
-         System.out.println("computador " + cliente.getComputadorList().size());
-         System.out.println("Dispositivos " + cliente.getDispositivoList().size());
-         System.out.println("Rede " + cliente.getRedeList().size());
-        
-        
-        
+    public Cliente findAll(Cliente c) {
+        Query query = entityManager.createNamedQuery("Cliente.findByConta");
+        query.setParameter("conta", c.getConta());
+        Cliente cliente = (Cliente) query.getSingleResult();
         return cliente;
     }
 
     public List<Cliente> pesquisar(String value) {
-        Query query = getEntityManager().createNamedQuery("Cliente.findByNome");
+        Query query = entityManager.createNamedQuery("Cliente.findByNome");
         query.setParameter("nome", value + "%");
-        query.setParameter("conta", value + "%"); 
-        
-        
+        query.setParameter("conta", value + "%");
         return query.getResultList();
     }
 
     public Cliente insert(Cliente cliente) {
-        EntityManager em = getEntityManager();
+        EntityManager entityManager = getEntityManager();
         try {
-            em.getTransaction().begin();
+            entityManager.getTransaction().begin();
             if (cliente.getConta() == null) {
-                em.persist(cliente);
+                entityManager.persist(cliente);
             } else {
-                em.merge(cliente);
+                entityManager.merge(cliente);
             }
-            em.flush();
-            em.getTransaction().commit();
+            entityManager.flush();
+            entityManager.getTransaction().commit();
         } catch (Exception ex) {
-            em.getTransaction().rollback();
+            entityManager.getTransaction().rollback();
         } finally {
-             em.close();
+            // entityManager.close();
         }
         return cliente;
     }
 
     public void delete(String conta) {
-       EntityManager em = getEntityManager();
+        EntityManager entityManager = getEntityManager();
         try {
-            em.getTransaction().begin();
-            Cliente cliente = em.find(Cliente.class, conta);
-            em.remove(cliente);
-            em.flush();
-            em.getTransaction().commit();
+            entityManager.getTransaction().begin();
+            Cliente cliente = entityManager.find(Cliente.class, conta);
+            entityManager.remove(cliente);
+            entityManager.flush();
+            entityManager.getTransaction().commit();
         } catch (Exception ex) {
-            em.getTransaction().rollback();
+            entityManager.getTransaction().rollback();
         } finally {
-              em.close();
+            //  entityManager.close();
         }
     }
 
     public void atualizar(Cliente cliente) {
-       EntityManager em = getEntityManager();
+        EntityManager entityManager = getEntityManager();
         try {
-            em.getTransaction().begin();
-            em.merge(cliente);
-            em.getTransaction().commit();
+            entityManager.getTransaction().begin();
+            entityManager.merge(cliente);
+            entityManager.getTransaction().commit();
         } catch (Exception ex) {
-            em.getTransaction().rollback();
+            entityManager.getTransaction().rollback();
         } finally {
-            em.close();
+            //  entityManager.close();
         }
     }
     
     public List<Device> getDevicesList(Cliente c) {
-         
+        Device device;
         List<Device> devicesList = new ArrayList<>();
-        Query query = getEntityManager().createNamedQuery("Cliente.findByConta");
+        Query query = entityManager.createNamedQuery("Cliente.findByConta");
         query.setParameter("conta", c.getConta());
         Cliente cliente = (Cliente) query.getSingleResult();
         
@@ -160,7 +135,7 @@ public class ClienteDAO {
     public List<Device> getDevicesListAll(Cliente c) {
      
         List<Device> devicesList = new ArrayList<>();
-        Query query = getEntityManager().createNamedQuery("Cliente.findByConta");
+        Query query = entityManager.createNamedQuery("Cliente.findByConta");
         query.setParameter("conta", c.getConta());
         Cliente cliente = (Cliente) query.getSingleResult();
         
@@ -184,9 +159,10 @@ public class ClienteDAO {
 
         ClienteDAO clienteDAO = new ClienteDAO();
         Cliente cliente = new Cliente();
-        cliente.setConta("8838");
- 
-        System.out.println(clienteDAO.findAll(cliente).getRedeList().size());
+        cliente.setConta("0001");
+
+        System.out.println(clienteDAO.pesquisar("00").size());
+        System.out.println(clienteDAO.pesquisar("00").get(0).getRedeList().size());
 
     }
 

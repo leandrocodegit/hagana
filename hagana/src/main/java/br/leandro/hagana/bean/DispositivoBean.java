@@ -34,16 +34,12 @@ public class DispositivoBean implements Serializable {
     private HtmlDataTable dataTable;
     public Dispositivo dispositivo;
     private Fabricante fabricante;
-    private ClienteDAO clienteDAO = new ClienteDAO();
 
     @PostConstruct
     public void init() {
-        
-        
 
         if (SessionContext.getInstance().getClienteSelecionado() == null) {
             try {
-                SessionContext.getInstance().setClienteSelecionado(clienteDAO.findAll(SessionContext.getInstance().getClienteSelecionado()));                
                 FacesContext.getCurrentInstance().getExternalContext().redirect("clientes.xhtml");
             } catch (Exception ex) {
 
@@ -68,7 +64,7 @@ public class DispositivoBean implements Serializable {
     }
 
     public List<Dispositivo> getDispositivoList() {
-        return clienteDAO.findAll(SessionContext.getInstance().getClienteSelecionado()).getDispositivoList();
+        return ClienteDAO.getInstance().findAll(SessionContext.getInstance().getClienteSelecionado()).getDispositivoList();
     }
 
     public List<Fabricante> getFabricantes() {
@@ -76,7 +72,7 @@ public class DispositivoBean implements Serializable {
     }
 
     public List<Local> getLocalList() {
-        return clienteDAO.findAll(SessionContext.getInstance().getClienteSelecionado()).getLocalList();
+        return ClienteDAO.getInstance().findAll(SessionContext.getInstance().getClienteSelecionado()).getLocalList();
     }
 
     public Fabricante getFabricante() {

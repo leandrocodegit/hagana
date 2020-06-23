@@ -38,11 +38,13 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Arquivo.findAll", query = "SELECT a FROM Arquivo a"),
     @NamedQuery(name = "Arquivo.findByIdarquivo", query = "SELECT a FROM Arquivo a WHERE a.idarquivo = :idarquivo"),
     @NamedQuery(name = "Arquivo.findByNome", query = "SELECT a FROM Arquivo a WHERE a.nome = :nome"),
-    @NamedQuery(name = "Arquivo.findByUrl", query = "SELECT a FROM Arquivo a WHERE a.privado = :privado"),
-    @NamedQuery(name = "Arquivo.findByFileName", query = "SELECT a FROM Arquivo a WHERE a.fileName = :fileName")})
+    @NamedQuery(name = "Arquivo.findByUrl", query = "SELECT a FROM Arquivo a WHERE a.url = :url"),
+    @NamedQuery(name = "Arquivo.findByTipo", query = "SELECT a FROM Arquivo a WHERE a.tipo = :tipo"),
+    @NamedQuery(name = "Arquivo.findByFileName", query = "SELECT a FROM Arquivo a WHERE a.fileName = :fileName"),
+    @NamedQuery(name = "Arquivo.findByRead", query = "SELECT a FROM Arquivo a WHERE a.read = :read")})
 public class Arquivo implements Serializable {
 
-    private static final long serialVersionUID = 1132254L;
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -50,14 +52,22 @@ public class Arquivo implements Serializable {
     private Integer idarquivo;
     @Size(max = 45)
     @Column(name = "nome")
-    private String nome; 
-    @Column(name = "privado")
-    private Boolean privado;
+    private String nome;
+    @Size(max = 45)
+    @Column(name = "url")
+    private String url;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "tipo")
+    private String tipo;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
     @Column(name = "fileName")
     private String fileName;
+    @Column(name = "read")
+    private Boolean read;
     @Column(name = "dataCriacao")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataCriacao;
@@ -73,7 +83,13 @@ public class Arquivo implements Serializable {
     public Arquivo(Integer idarquivo) {
         this.idarquivo = idarquivo;
     }
- 
+
+    public Arquivo(Integer idarquivo, String tipo, String fileName) {
+        this.idarquivo = idarquivo;
+        this.tipo = tipo;
+        this.fileName = fileName;
+    }
+
     public Integer getIdarquivo() {
         return idarquivo;
     }
@@ -90,20 +106,36 @@ public class Arquivo implements Serializable {
         this.nome = nome;
     }
 
-    public Boolean getPrivado() {
-        return privado;
+    public String getUrl() {
+        return url;
     }
 
-    public void setPrivado(Boolean privado) {
-        this.privado = privado;
+    public void setUrl(String url) {
+        this.url = url;
     }
- 
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
     public String getFileName() {
         return fileName;
     }
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public Boolean getRead() {
+        return read;
+    }
+
+    public void setRead(Boolean read) {
+        this.read = read;
     }
 
     @XmlTransient
@@ -122,7 +154,7 @@ public class Arquivo implements Serializable {
     public void setDataCriacao(Date dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
-
+ 
     public Usuario getUsuarioFK() {
         return usuarioFK;
     }
@@ -155,5 +187,5 @@ public class Arquivo implements Serializable {
     public String toString() {
         return "br.leandro.hagana.entidade.Arquivo[ idarquivo=" + idarquivo + " ]";
     }
-
+    
 }

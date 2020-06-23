@@ -18,8 +18,21 @@ import javax.persistence.Persistence;
  * @author leand
  */
 public class DAO {
-
+ 
+private static DAO instance;
     protected EntityManager entityManager;
+
+    public static DAO getInstance() {
+        if (instance == null) {
+            instance = new DAO();
+        }
+
+        return instance;
+    }
+
+    private DAO() {
+        entityManager = getEntityManager();
+    }
 
     private EntityManager getEntityManager() {
         EntityManagerFactory factory
@@ -29,57 +42,53 @@ public class DAO {
         }
 
         return entityManager;
-    }
-
-    synchronized public Object insert(Object device) {
-
-        EntityManager em = getEntityManager();
+    }    
+ 
+   synchronized public Object insert(Object device) { 
+        
         try {
-            em = getEntityManager();
-            em.getTransaction().begin();
-            em.persist(device);
+            entityManager.getTransaction().begin();
+            entityManager.persist(device);
 
-            em.flush();
-            em.getTransaction().commit();
+            entityManager.flush();
+            entityManager.getTransaction().commit();
         } catch (Exception ex) {
-            em.getTransaction().rollback();
+            entityManager.getTransaction().rollback();
             ex.printStackTrace();
             return null;
-
+            
         } finally {
-            em.close();
+            // entityManager.close();
         }
         return device;
     }
 
-    synchronized public void delete(Object tipeClass, Integer id) {
-        EntityManager em = getEntityManager();
+   synchronized public void delete(Object tipeClass, Integer id) {
+        EntityManager entityManager = getEntityManager();         
         try {
-            em.getTransaction().begin();
+            entityManager.getTransaction().begin();
             Object dispositivo = entityManager.find(tipeClass.getClass(), id);
-            em.remove(dispositivo);
-            em.flush();
-            em.getTransaction().commit();
+            entityManager.remove(dispositivo);
+            entityManager.flush();
+            entityManager.getTransaction().commit();
         } catch (Exception ex) {
-            em.getTransaction().rollback();
+            entityManager.getTransaction().rollback();
         } finally {
-            em.close();
+            //  entityManager.close();
         }
     }
 
-    synchronized public Object atualizar(Object device) {
-        EntityManager em = getEntityManager();
+   synchronized public void atualizar(Object device) {
+        EntityManager entityManager = getEntityManager();
         try {
-            em.getTransaction().begin();
-            em.merge(device);
-            em.getTransaction().commit();
+            entityManager.getTransaction().begin();
+            entityManager.merge(device);
+            entityManager.getTransaction().commit();
         } catch (Exception ex) {
-            em.getTransaction().rollback();
-            return null;
+            entityManager.getTransaction().rollback();
         } finally {
-            em.close();
+            //  entityManager.close();
         }
-        return device;
     }
 
     public static void main(String[] args) {
@@ -94,8 +103,9 @@ public class DAO {
         dispositivo.setUsuarioFK(usuario);
         dispositivo.setClienteFK(cliente);
         dispositivo.setDataCriacao(new Date());
-
-        //  DAO.getInstance().delete(dispositivo,36);
-        //DAO.getInstance().atualizar(dispositivo);
+        
+     //  DAO.getInstance().delete(dispositivo,36);
+      
+        DAO.getInstance().atualizar(dispositivo);
     }
 }

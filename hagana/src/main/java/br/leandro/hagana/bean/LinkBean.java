@@ -35,12 +35,10 @@ public class LinkBean implements Serializable {
     private HtmlDataTable dataTable;
     public Link link;
     private Fabricante fabricante;
-    private ClienteDAO clienteDAO;
 
     @PostConstruct
     public void init() {
 
-         clienteDAO = new ClienteDAO();
         if (SessionContext.getInstance().getClienteSelecionado() == null) {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("clientes.xhtml");
@@ -67,7 +65,7 @@ public class LinkBean implements Serializable {
     }
 
     public List<Link> getLinkList() {
-        return clienteDAO.findAll(SessionContext.getInstance().getClienteSelecionado()).getLinkList();
+        return ClienteDAO.getInstance().findAll(SessionContext.getInstance().getClienteSelecionado()).getLinkList();
     }
 
     public List<Fabricante> getFabricantes() {
@@ -75,7 +73,7 @@ public class LinkBean implements Serializable {
     }
 
     public List<Local> getLocalList() {
-        return clienteDAO.findAll(SessionContext.getInstance().getClienteSelecionado()).getLocalList();
+        return ClienteDAO.getInstance().findAll(SessionContext.getInstance().getClienteSelecionado()).getLocalList();
     }
 
     public Fabricante getFabricante() {

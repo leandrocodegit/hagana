@@ -45,7 +45,7 @@
                 <ul>
                     <li class="icone"><a href="dashboard.xhtml"><span><b class="fas fa-stream w3-text-blue-grey"></b></span>   <b class="textoMenu" style="color:#0bd6e2" >Dashboard</b></a></li>
                     <li class="icone"><a href="index.xhtml"><span><b class="fas fa-hdd w3-text-blue-grey"></b></span>   <b class="textoMenu" >Dispositivos</b></a></li>                   
-                    <li class="icone"><a href="arquivos.xhtml"  onclick="rc()" ><span><b class="fas fa-clone w3-text-blue-grey"></b></span>   <b class="textoMenu" >Arquivos</b></a></li>
+                    <li class="icone"><a href="dispositivos.xhtml"  onclick="rc()" ><span><b class="fas fa-clone w3-text-blue-grey"></b></span>   <b class="textoMenu" >Arquivos</b></a></li>
                     <li class="icone"><a href="map.xhtml"><span><b class="fas fa-sitemap w3-text-blue-grey"></b></span>   <b class="textoMenu" >Mapa</b></a></li>
                     <li class="icone"><a href="fotos.xhtml"><span><b class="fas fa-camera-retro w3-text-blue-grey" ></b></span>   <b class="textoMenu" >Fotos</b></a></li>
                     <li class="icone"><a href="login.xhtml"><span><b class="far fa-user w3-text-purple"></b></span>   <b class="w3-text-purple" style="padding-left:9px" > Olá, #{loginBean.dadosUsuario}</b></a></li>
@@ -271,11 +271,25 @@
                 font-size: 16px;
                 color: #00f1ff; 
             }
-            
-            .icone b{
-                font-size: 16px;
+            .botaoFoto
+            {
+                border-style: none;
+                color: #4d4c55;
+                border-radius: 100px; 
+                background: none;
+                font-size: 22px;
+                margin: 12px;
             }
-            
+            .botaoFoto:hover{
+                color: #b1f705;
+            }
+            #bord{
+                box-shadow: 0 0 10px #a2a2a2;
+                border-radius: 4px; 
+            }
+            #bord:hover{
+                box-shadow: 0 0 10px #9bff00;
+            }
             .inputFoto{
 
                 background: url(../img/cam.png) no-repeat 10px center ;
@@ -305,7 +319,9 @@
                 background: red;
             }
 
-
+            .icone b{
+                font-size: 16px;
+            }
 
 
         </style>

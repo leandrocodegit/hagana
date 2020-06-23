@@ -29,18 +29,12 @@ public class FotoBean implements Serializable {
 
     private static final long serialVersionUID = 15564855655321L;
     public Foto foto;
-    private ClienteDAO clienteDAO = new ClienteDAO();
-    private DAO dao = new DAO();
 
     @PostConstruct
     public void init() {
- 
-        
-        
+
         if (SessionContext.getInstance().getClienteSelecionado() == null) {
             try {
-                SessionContext.getInstance().setClienteSelecionado(clienteDAO.findAll(SessionContext.getInstance().getClienteSelecionado()));  
-                clienteDAO.getEntityManager().close();
                 FacesContext.getCurrentInstance().getExternalContext().redirect("clientes.xhtml");
             } catch (Exception ex) {
 
@@ -57,7 +51,7 @@ public class FotoBean implements Serializable {
     }
 
     public List<Foto> getFotoList() {
-        return clienteDAO.findAll(SessionContext.getInstance().getClienteSelecionado()).getFotoList();
+        return ClienteDAO.getInstance().findAll(SessionContext.getInstance().getClienteSelecionado()).getFotoList();
     }
 
     public void deletar(Integer id) {
@@ -66,7 +60,7 @@ public class FotoBean implements Serializable {
         System.out.println("Removendo foto " + id);
 
         if (deletaFotoDir()) {
-            dao.delete(foto, id);
+            DAO.getInstance().delete(foto, id);
             message("Sucesso!", "Removido foto.");
         } else {
             message("Erro!", "Falha ao remover arquivo.");
@@ -82,7 +76,7 @@ public class FotoBean implements Serializable {
             foto.setNome(foto.getNome().toUpperCase());
         }
 
-        dao.atualizar(foto);
+        DAO.getInstance().atualizar(foto);
         message("Sucesso!", "Atualizado foto.");
     }
 
@@ -102,7 +96,7 @@ public class FotoBean implements Serializable {
         Foto gravar = new Foto();
         gravar = foto;
 
-        if (dao.insert(gravar) != null) {
+        if (DAO.getInstance().insert(gravar) != null) {
 
             message("Sucesso!", " foto adicionada.");
             // criarPasta(cli);
