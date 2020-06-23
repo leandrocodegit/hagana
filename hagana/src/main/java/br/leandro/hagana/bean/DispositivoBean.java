@@ -6,7 +6,7 @@
 package br.leandro.hagana.bean;
 
 import br.leandro.hagana.controler.ClienteDAO;
-import br.leandro.hagana.controler.DispositivoDAO;
+import br.leandro.hagana.controler.DAO;
 import br.leandro.hagana.controler.FabricanteDAO;
 import br.leandro.hagana.entidade.Dispositivo;
 import br.leandro.hagana.entidade.Fabricante;
@@ -96,7 +96,8 @@ public class DispositivoBean implements Serializable {
 
     public void deletar() {
         if (dispositivo != null) {
-            DispositivoDAO.getInstance().delete(dispositivo.getIddispositivo());
+            DAO.getInstance().delete(dispositivo, dispositivo.getIddispositivo());
+            SessionContext.getInstance().refreshcliente();
             message("Sucesso!", "Removido dispositivo.");
         }
     }
@@ -113,7 +114,8 @@ public class DispositivoBean implements Serializable {
             dispositivo.setIp("DHCP");
         }
 
-        DispositivoDAO.getInstance().atualizar(dispositivo);
+        DAO.getInstance().atualizar(dispositivo);
+        SessionContext.getInstance().refreshcliente();
         message("Sucesso!", "Atualizado.");
     }
 
@@ -134,11 +136,9 @@ public class DispositivoBean implements Serializable {
             dispositivo.setIp("DHCP");
         }
 
-        Dispositivo gravar = new Dispositivo();
-        gravar = dispositivo;
-
-        if (DispositivoDAO.getInstance().insert(gravar) != null) {
-
+        if (DAO.getInstance().insert(dispositivo) != null) {
+            SessionContext.getInstance().refreshcliente();
+            limpar();
             message("Sucesso!", "Adicionado.");
             // criarPasta(cli);
         } else {
@@ -149,9 +149,9 @@ public class DispositivoBean implements Serializable {
     }
 
     public void limpar() {
-        if (dispositivo == null) {
-            dispositivo = new Dispositivo();
-        }
+        
+        dispositivo = new Dispositivo();
+
         dispositivo.setPortaTCP(0);
         dispositivo.setPortaWEB(80);
         dispositivo.setLocalFK(new Local());

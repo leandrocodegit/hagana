@@ -56,14 +56,6 @@ public class SessionContext {
     public void refreshcliente() {
         cliente = (Cliente) ClienteDAO.getInstance().findCliente(cliente);
  
-        System.out.println("*********************** GET *************************");
-        if(cliente != null){
-        System.out.println("Fotos " + cliente.getFotoList().size());
-         System.out.println("computador " + cliente.getComputadorList().size());
-         System.out.println("Dispositivos " + cliente.getDispositivoList().size());
-         System.out.println("Rede " + cliente.getRedeList().size());
-        } 
- 
     }
 
     public void setClienteSelecionado(Cliente cliente) {

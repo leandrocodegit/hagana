@@ -7,7 +7,7 @@ package br.leandro.hagana.bean;
 
 import br.leandro.hagana.controler.ClienteDAO;
 import br.leandro.hagana.controler.DAO;
-import br.leandro.hagana.controler.RedeDAO;
+import br.leandro.hagana.controler.DAO;
 import br.leandro.hagana.entidade.Arquivo;
 import br.leandro.hagana.entidade.Foto;
 import br.leandro.hagana.entidade.Local;
@@ -41,11 +41,11 @@ public class RedeBean implements Serializable {
     private HtmlDataTable dataTable;
     public Rede rede;
     private Part file;
-    private Arquivo arquivo; 
+    private Arquivo arquivo;
 
     @PostConstruct
     public void init() {
- 
+
         if (SessionContext.getInstance().getClienteSelecionado() == null) {
             try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("clientes.xhtml");
@@ -87,25 +87,23 @@ public class RedeBean implements Serializable {
         this.arquivo = arquivo;
     }
 
-    public List<Rede> getRedeList() { 
+    public List<Rede> getRedeList() {
         return ClienteDAO.getInstance().findCliente(SessionContext.getInstance().getClienteSelecionado()).getRedeList();
     }
 
     public List<Local> getLocalList() {
-        return ClienteDAO.getInstance().findCliente(SessionContext.getInstance().getClienteSelecionado()).getLocalList(); 
+        return ClienteDAO.getInstance().findCliente(SessionContext.getInstance().getClienteSelecionado()).getLocalList();
     }
 
- 
     public void selecionarRede() {
         rede = (Rede) dataTable.getRowData();
         rede.setCaptureSenha(SessionContext.getInstance().getUsuarioLogado().getVerSenhas());
-        System.out.println("selecionado " + rede);
 
     }
 
     public void deletar() {
         if (rede != null) {
-            RedeDAO.getInstance().delete(rede.getIdrede());
+            DAO.getInstance().delete(rede, rede.getIdrede());
             SessionContext.getInstance().refreshcliente();
             message("Sucesso!", "Removido rede.");
         }
@@ -119,7 +117,7 @@ public class RedeBean implements Serializable {
             rede.setIp("DHCP");
         }
 
-        RedeDAO.getInstance().atualizar(rede);
+        DAO.getInstance().atualizar(rede);
         SessionContext.getInstance().refreshcliente();
         message("Sucesso!", "Atualizado.");
     }
@@ -137,10 +135,9 @@ public class RedeBean implements Serializable {
             rede.setIp("DHCP");
         }
 
-        Rede gravar = new Rede();
-        gravar = rede;
-        if (RedeDAO.getInstance().insert(rede) != null) {
+        if (DAO.getInstance().insert(rede) != null) {
             SessionContext.getInstance().refreshcliente();
+            limpar();
             message("Sucesso!", "Adicionado.");
             // criarPasta(cli);
         } else {
@@ -151,10 +148,8 @@ public class RedeBean implements Serializable {
 
     public void limpar() {
 
-        if(rede == null)
-        {
-            rede = new Rede();
-        }
+        rede = new Rede();
+
         rede.setLocalFK(new Local());
         rede.setCaptureSenha(true);
     }
@@ -178,7 +173,7 @@ public class RedeBean implements Serializable {
                 arquivo.setPrivado(true);
 
                 deleteFileExist();
-                
+
                 if (rede.getArquivoFK() != null) {
                     arquivo = rede.getArquivoFK();
                     rede.getArquivoFK().setFileName(file.getSubmittedFileName());
@@ -186,9 +181,9 @@ public class RedeBean implements Serializable {
                 } else {
                     arquivo = (Arquivo) DAO.getInstance().insert(arquivo);
                     rede.setArquivoFK(arquivo);
-                     DAO.getInstance().atualizar(rede);
+                    DAO.getInstance().atualizar(rede);
                 }
- 
+
                 if (file != null) {
                     Files.copy(input, new File(diretorioCliente, String.valueOf(file.getSubmittedFileName())).toPath());
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "", "Arquivo enviado com sucesso."));
@@ -206,14 +201,14 @@ public class RedeBean implements Serializable {
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         String diretorio = ec.getRealPath("/") + "restrict\\arquivos\\contas\\" + SessionContext.getInstance().getClienteSelecionado().getConta() + "\\arquivos";
         File path = new File(diretorio);
-        try{
-        File arq = new File(path.getPath(), rede.getArquivoFK().getFileName());
-        
-        if (path.exists() && rede != null) {
-            arq.delete();
-            return true;
-        }
-        }catch(NullPointerException erro){
+        try {
+            File arq = new File(path.getPath(), rede.getArquivoFK().getFileName());
+
+            if (path.exists() && rede != null) {
+                arq.delete();
+                return true;
+            }
+        } catch (NullPointerException erro) {
             return true;
         }
         return false;

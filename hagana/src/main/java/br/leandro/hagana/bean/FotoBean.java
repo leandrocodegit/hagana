@@ -115,12 +115,10 @@ public class FotoBean implements Serializable {
         if (foto.getNome().length() < 6) {
             foto.setNome(foto.getNome().toUpperCase());
         }
-
-        Foto gravar = new Foto();
-        gravar = foto;
-
-        if (DAO.getInstance().insert(gravar) != null) {
+ 
+        if (DAO.getInstance().insert(foto) != null) {
             SessionContext.getInstance().refreshcliente();
+            foto = new Foto();
             message("Sucesso!", " foto adicionada.");
             // criarPasta(cli);
         } else {

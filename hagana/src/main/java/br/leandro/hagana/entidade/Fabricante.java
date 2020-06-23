@@ -39,7 +39,7 @@ public class Fabricante implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idfabricante")
-    private Integer idfabricante;
+    private Integer idfabricante = 1;
     @Size(max = 45)
     @Column(name = "nome")
     private String nome;

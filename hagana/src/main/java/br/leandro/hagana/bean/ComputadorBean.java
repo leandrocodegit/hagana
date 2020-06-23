@@ -6,8 +6,7 @@
 package br.leandro.hagana.bean;
 
 import br.leandro.hagana.controler.ClienteDAO;
-import br.leandro.hagana.controler.ComputadorDAO;
-import br.leandro.hagana.controler.DispositivoDAO;
+import br.leandro.hagana.controler.DAO;
 import br.leandro.hagana.entidade.Computador;
 import br.leandro.hagana.entidade.Local;
 import java.io.Serializable;
@@ -16,7 +15,6 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
@@ -77,7 +75,8 @@ public class ComputadorBean implements Serializable {
 
     public void deletar() {
         if (computador != null) {
-            DispositivoDAO.getInstance().delete(computador.getIdcomputador());
+            DAO.getInstance().delete(computador, computador.getIdcomputador());
+            SessionContext.getInstance().refreshcliente();
             message("Sucesso!", "Removido computador.");
         }
     }
@@ -90,7 +89,8 @@ public class ComputadorBean implements Serializable {
 
         computador.setNome(computador.getNome().substring(0, 1).toUpperCase() + computador.getNome().substring(1).toLowerCase());
 
-        ComputadorDAO.getInstance().atualizar(computador);
+        DAO.getInstance().atualizar(computador);
+        SessionContext.getInstance().refreshcliente();
         message("Sucesso!", "Atualizado.");
     }
 
@@ -107,11 +107,9 @@ public class ComputadorBean implements Serializable {
             computador.setIp("DHCP");
         }
 
-        Computador gravar = new Computador();
-        gravar = computador;
-
-        if (ComputadorDAO.getInstance().insert(gravar) != null) {
-
+        if (DAO.getInstance().insert(computador) != null) {
+            SessionContext.getInstance().refreshcliente();
+            limpar();
             message("Sucesso!", "Adicionado.");
             // criarPasta(cli);
         } else {
@@ -121,9 +119,9 @@ public class ComputadorBean implements Serializable {
     }
 
     public void limpar() {
-        if (computador == null) {
-            computador = new Computador();
-        }
+
+        computador = new Computador();
+
         computador.setLocalFK(new Local());
         computador.setCaptureSenha(true);
     }

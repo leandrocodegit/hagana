@@ -87,6 +87,7 @@ public class DAO {
             em.getTransaction().begin();
             em.merge(device);
             em.getTransaction().commit();
+            
         } catch (Exception ex) {
             em.getTransaction().rollback();
             return null;

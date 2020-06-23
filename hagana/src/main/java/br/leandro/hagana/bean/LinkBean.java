@@ -5,11 +5,8 @@
  */
 package br.leandro.hagana.bean;
 
-import br.leandro.hagana.controler.ClienteDAO;
-import br.leandro.hagana.controler.DAO;
-import br.leandro.hagana.controler.DispositivoDAO;
 import br.leandro.hagana.controler.FabricanteDAO;
-import br.leandro.hagana.controler.LinkDAO;
+import br.leandro.hagana.controler.DAO;
 import br.leandro.hagana.entidade.Fabricante;
 import br.leandro.hagana.entidade.Link;
 import br.leandro.hagana.entidade.Local;
@@ -110,7 +107,7 @@ public class LinkBean implements Serializable {
             link.setNome(link.getNome().toUpperCase());
         }
 
-        LinkDAO.getInstance().atualizar(link);
+        DAO.getInstance().atualizar(link);
         SessionContext.getInstance().refreshcliente();
         message("Sucesso!", "Atualizado.");
     }
@@ -125,15 +122,13 @@ public class LinkBean implements Serializable {
 
         link.setNome(link.getNome().substring(0, 1).toUpperCase() + link.getNome().substring(1).toLowerCase());
 
-        Link gravar = new Link();
-        gravar = link;
-
         if (link.getNome().length() < 6) {
             link.setNome(link.getNome().toUpperCase());
         }
 
-        if (LinkDAO.getInstance().insert(gravar) != null) {
+        if (DAO.getInstance().insert(link) != null) {
             SessionContext.getInstance().refreshcliente();
+            limpar();
             message("Sucesso!", "Adicionado.");
             // criarPasta(cli);
         } else {
@@ -143,9 +138,7 @@ public class LinkBean implements Serializable {
 
     public void limpar() {
 
-        if (link == null) {
-            link = new Link();
-        }
+        link = new Link();
 
         link.setLocalFK(new Local());
         link.setPorta(80);
