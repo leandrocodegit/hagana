@@ -6,6 +6,7 @@
 package br.leandro.hagana.bean;
 
 import br.leandro.hagana.controler.ClienteDAO;
+import br.leandro.hagana.controler.DAO;
 import br.leandro.hagana.controler.DispositivoDAO;
 import br.leandro.hagana.controler.FabricanteDAO;
 import br.leandro.hagana.controler.LinkDAO;
@@ -34,19 +35,16 @@ public class LinkBean implements Serializable {
 
     private HtmlDataTable dataTable;
     public Link link;
-    private Fabricante fabricante; 
+    private Fabricante fabricante;
     private List<Link> linkList;
     private List<Local> localList;
- 
 
     @PostConstruct
     public void init() {
- 
+
         if (SessionContext.getInstance().getClienteSelecionado() == null) {
             try {
-                linkList = ClienteDAO.getInstance().findCliente(SessionContext.getInstance().getClienteSelecionado()).getLinkList();
-                localList = ClienteDAO.getInstance().findCliente(SessionContext.getInstance().getClienteSelecionado()).getLocalList();
-                
+
                 FacesContext.getCurrentInstance().getExternalContext().redirect("clientes.xhtml");
             } catch (Exception ex) {
 
@@ -69,16 +67,19 @@ public class LinkBean implements Serializable {
     public void setLink(Link link) {
         this.link = link;
     }
- 
-    public void setLinkList(List<Link> linkList) {
-        this.linkList = linkList;
+
+    public List<Link> getLinkList() {
+        return SessionContext.getInstance().getClienteSelecionado().getLinkList();
     }
- 
+
+    public List<Local> getLocalList() {
+        return SessionContext.getInstance().getClienteSelecionado().getLocalList();
+    }
 
     public List<Fabricante> getFabricantes() {
         return FabricanteDAO.getInstance().getFabricantes();
     }
- 
+
     public Fabricante getFabricante() {
         return fabricante;
     }
@@ -90,12 +91,12 @@ public class LinkBean implements Serializable {
     public void selecionarLink() {
         link = (Link) dataTable.getRowData();
         link.setCaptureSenha(SessionContext.getInstance().getUsuarioLogado().getVerSenhas());
- 
+
     }
 
     public void deletar() {
         if (link != null) {
-            DispositivoDAO.getInstance().delete(link.getIdlink());
+            DAO.getInstance().delete(link, link.getIdlink());
             SessionContext.getInstance().refreshcliente();
             message("Sucesso!", "Removido link.");
         }
@@ -123,7 +124,7 @@ public class LinkBean implements Serializable {
         link.setIdlink(null);
 
         link.setNome(link.getNome().substring(0, 1).toUpperCase() + link.getNome().substring(1).toLowerCase());
-        
+
         Link gravar = new Link();
         gravar = link;
 
@@ -141,11 +142,15 @@ public class LinkBean implements Serializable {
     }
 
     public void limpar() {
-       
+
+        if (link == null) {
+            link = new Link();
+        }
+
         link.setLocalFK(new Local());
         link.setPorta(80);
         link.setCaptureSenha(true);
-        
+
     }
 
     public void message(String mensagem, String conteudo) {

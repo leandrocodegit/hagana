@@ -29,15 +29,13 @@ public class FotoBean implements Serializable {
 
     private static final long serialVersionUID = 15564855655321L;
     public Foto foto;
- 
+    private Integer id;
 
     @PostConstruct
     public void init() {
- 
-        
-        
+
         if (SessionContext.getInstance().getClienteSelecionado() == null) {
-            try {                 
+            try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("clientes.xhtml");
             } catch (Exception ex) {
 
@@ -53,24 +51,39 @@ public class FotoBean implements Serializable {
         this.foto = foto;
     }
 
-    public List<Foto> getFotoList() {
- 
-        return ClienteDAO.getInstance().findCliente(SessionContext.getInstance().getClienteSelecionado()).getFotoList();
- 
+    public Integer getId() {
+        return id;
     }
 
-    public void deletar(Integer id) {
+    public void setId(Integer id) {
+        System.out.println("ID " + id);
+        this.id = id;
+    }
+
+    public List<Foto> getFotoList() {
+
+        return ClienteDAO.getInstance().findCliente(SessionContext.getInstance().getClienteSelecionado()).getFotoList();
+
+    }
+
+    public void deletar() {
+        
+        if(id != null)
+        {
         foto = new Foto();
         foto.setIdfoto(id);
-        System.out.println("Removendo foto " + id);
-
+      
         if (deletaFotoDir()) {
- 
+
             DAO.getInstance().delete(foto, id);
             SessionContext.getInstance().refreshcliente();
- 
+            System.out.println("Delete " + id);
             message("Sucesso!", "Removido foto.");
         } else {
+            message("Erro!", "Falha ao remover arquivo.");
+        }
+        }
+        else {
             message("Erro!", "Falha ao remover arquivo.");
         }
 
@@ -83,10 +96,10 @@ public class FotoBean implements Serializable {
         if (foto.getNome().length() < 6) {
             foto.setNome(foto.getNome().toUpperCase());
         }
- 
+
         DAO.getInstance().atualizar(foto);
         SessionContext.getInstance().refreshcliente();
- 
+
         message("Sucesso!", "Atualizado foto.");
     }
 
@@ -105,10 +118,10 @@ public class FotoBean implements Serializable {
 
         Foto gravar = new Foto();
         gravar = foto;
- 
+
         if (DAO.getInstance().insert(gravar) != null) {
             SessionContext.getInstance().refreshcliente();
- message("Sucesso!", " foto adicionada.");
+            message("Sucesso!", " foto adicionada.");
             // criarPasta(cli);
         } else {
             message("Falha!", "Erro ao salvar foto.");
@@ -122,7 +135,7 @@ public class FotoBean implements Serializable {
         File path = new File(diretorio + "\\imagens");
 
         if (path.exists() && foto != null) {
- 
+
             File file = new File(path.getPath(), String.valueOf(foto.getIdfoto()) + ".jpg");
             file.delete();
             file = new File(path.getPath(), "_" + String.valueOf(foto.getIdfoto()) + ".jpg");

@@ -33,15 +33,13 @@ public class DispositivoBean implements Serializable {
 
     private HtmlDataTable dataTable;
     public Dispositivo dispositivo;
-    private Fabricante fabricante; 
+    private Fabricante fabricante;
 
     @PostConstruct
     public void init() {
-        
-        
 
         if (SessionContext.getInstance().getClienteSelecionado() == null) {
-            try {                
+            try {
                 FacesContext.getCurrentInstance().getExternalContext().redirect("clientes.xhtml");
             } catch (Exception ex) {
 
@@ -65,18 +63,13 @@ public class DispositivoBean implements Serializable {
         this.dispositivo = dispositivo;
     }
 
-    public List<Dispositivo> getDispositivoList() { 
+    public List<Dispositivo> getDispositivoList() {
         return ClienteDAO.getInstance().findCliente(SessionContext.getInstance().getClienteSelecionado()).getDispositivoList();
- 
+
     }
 
     public List<Fabricante> getFabricantes() {
         return FabricanteDAO.getInstance().getFabricantes();
-    }
-
-    public List<Local> getLocalList() { 
-        return ClienteDAO.getInstance().findCliente(SessionContext.getInstance().getClienteSelecionado()).getLocalList();
- 
     }
 
     public Fabricante getFabricante() {
@@ -90,9 +83,8 @@ public class DispositivoBean implements Serializable {
     public void selecionarDispositivo() {
         this.dispositivo = (Dispositivo) dataTable.getRowData();
         this.dispositivo.setCaptureSenha(SessionContext.getInstance().getUsuarioLogado().getVerSenhas());
-         
-    }
 
+    }
 
     public void event() {
 
@@ -131,7 +123,6 @@ public class DispositivoBean implements Serializable {
         dispositivo.setDataCriacao(new Date());
         dispositivo.setUsuarioFK(SessionContext.getInstance().getUsuarioLogado());
         dispositivo.setClienteFK(SessionContext.getInstance().getClienteSelecionado());
-        
 
         dispositivo.setNome(dispositivo.getNome().substring(0, 1).toUpperCase() + dispositivo.getNome().substring(1).toLowerCase());
 
@@ -142,10 +133,9 @@ public class DispositivoBean implements Serializable {
         if (dispositivo.isDhcp()) {
             dispositivo.setIp("DHCP");
         }
-        
-        
-       Dispositivo gravar = new Dispositivo();
-       gravar = dispositivo;
+
+        Dispositivo gravar = new Dispositivo();
+        gravar = dispositivo;
 
         if (DispositivoDAO.getInstance().insert(gravar) != null) {
 
@@ -154,18 +144,20 @@ public class DispositivoBean implements Serializable {
         } else {
             message("Falha!", "Erro ao adicionar.");
         }
-        
+
         limpar();
     }
 
-    public void limpar() { 
-       
+    public void limpar() {
+        if (dispositivo == null) {
+            dispositivo = new Dispositivo();
+        }
         dispositivo.setPortaTCP(0);
         dispositivo.setPortaWEB(80);
         dispositivo.setLocalFK(new Local());
         dispositivo.setFabricanteFK(new Fabricante());
         dispositivo.setCaptureSenha(true);
-         
+
     }
 
     public void message(String mensagem, String conteudo) {

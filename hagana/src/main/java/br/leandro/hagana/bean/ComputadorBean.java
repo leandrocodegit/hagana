@@ -32,8 +32,7 @@ public class ComputadorBean implements Serializable {
     private static final long serialVersionUID = 15564855655321L;
 
     private HtmlDataTable dataTable;
-    public Computador computador; 
-    
+    public Computador computador;
 
     @PostConstruct
     public void init() {
@@ -63,14 +62,13 @@ public class ComputadorBean implements Serializable {
         this.computador = computador;
     }
 
-    public List<Computador> getComputadorList() { 
+    public List<Computador> getComputadorList() {
         return ClienteDAO.getInstance().findCliente(SessionContext.getInstance().getClienteSelecionado()).getComputadorList();
     }
 
     public List<Local> getLocalList() {
-        return ClienteDAO.getInstance().findCliente(SessionContext.getInstance().getClienteSelecionado()).getLocalList(); 
+        return ClienteDAO.getInstance().findCliente(SessionContext.getInstance().getClienteSelecionado()).getLocalList();
     }
-  
 
     public void selecionarComputador() {
         computador = (Computador) dataTable.getRowData();
@@ -108,7 +106,7 @@ public class ComputadorBean implements Serializable {
         if (computador.isDhcp()) {
             computador.setIp("DHCP");
         }
-        
+
         Computador gravar = new Computador();
         gravar = computador;
 
@@ -122,10 +120,12 @@ public class ComputadorBean implements Serializable {
         limpar();
     }
 
-    public void limpar() {         
-        computador = new Computador();
+    public void limpar() {
+        if (computador == null) {
+            computador = new Computador();
+        }
         computador.setLocalFK(new Local());
-        computador.setCaptureSenha(true);       
+        computador.setCaptureSenha(true);
     }
 
     public void message(String mensagem, String conteudo) {

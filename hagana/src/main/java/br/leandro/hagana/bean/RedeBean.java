@@ -106,6 +106,7 @@ public class RedeBean implements Serializable {
     public void deletar() {
         if (rede != null) {
             RedeDAO.getInstance().delete(rede.getIdrede());
+            SessionContext.getInstance().refreshcliente();
             message("Sucesso!", "Removido rede.");
         }
     }
@@ -119,6 +120,7 @@ public class RedeBean implements Serializable {
         }
 
         RedeDAO.getInstance().atualizar(rede);
+        SessionContext.getInstance().refreshcliente();
         message("Sucesso!", "Atualizado.");
     }
 
@@ -138,7 +140,7 @@ public class RedeBean implements Serializable {
         Rede gravar = new Rede();
         gravar = rede;
         if (RedeDAO.getInstance().insert(rede) != null) {
-
+            SessionContext.getInstance().refreshcliente();
             message("Sucesso!", "Adicionado.");
             // criarPasta(cli);
         } else {
@@ -149,6 +151,10 @@ public class RedeBean implements Serializable {
 
     public void limpar() {
 
+        if(rede == null)
+        {
+            rede = new Rede();
+        }
         rede.setLocalFK(new Local());
         rede.setCaptureSenha(true);
     }

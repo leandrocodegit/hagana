@@ -61,7 +61,7 @@ public class DAO {
             return null;
 
         } finally {
-            em.close();
+          //  em.close();
         }
         return device;
     }
@@ -77,7 +77,7 @@ public class DAO {
         } catch (Exception ex) {
             em.getTransaction().rollback();
         } finally {
-            em.close();
+           // em.close();
         }
     }
 
@@ -91,7 +91,7 @@ public class DAO {
             em.getTransaction().rollback();
             return null;
         } finally {
-            em.close();
+          //  em.close();
         }
         return device;
     } 

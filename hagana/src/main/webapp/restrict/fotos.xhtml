@@ -113,7 +113,7 @@
 
                         <div class="disContent w3-container" style="overflow-x: hidden;overflow-y: auto;height: 100vh;margin-bottom: 10px">
                             <div class="w3-row">
-                                <h:panelGroup  id="listaVideos"> 
+                                <h:panelGroup  id="listaFotos"> 
 
                                     <ui:repeat value="#{fotoBean.fotoList}" var="foto">
                                         <div class="w3-col s3 w3-center w3-padding w3-mobile">
@@ -127,15 +127,18 @@
                                                     <div class="w3-container"> 
 
                                                         <h:form>
-                                                            <p:commandLink ajax="true" title="Remover foto"  action="#{fotoBean.deletar(foto.idfoto)}"  class="botaoFoto fas fa-times-circle "/> 
+                                                            <p:commandLink ajax="true" title="Remover foto" action="#{fotoBean.setId(foto.idfoto)}" onclick="document.getElementById('ex04').style.display = 'block'"   class="botaoFoto fas fa-times-circle "/> 
                                                             <p:commandLink  title="Detalhes" ajax="true" class="botaoFoto far fas fa-info-circle" onclick="acord('F' + #{foto.idfoto})"/> 
-                                                             <a class="botaoFoto  fas fa-download" href="arquivos/contas/#{foto.clienteFK.conta}/imagens/#{foto.idfoto}.jpg" download="#{foto.nome}"></a>
-                                                             <p:commandLink  title="Expandir" ajax="true"  class="botaoFoto far fas fa-expand-arrows-alt " onclick="expandir('#{foto.nome}', '#{foto.idfoto}', '#{foto.clienteFK.conta}')">
-                                                                 <f:ajax execute="status"></f:ajax>
-                                                             </p:commandLink>
-                                                                 
-                                                        
- </h:form>
+                                                            <a class="botaoFoto  fas fa-download" href="arquivos/contas/#{foto.clienteFK.conta}/imagens/#{foto.idfoto}.jpg" download="#{foto.nome}"></a>
+                                                            <p:commandLink  title="Expandir" ajax="true"  class="botaoFoto far fas fa-expand-arrows-alt " onclick="expandir('#{foto.nome}', '#{foto.idfoto}', '#{foto.clienteFK.conta}')">
+                                                                <f:ajax execute="status"></f:ajax>
+                                                            </p:commandLink>
+
+                                                            <br></br>
+                                                            <br></br>
+
+
+                                                        </h:form>
                                                     </div>
                                                 </div>
                                             </div>
@@ -170,6 +173,28 @@
                             </div>                             
                         </div>
                         <!-- Fotos repeat fim -->
+                        <!-- Modal excluir foto -->
+                        <div id="ex04" class="w3-modal w3-round-xlarge" >
+                            <div class="w3-modal-content w3-round-large"  style="width: 500px;margin-top:150px">
+                                <div class="headModal w3-pink"> 
+                                    <p class="w3-text-white w3-center w3-padding" style="font-family: 'Roboto Slab';font-size: 18px">Excluir Foto ?</p>
+                                </div>
+
+                                <br></br>
+                                <div class="w3-container"  style="width: 100%;padding-right: 10px;padding-left: 10px;">
+                                    <br></br>
+                                    <h:form>
+                                        <p:commandButton  ajax="true" value="Sim" update="listaFotos" action="#{fotoBean.deletar()}"  class="botaoExcluir w3-right w3-hover-pink"   onclick="document.getElementById('m003').style.display = 'none'" >
+
+                                        </p:commandButton>
+                                        <p:commandButton   value="Não"  class="botaoExcluir w3-right" 
+                                                           onclick="document.getElementById('ex04').style.display = 'none'">
+                                        </p:commandButton>
+                                    </h:form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Fim modal excluir foto -->
                     </div>                   
                 </div>
             </div>
@@ -187,7 +212,14 @@
             <div class="w3-modal-content"  style="width: 500px;margin-top: 150px">
 
                 <div class="headModal">
-                    <i class="fas fa-times-circle w3-right minimiza" onclick="document.getElementById('mAddFoto').style.display = 'none'"> </i>
+                    <h:form>
+                        <h:commandLink  
+                            class="fas fa-times-circle w3-right minimiza"
+                            onclick="document.getElementById('mAddFoto').style.display = 'none'">
+                            <f:ajax  render="listaFotos"/>                   
+
+                        </h:commandLink>  
+                    </h:form>
                     <p class="w3-text-white w3-center w3-padding" style="font-family: 'Roboto Slab';font-size: 18px">Adicionar foto</p>
                 </div>
 
@@ -217,7 +249,7 @@
                             <h:commandButton value="Enviar" 
                                              action="#{uploadBean.uploadFile()}"
                                              class="botao w3-center">
-                                <f:ajax  execute="formFile" render="formFile"/>                                 
+                                <f:ajax  execute="formFile" render="formFile"/>   
                             </h:commandButton>
                         </div>
 
@@ -271,11 +303,11 @@
                 font-size: 16px;
                 color: #00f1ff; 
             }
-            
+
             .icone b{
                 font-size: 16px;
             }
-            
+
             .inputFoto{
 
                 background: url(../img/cam.png) no-repeat 10px center ;

@@ -591,7 +591,7 @@
                                                                                 ajax="true"
                                                                                 onclick="document.getElementById('mFile').style.display = 'block'"
                                                                                 style="color:#d9004a;margin-right: 10px;">
-                                                                   
+
                                                                 </p:commandLink>
                                                             </td>
                                                             <td style="width: 30px">
@@ -618,11 +618,7 @@
                         </div>
                     </div>
 
-                    <!-- Load status -->
-                    <h:form id="status"> 
-                        <p:ajaxStatus  onstart="document.getElementById('load').style.display = 'block'" onsuccess="document.getElementById('load').style.display = 'none'" />
-                    </h:form>
-                    <!-- Load status -->
+
 
                     <!-- Modal file inicio -->
                     <div id="mFile" class="w3-modal " >
@@ -973,7 +969,7 @@
                                             <td>
 
                                                 <h:selectOneMenu value="#{dispositivoBean.dispositivo.localFK.idlocal}"  class="inp" style="height: 35px" >
-                                                    <f:selectItems  var="local" value="#{dispositivoBean.localList}" itemValue="#{local.idlocal}" itemLabel="#{local.nome}" />                                                    
+                                                    <f:selectItems  var="local" value="#{clienteBean.clienteSelecionado.localList}" itemValue="#{local.idlocal}" itemLabel="#{local.nome}" />                                                    
 
                                                     <!-- <f:ajax render="resultados"/>-->
                                                 </h:selectOneMenu>
@@ -1135,7 +1131,7 @@
                                             <td>
 
                                                 <h:selectOneMenu value="#{computadorBean.computador.localFK.idlocal}" class="inp" style="height: 35px" >                                                   
-                                                    <f:selectItems  var="comp" value="#{computadorBean.localList}" itemValue="#{comp.idlocal}" itemLabel="#{comp.nome}" />                                                   
+                                                    <f:selectItems  var="comp" value="#{clienteBean.clienteSelecionado.localList}" itemValue="#{comp.idlocal}" itemLabel="#{comp.nome}" />                                                   
                                                     <!-- <f:ajax render="resultados"/>-->
                                                 </h:selectOneMenu>
 
@@ -1273,7 +1269,7 @@
                                             <td>
 
                                                 <h:selectOneMenu value="#{redeBean.rede.localFK.idlocal}" class="inp" style="hheight: 35px" >                                                   
-                                                    <f:selectItems  var="rede" value="#{redeBean.localList}" itemValue="#{rede.idlocal}" itemLabel="#{rede.nome}" />                                                   
+                                                    <f:selectItems  var="rede" value="#{clienteBean.clienteSelecionado.localList}" itemValue="#{rede.idlocal}" itemLabel="#{rede.nome}" />                                                   
                                                     <!-- <f:ajax render="resultados"/>-->
                                                 </h:selectOneMenu>
 
@@ -1394,6 +1390,14 @@
                                                 <p:message for="velocidade" styleClass="validate"/>
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <td class="w3-right-align"><b>Login</b></td>
+                                            <td><p:inputText id="login" type="text" value="#{linkBean.link.login}" required="true" class="inp" >
+                                                    <f:validateLength minimum="3" />
+                                                </p:inputText>
+                                                <p:message for="login" styleClass="validate"/>
+                                            </td>
+                                        </tr>
                                         <h:panelGroup rendered="#{linkBean.link.captureSenha == false}">
                                             <tr>
                                                 <td class="w3-right-align"><b>Senha:</b></td>
@@ -1412,7 +1416,7 @@
                                             <td>
 
                                                 <h:selectOneMenu value="#{linkBean.link.localFK.idlocal}" class="inp" style="height: 35px" >                                                   
-                                                    <f:selectItems  var="link" value="#{linkBean.localList}" itemValue="#{link.idlocal}" itemLabel="#{link.nome}" />                                                   
+                                                    <f:selectItems  var="link" value="#{clienteBean.clienteSelecionado.localList}" itemValue="#{link.idlocal}" itemLabel="#{link.nome}" />                                                   
                                                     <!-- <f:ajax render="resultados"/>-->
                                                 </h:selectOneMenu>
 
@@ -1424,16 +1428,14 @@
 
                                     <br></br>
                                     <div class="w3-right w3-padding"> 
-                                        <h:panelGroup rendered="#{linkBean.link.inativeBTAdd == false}">
-                                            <p:commandButton value="Excluir" onclick="abreModal('ex04')"  class="botao">                                   
-                                            </p:commandButton>
-                                            <p:commandButton  value="Atualizar" ajax="false" action="#{linkBean.atualizar()}"  update="formLink"   class="botao">
-                                            </p:commandButton>
-                                        </h:panelGroup>
-                                        <h:panelGroup rendered="#{linkBean.link.inativeBTAdd == true}">
-                                            <p:commandButton  update="formCadLink,formLink"  value="Cadastrar" ajax="true" action="#{linkBean.adicionar()}"  class="botao">                                    
-                                            </p:commandButton>
-                                        </h:panelGroup>
+
+                                        <p:commandButton value="Excluir" onclick="abreModal('ex04')"  class="botao">                                   
+                                        </p:commandButton>
+                                        <p:commandButton  value="Atualizar" ajax="false" action="#{linkBean.atualizar()}"  update="formLink"   class="botao">
+                                        </p:commandButton>                                        
+                                        <p:commandButton  update="formCadLink,formLink"  value="Cadastrar" ajax="true" action="#{linkBean.adicionar()}"  class="botao">                                    
+                                        </p:commandButton>
+
                                     </div>
 
                                     <p:messages  showDetail="true" closable="true"/>
@@ -1565,12 +1567,12 @@
                 var x = document.getElementById(id);
 
                 var bt = document.getElementById('BT' + id);
-               
+
 
                 if (x.className.indexOf(" w3-show ") === -1) {
                     x.className = x.className.replace(" w3-hide ", " w3-show ");
                     bt.className = bt.className.replace("itemCor", " cor ");
-                     window.location = '#BT' + id;
+                    window.location = '#BT' + id;
 
                 } else {
                     x.className = x.className.replace(" w3-show ", " w3-hide ");

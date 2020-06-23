@@ -87,7 +87,7 @@ public class ClienteDAO {
         } catch (Exception ex) {
             em.getTransaction().rollback();
         } finally {
-            em.close();
+           // em.close();
         }
         return cliente;
     }
@@ -103,7 +103,7 @@ public class ClienteDAO {
         } catch (Exception ex) {
             em.getTransaction().rollback();
         } finally {
-            em.close();
+          //  em.close();
         }
     }
 
@@ -116,7 +116,7 @@ public class ClienteDAO {
         } catch (Exception ex) {
             em.getTransaction().rollback();
         } finally {
-            em.close();
+           // em.close();
         }
     }
 
