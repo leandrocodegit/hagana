@@ -31,6 +31,7 @@ public class ComputadorBean implements Serializable {
 
     private HtmlDataTable dataTable;
     public Computador computador;
+    private DAO dao = new DAO();
 
     @PostConstruct
     public void init() {
@@ -75,7 +76,7 @@ public class ComputadorBean implements Serializable {
 
     public void deletar() {
         if (computador != null) {
-            DAO.getInstance().delete(computador, computador.getIdcomputador());
+           dao.delete(computador, computador.getIdcomputador());
             SessionContext.getInstance().refreshcliente();
             message("Sucesso!", "Removido computador.");
         }
@@ -89,7 +90,7 @@ public class ComputadorBean implements Serializable {
 
         computador.setNome(computador.getNome().substring(0, 1).toUpperCase() + computador.getNome().substring(1).toLowerCase());
 
-        DAO.getInstance().atualizar(computador);
+        dao.atualizar(computador);
         SessionContext.getInstance().refreshcliente();
         message("Sucesso!", "Atualizado.");
     }
@@ -107,7 +108,7 @@ public class ComputadorBean implements Serializable {
             computador.setIp("DHCP");
         }
 
-        if (DAO.getInstance().insert(computador) != null) {
+        if (dao.insert(computador) != null) {
             SessionContext.getInstance().refreshcliente();
             limpar();
             message("Sucesso!", "Adicionado.");

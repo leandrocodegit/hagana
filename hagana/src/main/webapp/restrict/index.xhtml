@@ -1401,13 +1401,21 @@
                                         <h:panelGroup rendered="#{linkBean.link.captureSenha == false}">
                                             <tr>
                                                 <td class="w3-right-align"><b>Senha:</b></td>
-                                                <td><p:inputText type="password" value="#{linkBean.link.senha}" class="inp"/></td>
+                                                <td><p:inputText id="senha1" type="password" value="#{linkBean.link.senha}" class="inp">
+                                                <f:validateLength minimum="3" />
+                                                </p:inputText>
+                                                <p:message for="senha1" styleClass="validate"/>
+                                                </td>
                                             </tr>  
                                         </h:panelGroup>
                                         <h:panelGroup rendered="#{linkBean.link.captureSenha == true}">
                                             <tr>
                                                 <td class="w3-right-align"><b>Senha:</b></td>
-                                                <td><p:inputText type="text" value="#{linkBean.link.senha}" class="inp"/></td>
+                                                <td><p:inputText id="senha2" type="text" value="#{linkBean.link.senha}" class="inp">
+                                                 <f:validateLength minimum="3" />
+                                                </p:inputText>
+                                                <p:message for="senha2" styleClass="validate"/>
+                                                </td>
                                             </tr>  
                                         </h:panelGroup>
 

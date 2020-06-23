@@ -7,9 +7,7 @@ package br.leandro.hagana.bean;
 
 import br.leandro.hagana.controler.ClienteDAO;
 import br.leandro.hagana.controler.DAO;
-import br.leandro.hagana.controler.DAO;
 import br.leandro.hagana.entidade.Arquivo;
-import br.leandro.hagana.entidade.Foto;
 import br.leandro.hagana.entidade.Local;
 import br.leandro.hagana.entidade.Rede;
 import java.io.File;
@@ -42,6 +40,7 @@ public class RedeBean implements Serializable {
     public Rede rede;
     private Part file;
     private Arquivo arquivo;
+    private DAO dao = new DAO();
 
     @PostConstruct
     public void init() {
@@ -103,7 +102,7 @@ public class RedeBean implements Serializable {
 
     public void deletar() {
         if (rede != null) {
-            DAO.getInstance().delete(rede, rede.getIdrede());
+            dao.delete(rede, rede.getIdrede());
             SessionContext.getInstance().refreshcliente();
             message("Sucesso!", "Removido rede.");
         }
@@ -117,7 +116,7 @@ public class RedeBean implements Serializable {
             rede.setIp("DHCP");
         }
 
-        DAO.getInstance().atualizar(rede);
+        dao.atualizar(rede);
         SessionContext.getInstance().refreshcliente();
         message("Sucesso!", "Atualizado.");
     }
@@ -135,7 +134,7 @@ public class RedeBean implements Serializable {
             rede.setIp("DHCP");
         }
 
-        if (DAO.getInstance().insert(rede) != null) {
+        if (dao.insert(rede) != null) {
             SessionContext.getInstance().refreshcliente();
             limpar();
             message("Sucesso!", "Adicionado.");
@@ -177,11 +176,11 @@ public class RedeBean implements Serializable {
                 if (rede.getArquivoFK() != null) {
                     arquivo = rede.getArquivoFK();
                     rede.getArquivoFK().setFileName(file.getSubmittedFileName());
-                    DAO.getInstance().atualizar(arquivo);
+                    dao.atualizar(arquivo);
                 } else {
-                    arquivo = (Arquivo) DAO.getInstance().insert(arquivo);
+                    arquivo = (Arquivo) dao.insert(arquivo);
                     rede.setArquivoFK(arquivo);
-                    DAO.getInstance().atualizar(rede);
+                    dao.atualizar(rede);
                 }
 
                 if (file != null) {

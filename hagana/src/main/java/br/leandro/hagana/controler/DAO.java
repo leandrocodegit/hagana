@@ -5,10 +5,6 @@
  */
 package br.leandro.hagana.controler;
 
-import br.leandro.hagana.entidade.Cliente;
-import br.leandro.hagana.entidade.Dispositivo;
-import br.leandro.hagana.entidade.Usuario;
-import java.util.Date;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -18,23 +14,9 @@ import javax.persistence.Persistence;
  * @author leand
  */
 public class DAO {
-
-   
-     private static DAO instance;
+ 
     protected EntityManager entityManager;
-
-    public static DAO getInstance() {
-        if (instance == null) {
-            instance = new DAO();
-        }
-
-        return instance;
-    }
-
-    private DAO() {
-        entityManager = getEntityManager();
-    }
-
+ 
     public EntityManager getEntityManager() {
         EntityManagerFactory factory
                 = Persistence.createEntityManagerFactory("com.gennis_hagana_war_PU");

@@ -30,6 +30,7 @@ public class FotoBean implements Serializable {
     private static final long serialVersionUID = 15564855655321L;
     public Foto foto;
     private Integer id;
+    private DAO dao = new DAO();
 
     @PostConstruct
     public void init() {
@@ -55,8 +56,7 @@ public class FotoBean implements Serializable {
         return id;
     }
 
-    public void setId(Integer id) {
-        System.out.println("ID " + id);
+    public void setId(Integer id) { 
         this.id = id;
     }
 
@@ -75,9 +75,8 @@ public class FotoBean implements Serializable {
       
         if (deletaFotoDir()) {
 
-            DAO.getInstance().delete(foto, id);
-            SessionContext.getInstance().refreshcliente();
-            System.out.println("Delete " + id);
+            dao.delete(foto, id);
+            SessionContext.getInstance().refreshcliente(); 
             message("Sucesso!", "Removido foto.");
         } else {
             message("Erro!", "Falha ao remover arquivo.");
@@ -97,7 +96,7 @@ public class FotoBean implements Serializable {
             foto.setNome(foto.getNome().toUpperCase());
         }
 
-        DAO.getInstance().atualizar(foto);
+        dao.atualizar(foto);
         SessionContext.getInstance().refreshcliente();
 
         message("Sucesso!", "Atualizado foto.");
@@ -116,7 +115,7 @@ public class FotoBean implements Serializable {
             foto.setNome(foto.getNome().toUpperCase());
         }
  
-        if (DAO.getInstance().insert(foto) != null) {
+        if (dao.insert(foto) != null) {
             SessionContext.getInstance().refreshcliente();
             foto = new Foto();
             message("Sucesso!", " foto adicionada.");

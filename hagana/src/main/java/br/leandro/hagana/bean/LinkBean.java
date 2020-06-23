@@ -33,8 +33,7 @@ public class LinkBean implements Serializable {
     private HtmlDataTable dataTable;
     public Link link;
     private Fabricante fabricante;
-    private List<Link> linkList;
-    private List<Local> localList;
+    private DAO dao = new DAO();
 
     @PostConstruct
     public void init() {
@@ -93,7 +92,7 @@ public class LinkBean implements Serializable {
 
     public void deletar() {
         if (link != null) {
-            DAO.getInstance().delete(link, link.getIdlink());
+            dao.delete(link, link.getIdlink());
             SessionContext.getInstance().refreshcliente();
             message("Sucesso!", "Removido link.");
         }
@@ -107,7 +106,7 @@ public class LinkBean implements Serializable {
             link.setNome(link.getNome().toUpperCase());
         }
 
-        DAO.getInstance().atualizar(link);
+        dao.atualizar(link);
         SessionContext.getInstance().refreshcliente();
         message("Sucesso!", "Atualizado.");
     }
@@ -126,7 +125,7 @@ public class LinkBean implements Serializable {
             link.setNome(link.getNome().toUpperCase());
         }
 
-        if (DAO.getInstance().insert(link) != null) {
+        if (dao.insert(link) != null) {
             SessionContext.getInstance().refreshcliente();
             limpar();
             message("Sucesso!", "Adicionado.");

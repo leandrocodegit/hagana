@@ -34,6 +34,7 @@ public class DispositivoBean implements Serializable {
     private HtmlDataTable dataTable;
     public Dispositivo dispositivo;
     private Fabricante fabricante;
+    private DAO dao = new DAO();
 
     @PostConstruct
     public void init() {
@@ -96,7 +97,7 @@ public class DispositivoBean implements Serializable {
 
     public void deletar() {
         if (dispositivo != null) {
-            DAO.getInstance().delete(dispositivo, dispositivo.getIddispositivo());
+            dao.delete(dispositivo, dispositivo.getIddispositivo());
             SessionContext.getInstance().refreshcliente();
             message("Sucesso!", "Removido dispositivo.");
         }
@@ -114,7 +115,7 @@ public class DispositivoBean implements Serializable {
             dispositivo.setIp("DHCP");
         }
 
-        DAO.getInstance().atualizar(dispositivo);
+        dao.atualizar(dispositivo);
         SessionContext.getInstance().refreshcliente();
         message("Sucesso!", "Atualizado.");
     }
@@ -136,7 +137,7 @@ public class DispositivoBean implements Serializable {
             dispositivo.setIp("DHCP");
         }
 
-        if (DAO.getInstance().insert(dispositivo) != null) {
+        if (dao.insert(dispositivo) != null) {
             SessionContext.getInstance().refreshcliente();
             limpar();
             message("Sucesso!", "Adicionado.");
