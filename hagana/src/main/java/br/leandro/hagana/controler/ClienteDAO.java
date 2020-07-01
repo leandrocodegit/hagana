@@ -72,6 +72,23 @@ public class ClienteDAO {
 
         return query.getResultList();
     }
+    
+    
+    public Integer getCount() {
+        Cliente cliente = new Cliente();
+        cliente.setConta("9246");
+        Query query = getEntityManager().createNamedQuery("Dispositivo.findByCount");
+        query.setParameter("cliente", cliente.getConta());
+        query.setParameter("tipo", "4");
+
+        return (Integer) query.getSingleResult();
+    }
+    
+    public static void main(String[] args) {
+        ClienteDAO dao = new ClienteDAO();
+        //System.out.println(dao.getCount(""));
+        dao.getCount();
+    }
 
     public Cliente insert(Cliente cliente) {
         EntityManager em = getEntityManager();

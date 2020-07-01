@@ -65,7 +65,7 @@ public class Cliente implements Serializable {
     private Date dataCriacao;
     @OneToMany(mappedBy = "clienteFK")
     private List<Computador> computadorList;
-    @JoinColumn(name = "usuarioFK", referencedColumnName = "idusuario")
+    @JoinColumn(name = "usuario_FK", referencedColumnName = "idusuario")
     @ManyToOne(optional = false)
     private Usuario usuarioFK;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "clienteFK")

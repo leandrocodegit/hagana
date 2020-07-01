@@ -1,3 +1,10 @@
 /hagana/target/
 /broadcast/nbproject/private/
 /broadcast/build/
+/servidor/target/
+/vpn-client/nbproject/private/
+/vpn-client/build/
+/vpn-client/dist/
+/vpn-remote/nbproject/private/
+/vpn-remote/build/
+/vpn-remote/dist/

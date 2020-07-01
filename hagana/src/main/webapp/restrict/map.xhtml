@@ -37,10 +37,15 @@
                 <ul>
                     <li class="icone"><a href="dashboard.xhtml"><span><b class="fas fa-stream w3-text-blue-grey"></b></span>   <b class="textoMenu" style="color:#0bd6e2" >Dashboard</b></a></li>
                     <li class="icone"><a href="index.xhtml"><span><b class="fas fa-hdd w3-text-blue-grey"></b></span>   <b class="textoMenu" >Dispositivos</b></a></li>                   
-                    <li class="icone"><a href="dispositivos.xhtml"  onclick="rc()" ><span><b class="fas fa-clone w3-text-blue-grey"></b></span>   <b class="textoMenu" >Arquivos</b></a></li>
+                    <li class="icone"><a href="arquivos.xhtml"  onclick="rc()" ><span><b class="fas fa-clone w3-text-blue-grey"></b></span>   <b class="textoMenu" >Arquivos</b></a></li>
                     <li class="icone"><a href="map.xhtml"><span><b class="fas fa-sitemap w3-text-blue-grey"></b></span>   <b class="textoMenu" >Mapa</b></a></li>
                     <li class="icone"><a href="fotos.xhtml"><span><b class="fas fa-camera-retro w3-text-blue-grey" ></b></span>   <b class="textoMenu" >Fotos</b></a></li>
+                    <h:panelGroup rendered="#{loginBean.usuarioLogado.gerenciarUsuario == true}">
+                        <li class="icone"><a href="manager.xhtml"><span><b class="fas fa-user-plus w3-text-blue-grey"></b></span><b class="w3-text-blue-grey" style="padding-left:9px" > Usuários</b></a></li>
+                    </h:panelGroup>
+
                     <li class="icone"><a href="login.xhtml"><span><b class="far fa-user w3-text-purple"></b></span>   <b class="w3-text-purple" style="padding-left:9px" > Olá, #{loginBean.dadosUsuario}</b></a></li>
+
 
                     <div class="w3-padding">
 
@@ -64,110 +69,128 @@
             </footer>
 
 
-            <div class="w3-main" style="margin-left:200px" id="main" >     
+            <div class="w3-main" style="margin-left:200px" id="main" >    
 
-                <div class="w3-mobile w3-white w3-section w3-row-padding w3-left " style="width:100%;padding-top:50px;padding-left:0px;padding-right:0;padding-bottom: 5px ">
+
+
+                <div class="w3-mobile w3-section w3-row-padding w3-left " style="width:100%;padding-top:50px;padding-left:0px;padding-right:0;padding-bottom: 5px ">
 
                     <div class="" style="height:40px;margin-bottom: 20px;margin-left:5px" id="navCliente">                        
                         <a class="w3-button w3-xlarge w3-round-large w3-text-white w3-hover-pink" href="clientes.xhtml"  
                            style="font-size:16px;text-decoration: none;margin-left: -12px;background: #0bd6e2">#{loginBean.dadosCliente}</a>
                     </div>
 
-                    <!-- Inicio dispositivos -->
-                    <div>
-                        <div  style="height: 400px; position: fixed;margin-top: 150px">
-                            <p:panel id="output">
+                    <div class="w3-bar w3-black w3-border-bottom border-lime">
+                        <button class="w3-bar-item w3-button" onclick="openTab('todos')">Todos</button>
+                        <button class="w3-bar-item w3-button" onclick="openTab('seq')">Sequencial</button> 
+                    </div>
 
-                                <table class="w3-table w3-large">
-
-                                    <tr>
-                                        <td>Nome:</td>
-                                        <td class="w3-text-deep-orange">#{dashboradBean.device.nome}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tipo:</td>
-                                        <td>
-                                            <h:form>
-                                                <h:selectOneMenu  value="#{dashboradBean.device.tipo}" disabled="true"  class="w3-large w3-select w3-border-0" style="height: 40px" >
-                                                    <f:selectItem itemLabel="" itemValue="0"/>
-                                                    <f:selectItem itemLabel="Antena TAG" itemValue="1" />
-                                                    <f:selectItem itemLabel="Alarme IP" itemValue="2" />
-                                                    <f:selectItem itemLabel="Biometria" itemValue="3" />
-                                                    <f:selectItem itemLabel="Camera IP" itemValue="4" />
-                                                    <f:selectItem itemLabel="Controladora" itemValue="5" />
-                                                    <f:selectItem itemLabel="DVR/NVR" itemValue="6" />
-                                                    <f:selectItem itemLabel="Intefone IP" itemValue="7" />
-                                                    <f:selectItem itemLabel="Modulo guarita" itemValue="8" />
-                                                    <f:selectItem itemLabel="Antena" itemValue="9" />
-                                                    <f:selectItem itemLabel="Roteador" itemValue="10"/>
-                                                    <f:selectItem itemLabel="Roteador WIFI" itemValue="11" />  
-                                                    <f:selectItem itemLabel="Switch" itemValue="12" /> 
-                                                    <f:selectItem itemLabel="Switch POE" itemValue="13" /> 
-                                                    <f:selectItem itemLabel="Desktop" itemValue="14" />
-                                                    <f:selectItem itemLabel="Notebook" itemValue="15" />
-                                                    <f:selectItem itemLabel="Rapsbary" itemValue="16" />
-                                                    <f:selectItem itemLabel="Servidor" itemValue="17" />
-                                                    <f:selectItem itemLabel="ADSL" itemValue="18" />  
-                                                    <f:selectItem itemLabel="Cabo" itemValue="19"/>
-                                                    <f:selectItem itemLabel="Fibra optica" itemValue="20" /> 
-                                                    <f:selectItem itemLabel="Radio" itemValue="21" /> 
-                                                </h:selectOneMenu>
-                                            </h:form>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>IP/Host:</td>
-                                        <td class="w3-text-blue">#{dashboradBean.device.ip}</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>Local</td>
-                                        <td class="w3-text-blue">#{dashboradBean.device.localFK.nome}</td>
-                                    </tr>   
-                                    <tr>
-                                        <td>Port conect</td>
-                                        <td class="w3-text-blue">#{dashboradBean.device.port_conect}</td>
-                                    </tr>                       
-                                    <tr>
-                                        <td>Data</td>
-                                        <td class="w3-text-blue">#{dashboradBean.device.dataFormat}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Usuario</td>
-                                        <td class="w3-text-blue">#{dashboradBean.device.usuarioFK.nome}</td>
-                                    </tr>
-                                </table>
-                            </p:panel>
-                        </div>
-                        <!-- Inicio map -->
-
+                    <div id="todos" class="w3-container">
                         <h:form>
-                            <p:mindmap value="#{dashboradBean.root}" style=" height: 82vh;">
-                                <p:ajax event="select" listener="#{dashboradBean.onNodeSelect}" update="output"/>
-                                <p:ajax event="dblselect" listener="#{dashboradBean.onNodeDblselect}" update="output" />
+                            <p:mindmap value="#{dashboradBean.root}" style="width: 100%;height: 100vh;">   
                             </p:mindmap>
                         </h:form>
-
-                        <!-- Fim map -->
-
-                        <p:growl id="growl" showDetail="true"  /> 
-
                     </div>
+
+                    <div id="seq" class="w3-container" >
+                        <!-- Inicio dispositivos -->
+
+                        <div>
+                            <div  style="height: 400px; position: fixed;margin-top: 150px">
+                                <p:panel id="output">
+
+                                    <table class="w3-table w3-large">
+
+                                        <tr>
+                                            <td class="w3-text-deep-orange">#{mapBean.device.nome}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h:form>
+                                                    <h:selectOneMenu  value="#{mapBean.device.tipo}" disabled="true"  class="w3-large w3-select w3-border-0 w3-text-deep-orange" style="height: 40px;background: transparent;" >
+                                                        <f:selectItem itemLabel="" itemValue="0"/>
+                                                        <f:selectItem itemLabel="Antena TAG" itemValue="1" />
+                                                        <f:selectItem itemLabel="Alarme IP" itemValue="2" />
+                                                        <f:selectItem itemLabel="Biometria" itemValue="3" />
+                                                        <f:selectItem itemLabel="Camera IP" itemValue="4" />
+                                                        <f:selectItem itemLabel="Controladora" itemValue="5" />
+                                                        <f:selectItem itemLabel="DVR/NVR" itemValue="6" />
+                                                        <f:selectItem itemLabel="Intefone IP" itemValue="7" />
+                                                        <f:selectItem itemLabel="Modulo guarita" itemValue="8" />
+                                                        <f:selectItem itemLabel="Antena" itemValue="9" />
+                                                        <f:selectItem itemLabel="Roteador" itemValue="10"/>
+                                                        <f:selectItem itemLabel="Roteador WIFI" itemValue="11" />  
+                                                        <f:selectItem itemLabel="Switch" itemValue="12" /> 
+                                                        <f:selectItem itemLabel="Switch POE" itemValue="13" /> 
+                                                        <f:selectItem itemLabel="Provedor" itemValue="14" />
+                                                        <f:selectItem itemLabel="Desktop" itemValue="15" />
+                                                        <f:selectItem itemLabel="Notebook" itemValue="16" />                                               
+                                                        <f:selectItem itemLabel="Servidor" itemValue="17" />
+                                                        <f:selectItem itemLabel="ADSL" itemValue="18" />  
+                                                        <f:selectItem itemLabel="Cabo" itemValue="19"/>
+                                                        <f:selectItem itemLabel="Fibra optica" itemValue="20" /> 
+                                                        <f:selectItem itemLabel="Radio" itemValue="21" /> 
+                                                    </h:selectOneMenu>
+                                                </h:form>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="w3-text-blue">#{mapBean.device.ip}</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td class="w3-text-blue">#{mapBean.device.localFK.nome}</td>
+                                        </tr>   
+                                        <tr>
+                                            <td class="w3-text-blue">#{mapBean.device.port_conect}</td>
+                                        </tr>                       
+                                        <tr>
+                                            <td class="w3-text-blue">#{mapBean.device.dataFormat}</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="w3-text-blue">#{mapBean.device.usuarioFK.nome}</td>
+                                        </tr>
+                                    </table>
+                                </p:panel>
+                            </div>
+                            <!-- Inicio map -->
+
+                            <h:form>
+                                <p:mindmap value="#{mapBean.root}" style="width: 100%;height: 100vh;">
+                                    <p:ajax event="select" listener="#{mapBean.onNodeSelect}" update="output"/>
+                                    <p:ajax event="dblselect" listener="#{mapBean.onNodeDblselect}" update="output" />
+                                </p:mindmap>
+                            </h:form>
+
+                            <!-- Fim map -->
+
+                            <p:growl id="growl" showDetail="true"  /> 
+
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
         </div>
 
         <style>
+
+
             svg{ 
                 margin-left: 120px;
             }
             path{
-                stroke-width:4;  
-                stroke: #404040;
+                stroke-width:3;  
+                stroke: #00e4ff; 
+            }
+            #todos ellipse{  
+
+                rx:50; 
+                ry:50;
             }
             ellipse{  
-                stroke-width:0.8; 
-                stroke: #dfdfdf;
+
                 rx:65; 
                 ry:50;
             }
@@ -183,6 +206,12 @@
 
                 font-size: 12px;
             }
+            .ui-tooltip{
+                color: white;
+                background: #a800d1;
+                border-radius: 10px;
+                padding: 10px;
+            }
             .ui-growl-item-container{
 
                 background-color: #121313; 
@@ -190,6 +219,9 @@
                 font-size: 16px;
                 color: #ff0068; 
                 font-family: 'Roboto Slab';
+            }
+            body{
+                background: black;
             }
         </style>
 
@@ -222,48 +254,17 @@
 
             }
 
-            $(function () {
-                var $refreshButton = $('#refresh');
-                var $results = $('#css_result');
+            function openTab(tab) {
 
-                function refresh() {
-                    var css = $('style.cp-pen-styles').text();
-                    $results.html(css);
-                }
-
-                refresh();
-                $refreshButton.click(refresh);
-
-                // Select all the contents when clicked
-                $results.click(function () {
-                    $(this).select();
-                });
-            });
-
-
-            function acord(id) {
-                var x = document.getElementById(id);
-
-                var bt = document.getElementById('BT' + id);
-
-                if (x.className.indexOf(" w3-show ") === -1) {
-                    x.className = x.className.replace(" w3-hide ", " w3-show ");
-                    bt.className = bt.className.replace("", " w3-card-2 w3-lime ");
+                if (tab === "todos") {
+                    document.getElementById("todos").style.display = "block";
+                    document.getElementById("seq").style.display = "none";
                 } else {
-                    x.className = x.className.replace(" w3-show ", " w3-hide ");
-
-                    bt.className = bt.className.replace(" w3-card-2 w3-lime ", "");
+                    document.getElementById("seq").style.display = "block";
+                    document.getElementById("todos").style.display = "none";
                 }
-            }
 
-            function abreModal(id) {
-                document.getElementById(id).style.display = 'block';
             }
-            function acordFechar(id) {
-                var x = document.getElementById(id);
-                x.className = x.className.replace(" w3-show ", " w3-hide ");
-            }
-
 
 
         </script>

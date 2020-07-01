@@ -40,7 +40,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Link.findByOperadora", query = "SELECT d FROM Link d WHERE d.operadora = :operadora"),
     @NamedQuery(name = "Link.findByVelocidade", query = "SELECT d FROM Link d WHERE d.velocidade = :velocidade"),
     @NamedQuery(name = "Link.findByTipo", query = "SELECT d FROM Link d WHERE d.tipoRede = :tipoRede"),
-    @NamedQuery(name = "Link.findByUsuario", query = "SELECT d FROM Link d WHERE d.usuario = :usuario"),
     @NamedQuery(name = "Link.findBySenha", query = "SELECT d FROM Link d WHERE d.senha = :senha")})
 public class Link extends Device implements Serializable {
 
@@ -70,10 +69,6 @@ public class Link extends Device implements Serializable {
     @Size(max = 45)
     @Column(name = "login")
     private String login;
-    @Size(max = 45)
-    @Column(name = "usuario")
-    private String usuario;
-    @Size(max = 45)
     @Column(name = "senha")
     private String senha;
     @Column(name = "dataCriacao")
@@ -95,7 +90,7 @@ public class Link extends Device implements Serializable {
     public Link(Integer idlink) {
         this.idlink = idlink;
     }
- 
+
     public Integer getIdlink() {
         return idlink;
     }
@@ -140,7 +135,7 @@ public class Link extends Device implements Serializable {
 
     @Override
     public Integer getTipo() {
-        return 0;
+        return 14;
     }
 
     public Integer getTipoRede() {
@@ -150,8 +145,7 @@ public class Link extends Device implements Serializable {
     public void setTipoRede(Integer tipoRede) {
         this.tipoRede = tipoRede;
     }
-    
-
+ 
     @Override
     public String getLogin() {
         return login;
@@ -160,14 +154,6 @@ public class Link extends Device implements Serializable {
     @Override
     public void setLogin(String login) {
         this.login = login;
-    }
-
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
     }
 
     @Override
@@ -225,10 +211,10 @@ public class Link extends Device implements Serializable {
     }
 
     @Override
-    public String getNome() {        
+    public String getNome() {
         return toLink();
     }
- 
+
     @Override
     public String getPort_conect() {
         return "Provedor";
@@ -253,12 +239,12 @@ public class Link extends Device implements Serializable {
         }
         return true;
     }
-    
+
     @Override
     public String getDataFormat() {
         return Data.formatDateddMMYYYYhhmm(dataCriacao);
     }
- 
+
     public String toLink() {
 
         String name = "";
@@ -279,21 +265,21 @@ public class Link extends Device implements Serializable {
             case 5:
                 name = "Vogel";
                 break;
-                            case 6:
+            case 6:
                 name = "WCS";
                 break;
-                            case 7:
+            case 7:
                 name = "Telium";
                 break;
-                            case 8:
+            case 8:
                 name = "Outra";
                 break;
         }
-                      
-        return name ;
+
+        return name;
     }
-    
-     @Override
+
+    @Override
     public String toString() {
         return "Link";
     }

@@ -40,12 +40,17 @@
                 </div>
 
                 <ul>
-                    <li class="icone"><a href="dashboard.xhtml"><span><b class="fas fa-stream w3-text-blue-grey"></b></span>   <b class="textoMenu" style="color:#0bd6e2" >Dashboard</b></a></li>
-                    <li class="icone"><a href="index.xhtml"><span><b class="fas fa-hdd w3-text-blue-grey"></b></span>   <b class="textoMenu" >Dispositivos</b></a></li>                   
-                    <li class="icone"><a href="arquivos.xhtml"  onclick="rc()" ><span><b class="fas fa-clone w3-text-blue-grey"></b></span>   <b class="textoMenu" >Arquivos</b></a></li>
+                   <li class="icone"><a href="dashboard.xhtml"><span><b class="fas fa-stream w3-text-blue-grey"></b></span>   <b class="textoMenu" style="color:#0bd6e2" >Dashboard</b></a></li>
+                    <li class="icone"><a href="index.xhtml"><span><b class="fas fa-hdd w3-text-blue-grey"></b></span>   <b class="textoMenu" >Dispositivos</b></a></li>   
+                    <li class="icone"><a href="terminal.xhtml"><span><b class="fas fa-keyboard w3-text-blue-grey"></b></span>   <b class="textoMenu" >Terminal</b></a></li>
                     <li class="icone"><a href="map.xhtml"><span><b class="fas fa-sitemap w3-text-blue-grey"></b></span>   <b class="textoMenu" >Mapa</b></a></li>
+                    <li class="icone"><a href="arquivos.xhtml"  onclick="rc()" ><span><b class="fas fa-clone w3-text-blue-grey"></b></span>   <b class="textoMenu" >Arquivos</b></a></li>         
                     <li class="icone"><a href="fotos.xhtml"><span><b class="fas fa-camera-retro w3-text-blue-grey" ></b></span>   <b class="textoMenu" >Fotos</b></a></li>
+                    <h:panelGroup rendered="#{loginBean.usuarioLogado.gerenciarUsuario == true}">
+                        <li class="icone"><a href="manager.xhtml"><span><b class="fas fa-user-plus w3-text-blue-grey"></b></span><b class="w3-text-blue-grey" style="padding-left:9px" > Usuários</b></a></li>
+                    </h:panelGroup>
                     <li class="icone"><a href="login.xhtml"><span><b class="far fa-user w3-text-purple"></b></span>   <b class="w3-text-purple" style="padding-left:9px" > Olá, #{loginBean.dadosUsuario}</b></a></li>
+
 
                     <div class="w3-padding">
 
@@ -83,14 +88,14 @@
                     </div>
 
 
+                  
 
-
-                    <div class="w3-center" style="padding: 15%">
+                      <div class="w3-center" style="padding: 15%">
                         <i class="fas fa-code w3-center" style='font-size:100px;color:#00d7f1'></i>
                         <h2 style='color:#00d7f1'>( Em construção )</h2>
                     </div>
-
-
+                      
+  
 
 
                 </div>

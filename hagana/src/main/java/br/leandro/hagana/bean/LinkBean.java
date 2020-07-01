@@ -117,7 +117,7 @@ public class LinkBean implements Serializable {
         link.setDataCriacao(new Date());
         link.setUsuarioFK(SessionContext.getInstance().getUsuarioLogado());
         link.setClienteFK(SessionContext.getInstance().getClienteSelecionado());
-        link.setIdlink(null);
+        
 
         link.setNome(link.getNome().substring(0, 1).toUpperCase() + link.getNome().substring(1).toLowerCase());
 

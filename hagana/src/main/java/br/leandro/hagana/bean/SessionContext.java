@@ -8,6 +8,7 @@ package br.leandro.hagana.bean;
 import br.leandro.hagana.controler.ClienteDAO;
 import br.leandro.hagana.entidade.Cliente;
 import br.leandro.hagana.entidade.Usuario;
+import com.gennis.servervnc.ClienteServidor;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -44,30 +45,24 @@ public class SessionContext {
     }
 
     public void setUsuarioLogado(Usuario usuario) {
+
         setAttribute("usuarioLogado", usuario);
     }
 
     public Cliente getClienteSelecionado() {
         cliente = (Cliente) getAttribute("clienteSelecionado");
- 
+
         return cliente;
     }
 
     public void refreshcliente() {
         cliente = (Cliente) ClienteDAO.getInstance().findCliente(cliente);
- 
+
     }
 
     public void setClienteSelecionado(Cliente cliente) {
         this.cliente = cliente;
- 
-         setAttribute("clienteSelecionado", cliente);
-         System.out.println("*********************** SET *************************");
-         System.out.println("Fotos " + cliente.getFotoList().size());
-         System.out.println("computador " + cliente.getComputadorList().size());
-         System.out.println("Dispositivos " + cliente.getDispositivoList().size());
-         System.out.println("Rede " + cliente.getRedeList().size());
- 
+        setAttribute("clienteSelecionado", cliente);
     }
 
     public void encerrarSessao() {
@@ -89,6 +84,12 @@ public class SessionContext {
 
     public HttpServletRequest getRequestSession() {
         return (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+    }
+
+    public String getIDSession() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
+        return session.getId();
     }
 
 }

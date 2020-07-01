@@ -48,7 +48,7 @@ public class DAO {
         return device;
     }
 
-    synchronized public void delete(Object tipeClass, Integer id) {
+    public void delete(Object tipeClass, Object id) {
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
@@ -63,7 +63,7 @@ public class DAO {
         }
     }
 
-    synchronized public Object atualizar(Object device) {
+     public Object atualizar(Object device) {
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();

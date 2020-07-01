@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
     @NamedQuery(name = "Usuario.findByIdusuario", query = "SELECT u FROM Usuario u WHERE u.idusuario = :idusuario"),
-    @NamedQuery(name = "Usuario.findByUser", query = "SELECT u FROM Usuario u WHERE (u.user = :user) AND (u.password = :password)"),
+    @NamedQuery(name = "Usuario.findByUser", query = "SELECT u FROM Usuario u WHERE (u.idusuario = :idusuario) AND (u.password = :password)"),
     @NamedQuery(name = "Usuario.findByPassword", query = "SELECT u FROM Usuario u WHERE u.password = :password"),
     @NamedQuery(name = "Usuario.findByNome", query = "SELECT u FROM Usuario u WHERE u.nome = :nome"),
     @NamedQuery(name = "Usuario.findByPerfil", query = "SELECT u FROM Usuario u WHERE u.perfil = :perfil"),
@@ -53,10 +53,7 @@ public class Usuario implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "idusuario")
-    private Integer idusuario;
-    @Size(max = 45)
-    @Column(name = "user")
-    private String user;
+    private String idusuario; 
     @Size(max = 45)
     @Column(name = "password")
     private String password;
@@ -94,27 +91,18 @@ public class Usuario implements Serializable {
 
     public Usuario() {
     }
-
-    public Usuario(Integer idusuario) {
-        this.idusuario = idusuario;
-    }
-
-    public Integer getIdusuario() {
+    
+    
+    
+ 
+    public String getIdusuario() {
         return idusuario;
     }
 
-    public void setIdusuario(Integer idusuario) {
+    public void setIdusuario(String idusuario) {
         this.idusuario = idusuario;
     }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
-
+ 
     public String getPassword() {
         return password;
     }
@@ -271,7 +259,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "br.leandro.hagana.entidade.Usuario[ idusuario=" + idusuario + " ]";
+        return "Usuario";
     }
 
     @XmlTransient

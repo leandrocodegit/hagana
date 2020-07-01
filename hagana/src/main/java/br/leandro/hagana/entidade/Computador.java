@@ -83,6 +83,9 @@ public class Computador extends Device implements Serializable {
     @Size(max = 45)
     @Column(name = "senhaRMT")
     private String senhaRMT;
+    @Size(max = 15)
+    @Column(name = "macAdress")
+    private String macAdress;
     @JoinColumn(name = "cliente_FK", referencedColumnName = "conta")
     @ManyToOne
     private Cliente clienteFK;
@@ -180,6 +183,14 @@ public class Computador extends Device implements Serializable {
 
     public void setSenhaRMT(String senhaRMT) {
         this.senhaRMT = senhaRMT;
+    }
+
+    public String getMacAdress() {
+        return macAdress;
+    }
+
+    public void setMacAdress(String macAdress) {
+        this.macAdress = macAdress;
     }
 
     @Override

@@ -16,6 +16,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -71,9 +72,10 @@ public class LoginBean implements Serializable {
     public String logar() {
 
         Usuario u = new Usuario();
-        u.setUser("1");
-        u.setPassword("1");
+        u.setIdusuario("gestor");
+        u.setPassword("root");
         
+        try{
         usuario = UsuarioDao.getInstance().findUser(u);
         
         if (usuario != null && usuario.getBloqueado() == false) {
@@ -86,16 +88,13 @@ public class LoginBean implements Serializable {
            SessionContext.getInstance().getSession().setAttribute("usuarioLogado", usuario);          
                             
             return "/restrict/clientes.xhtml?faces-redirect=true";
-        } else {
-
-           
+        }  
+        
+        }catch(NoResultException erro){
             FacesMessage msg = new FacesMessage("Login ", " Falha nas credênciais!");
             FacesContext.getCurrentInstance().addMessage(null, msg);
-
-          
-            return "login.xhtml";
         }
-
+         return "login.xhtml";
     }
 
 
@@ -124,11 +123,11 @@ public class LoginBean implements Serializable {
 
         Usuario user = SessionContext.getInstance().getUsuarioLogado();
 
-        if (user != null) {
+        if (user != null && user.getNome().contains(" ")) {
             return user.getNome().substring(0, user.getNome().indexOf(" "));
-        } else {
-            return "";
-        }
+        } 
+            return user.getNome();
+        
     }
 
 }

@@ -40,12 +40,17 @@
                 </div>
 
                 <ul>
-                    <li class="icone"><a href="dashboard.xhtml"><span><b class="fas fa-stream w3-text-blue-grey"></b></span>   <b class="textoMenu" style="color:#0bd6e2" >Dashboard</b></a></li>
-                    <li class="icone"><a href="index.xhtml"><span><b class="fas fa-hdd w3-text-blue-grey"></b></span>   <b class="textoMenu" >Dispositivos</b></a></li>                   
-                    <li class="icone"><a href="arquivos.xhtml"  onclick="rc()" ><span><b class="fas fa-clone w3-text-blue-grey"></b></span>   <b class="textoMenu" >Arquivos</b></a></li>
+                   <li class="icone"><a href="dashboard.xhtml"><span><b class="fas fa-stream w3-text-blue-grey"></b></span>   <b class="textoMenu" style="color:#0bd6e2" >Dashboard</b></a></li>
+                    <li class="icone"><a href="index.xhtml"><span><b class="fas fa-hdd w3-text-blue-grey"></b></span>   <b class="textoMenu" >Dispositivos</b></a></li>   
+                    <li class="icone"><a href="terminal.xhtml"><span><b class="fas fa-keyboard w3-text-blue-grey"></b></span>   <b class="textoMenu" >Terminal</b></a></li>
                     <li class="icone"><a href="map.xhtml"><span><b class="fas fa-sitemap w3-text-blue-grey"></b></span>   <b class="textoMenu" >Mapa</b></a></li>
+                    <li class="icone"><a href="arquivos.xhtml"  onclick="rc()" ><span><b class="fas fa-clone w3-text-blue-grey"></b></span>   <b class="textoMenu" >Arquivos</b></a></li>         
                     <li class="icone"><a href="fotos.xhtml"><span><b class="fas fa-camera-retro w3-text-blue-grey" ></b></span>   <b class="textoMenu" >Fotos</b></a></li>
+                    <h:panelGroup rendered="#{loginBean.usuarioLogado.gerenciarUsuario == true}">
+                        <li class="icone"><a href="manager.xhtml"><span><b class="fas fa-user-plus w3-text-blue-grey"></b></span><b class="w3-text-blue-grey" style="padding-left:9px" > Usuários</b></a></li>
+                    </h:panelGroup>
                     <li class="icone"><a href="login.xhtml"><span><b class="far fa-user w3-text-purple"></b></span>   <b class="w3-text-purple" style="padding-left:9px" > Olá, #{loginBean.dadosUsuario}</b></a></li>
+
 
                     <div class="w3-padding">
 
@@ -62,8 +67,6 @@
                         </div>
                     </div>
                 </ul>
-
-
             </div>
 
 
@@ -75,7 +78,7 @@
 
             <div class="w3-main" style="margin-left:200px;" id="main" >      
 
-                <div class="w3-mobile w3-section w3-row-padding w3-left " style="width:100%;padding-top:50px;padding-left:0px;padding-right:0;padding-bottom: 5px ">
+                <div class="w3-mobile w3-section w3-row-padding w3-left " style="width:100%;padding-top:50px;padding-left:0px;padding-right:0;padding-bottom: 5px;">
 
                     <div class="" style="height:40px;margin-bottom: 20px;margin-left:5px" id="navCliente">                        
                         <a class="w3-button w3-xlarge w3-round-large w3-text-white w3-hover-pink" href="clientes.xhtml"  
@@ -83,21 +86,21 @@
                     </div>
 
                     <!-- Inicio dispositivos -->
-                    <div class="w3-twothird"  style="padding:0px;background: none">
+                    <div class="w3-third"  style="padding:0px;background: none">
                         <!-- Head dispositivos -->
                         <header class="w3-container w3-border-bottom w3-border-light-blue" style="height: 45px">
 
                             <h:form>
-                                <h:panelGroup rendered="#{true == true}">
+                                <h:panelGroup rendered="#{loginBean.usuario.adicionar == true}">
                                     <h:commandLink     action="#{dispositivoBean.limpar()}" 
-                                                       title="Adicionar cliente"
-                                                       value=" Dispositivos"
+                                                       title="Adicionar dispositivo" 
                                                        onclick="abreModal('mDispostivo')"                                                       
-                                                       class="fas fa-plus-circle w3-left textoMenu">
+                                                       class="fas fa-plus-circle w3-left btAdd">
                                         <f:ajax  render="formCadDis" />
 
                                     </h:commandLink>
                                 </h:panelGroup>
+                                <h:outputLabel value="Dispositivos" class="textoAdd btAdd"/>
 
                             </h:form>
 
@@ -106,7 +109,7 @@
                         <!-- Head dispositivos -->
 
                         <!-- Inicio grid dispositivos -->
-                        <div class="scrollmenu disContent w3-container">
+                        <div class="scrollmenu disContent" style="padding: 2px;padding-right:  8px">
                             <h:form id="formDis">
                                 <h:dataTable id="dataDis" var="dis" binding="#{dispositivoBean.dataTable}" value="#{dispositivoBean.dispositivoList}" style="width: 100%;margin-top: 10px"
                                              styleClass="book-table"
@@ -118,7 +121,7 @@
                                             <i class="far fa-dot-circle iconeEdit" style="padding-top:10px;padding-left: 12px"></i> <b class="iconeConfig">#{dis.nome}</b>
 
 
-                                            <h:panelGroup rendered="#{true == true}">
+                                            <h:panelGroup rendered="#{loginBean.usuario.gerenciarItens == true}">
                                                 <p:commandLink  
                                                     actionListener="#{dispositivoBean.selecionarDispositivo()}" ajax="true" update="formCadDis,formDis"
                                                     title="Editar dispositivo" style=";padding-right:18px;font-size:15px;padding-top:10px"
@@ -188,13 +191,7 @@
                                                     <td class="textoTable">#{dis.localFK.nome}</td>
                                                     <td></td>
                                                     <td></td>
-                                                </tr>   
-                                                <tr>
-                                                    <td class="textLabel">Port conect</td>
-                                                    <td class="textoTable">#{dis.port_conect}</td>
-                                                    <td></td>
-                                                    <td></td>
-                                                </tr>
+                                                </tr> 
                                                 <tr>
                                                     <td class="textLabel">Porta WEB</td>
                                                     <td class="textoTable">#{dis.portaWEB}</td>
@@ -283,21 +280,21 @@
 
                                 <header class="w3-container w3-border-lime w3-border-bottom" style="height: 45px">
                                     <h:form>
-                                        <h:panelGroup rendered="#{true == true}">
+                                        <h:panelGroup rendered="#{loginBean.usuario.adicionar == true}">
                                             <h:commandLink     action="#{computadorBean.limpar()}" 
-                                                               value=" Computadores"
                                                                title="Adicionar computador"  onclick="abreModal('mComputador')"
-                                                               class="fas fa-plus-circle w3-left textoMenu">
+                                                               class="fas fa-plus-circle w3-left btAdd ">
 
-                                                <f:ajax  render=":formCadComp" />                                      
+                                                <f:ajax  render="formCadComp" />                                      
 
                                             </h:commandLink>
                                         </h:panelGroup>
                                     </h:form>
+                                    <h:outputLabel value=" Computadores" class="textoAdd btAdd"/>
                                 </header>                               
 
                                 <!-- Inicio grid compuador -->
-                                <div class="scrollmenu disContent w3-container">
+                                 <div class="scrollmenu disContent" style="padding: 2px;padding-right:  8px">
                                     <h:form id="formComp">
                                         <h:dataTable id="dataComp" var="comp" binding="#{computadorBean.dataTable}" value="#{computadorBean.computadorList}" style="width: 100%;margin-top: 10px"
                                                      styleClass="book-table"
@@ -311,7 +308,7 @@
                                                     <i class="fas fa-desktop iconeEdit" style="padding-top:10px;padding-left: 12px"></i> <b class="iconeConfig">#{comp.nome}</b>
 
 
-                                                    <h:panelGroup rendered="#{true == true}">
+                                                    <h:panelGroup rendered="#{loginBean.usuario.gerenciarItens == true}">
                                                         <p:commandLink  
                                                             actionListener="#{computadorBean.selecionarComputador()}" ajax="true" update="formCadComp,formComp"
                                                             title="Editar dispositivo" style=";padding-right:18px;font-size:15px;padding-top:10px"
@@ -378,13 +375,7 @@
                                                             <td></td>
                                                             <td></td>
                                                         </tr>   
-                                                        <tr>
-                                                            <td class="textLabel">Port conect</td>
-                                                            <td class="textoTable">#{comp.port_conect}</td>
-                                                            <td></td>
-                                                            <td></td>
-                                                        </tr>                                          
-
+                                           
                                                         <h:panelGroup rendered="#{loginBean.usuario.verSenhas == true}">
                                                             <tr>
                                                                 <td class="textLabel">Login</td>
@@ -451,30 +442,30 @@
                         </div>
                     </div>
 
-                    <div class="w3-twothird"  style="padding:0px;">
+                     <div class="w3-third w3-mobile" style="padding-right:1px;padding-left:0px; " >
 
                         <div class="w3-row">
 
-                            <div class=" w3-twothird " style="width:100%; ">
-                                <header class="w3-container w3-border-bottom w3-border-light-blue" style="height: 45px">               
+                            <div class="w3-twothird" style="width:100%; ">
 
+                                <header class="w3-container w3-border-lime w3-border-bottom" style="height: 45px">
                                     <h:form>
-                                        <h:panelGroup rendered="#{true == true}">
-                                            <h:commandLink     action="#{redeBean.limpar()}" 
-                                                               value=" Rede"
+                                        <h:panelGroup rendered="#{loginBean.usuario.adicionar == true}">
+                                            <h:commandLink     action="#{redeBean.limpar()}"  
                                                                title="Adicionar equipamento"  onclick="abreModal('mRede')" 
-                                                               class="fas fa-plus-circle w3-left textoMenu w3-text-lime">
+                                                               class="fas fa-plus-circle w3-left btAdd">
                                                 <f:ajax render=":formCadRede"/>                       
 
                                             </h:commandLink>
                                         </h:panelGroup>
-                                    </h:form>                                         
+                                    </h:form>   
+                                    <h:outputLabel value="Rede" class="textoAdd btAdd"/>
                                 </header>
                                 <br/>
 
                                 <!-- Inicio grid rede -->
 
-                                <div  style="margin: 8px">
+                                <div class="disContent scrollmenu" style="padding: 8px">
                                     <h:form id="formRede">
                                         <h:dataTable id="dataRede" var="rede" binding="#{redeBean.dataTable}" value="#{redeBean.redeList}" style="width: 100%;margin-top: 10px"
                                                      styleClass="book-table"
@@ -488,7 +479,7 @@
                                                     <i class="far fa-hdd iconeEdit" style="padding-top:10px;padding-left: 12px"></i> <b class="iconeConfig">#{rede.nome}</b>
 
 
-                                                    <h:panelGroup rendered="#{true == true}">
+                                                    <h:panelGroup rendered="#{loginBean.usuario.gerenciarItens == true}">
                                                         <p:commandLink  
                                                             actionListener="#{redeBean.selecionarRede()}" ajax="true" update="formCadRede,formRede"
                                                             title="Editar dispositivo" style=";padding-right:18px;font-size:15px;padding-top:10px"
@@ -547,13 +538,7 @@
                                                             <td></td>
                                                             <td></td>
                                                         </tr>   
-                                                        <tr>
-                                                            <td class="textLabel">Port conect</td>
-                                                            <td class="textoTable">#{rede.port_conect}</td>
-                                                            <td></td>
-                                                            <td></td>
-                                                        </tr>                                          
-
+                                         
                                                         <h:panelGroup rendered="#{loginBean.usuario.verSenhas == true}">
                                                             <tr>
                                                                 <td class="textLabel">Login</td>
@@ -695,21 +680,21 @@
 
 
 
-                    <div class="w3-third w3-mobile" style="padding-right:1px;padding-left:0px; " >
+                    <div class="w3-container w3-mobile" style="padding:0px;padding-top: 10px;" >
                         <div class=" w3-twothird " style="padding-left:0px;padding-right:1px;padding-top:0%;width:100%; ">
 
-                            <header class="w3-container w3-border-ligth-grey w3-border-bottom w3-border-lime" style=" height: 45px">
+                            <header class="w3-container w3-light-blue w3-card-4" style=" height: 45px">
                                 <h:form>
-                                    <h:panelGroup rendered="#{true == true}">
-                                        <h:commandLink     action="#{linkBean.limpar()}" 
-                                                           value=" Link"
-                                                           title="Adicionar equipamento"  onclick="abreModal('mLink')" 
-                                                           class="fas fa-plus-circle w3-left textoMenu">
+                                    <h:panelGroup rendered="#{loginBean.usuario.adicionar == true}">
+                                        <h:commandLink     action="#{linkBean.limpar()}"  
+                                                           title="Adicionar link"  onclick="abreModal('mLink')" 
+                                                           class="fas fa-plus-circle w3-left btAdd w3-text-white ">
                                             <f:ajax render=":formCadLink"/>                      
 
                                         </h:commandLink>
                                     </h:panelGroup>
                                 </h:form>   
+                                <h:outputLabel value="Link" class="textoAdd btAdd w3-text-white"/>
 
                             </header>
                             <br/>
@@ -727,10 +712,10 @@
                                         <h:column>
 
                                             <div onclick="acord('L' + #{link.idlink})" id="BTL#{link.idlink}" class="itemCor itemDim w3-block w3-left-align">
-                                                <i class="fas fa-cloud" style="color:#bfe700;padding-top:10px;padding-left: 12px"></i> <b class="iconeConfig">#{link.toString()}</b>
+                                                <i class="fas fa-cloud" style="color:#bfe700;padding-top:10px;padding-left: 12px"></i> <b class="iconeConfig">#{link.toLink()}</b>
 
 
-                                                <h:panelGroup rendered="#{true == true}">
+                                                <h:panelGroup rendered="#{loginBean.usuario.gerenciarItens == true}">
                                                     <p:commandLink  
                                                         actionListener="#{linkBean.selecionarLink()}" ajax="true" update="formCadLink,formLink"
                                                         title="Editar link" style=";padding-right:18px;font-size:15px;padding-top:10px"
@@ -928,7 +913,7 @@
                                             <td>
 
                                                 <h:selectOneMenu class="inp" value="#{dispositivoBean.dispositivo.port_conect}" style="height: 35px">                                                     
-                                                    <f:selectItems var="porta" value="#{clienteBean.deviceList}" itemValue="#{porta.portaUPLink}"  itemLabel="#{porta.nome}" />                                       
+                                                    <f:selectItems var="porta" value="#{clienteBean.deviceList}" itemValue="#{porta.portaUPLink}"  itemLabel="#{porta.nome} - #{porta.localFK.nome}" />                                       
                                                 </h:selectOneMenu>
                                             </td>
                                         </tr>
@@ -1097,7 +1082,7 @@
                                             <td>
 
                                                 <h:selectOneMenu class="inp" value="#{computadorBean.computador.port_conect}" style="height: 35px">                                                     
-                                                    <f:selectItems var="porta" value="#{clienteBean.deviceList}" itemValue="#{porta.portaUPLink}"  itemLabel="#{porta.nome}" />                                       
+                                                    <f:selectItems var="porta" value="#{clienteBean.deviceList}" itemValue="#{porta.portaUPLink}"  itemLabel="#{porta.nome} - #{porta.localFK.nome}" />                                       
                                                 </h:selectOneMenu>
                                             </td>
                                         </tr>
@@ -1144,11 +1129,11 @@
                                     <br></br>
                                     <div class="w3-right w3-padding"> 
 
-                                        <p:commandButton value="Excluir" onclick="abreModal('ex02')"  class="botao">                                   
+                                        <p:commandButton ajax="true" value="Excluir" onclick="abreModal('ex02')"  class="botao">                                   
                                         </p:commandButton>
                                         <p:commandButton  value="Atualizar" ajax="false" action="#{computadorBean.atualizar()}"     class="botao">
                                         </p:commandButton> 
-                                        <p:commandButton  update="formCadComp"  value="Cadastrar" ajax="true" action="#{computadorBean.adicionar()}"  class="botao">                                    
+                                        <p:commandButton  update="formCadComp,formComp"  value="Cadastrar" ajax="true" action="#{computadorBean.adicionar()}"  class="botao">                                    
                                         </p:commandButton>
                                     </div>
 
@@ -1165,7 +1150,7 @@
                                             </header>
                                             <div class="w3-container"  style="width: 100%;padding-right: 10px;padding-left: 10px;">
                                                 <br></br>
-                                                <p:commandButton   value="Sim"  actionListener="#{computadorBean.deletar()}"  class="botaoExcluir w3-right w3-hover-pink"   onclick="document.getElementById('m003').style.display = 'none'" >
+                                                <p:commandButton ajax="false"  value="Sim"  actionListener="#{computadorBean.deletar()}"  class="botaoExcluir w3-right w3-hover-pink"   onclick="document.getElementById('m003').style.display = 'none'" >
 
                                                 </p:commandButton>
                                                 <p:commandButton   value="Não"  class="botaoExcluir w3-right" update="formComp"
@@ -1217,7 +1202,7 @@
                                         <tr>
                                             <td class="w3-right-align"><b>Tipo:</b></td>
                                             <td>
-                                                <h:selectOneMenu  value="#{redeBean.rede.tipo}" class="inp" style="margin-left: -5px;height: 35px" >
+                                                <h:selectOneMenu  value="#{redeBean.rede.tipo}" class="inp" style="height: 35px" >
                                                     <f:selectItem itemLabel="Antena" itemValue="9" />
                                                     <f:selectItem itemLabel="Roteador" itemValue="10"/>
                                                     <f:selectItem itemLabel="Roteador WIFI" itemValue="11" />  
@@ -1248,7 +1233,7 @@
                                             <td>
 
                                                 <h:selectOneMenu class="inp" value="#{redeBean.rede.port_conect}" style="height: 40px">                                                     
-                                                    <f:selectItems var="porta" value="#{clienteBean.deviceList}" itemValue="#{porta.portaUPLink}"  itemLabel="#{porta.nome}" />                                       
+                                                    <f:selectItems var="porta" value="#{clienteBean.deviceList}" itemValue="#{porta.portaUPLink}"  itemLabel="#{porta.nome} - #{porta.localFK.nome}" />                                       
                                                 </h:selectOneMenu>
                                             </td>
                                         </tr>
@@ -1268,7 +1253,7 @@
                                             <td class="w3-right-align"><b>Local:</b></td>
                                             <td>
 
-                                                <h:selectOneMenu value="#{redeBean.rede.localFK.idlocal}" class="inp" style="hheight: 35px" >                                                   
+                                                <h:selectOneMenu value="#{redeBean.rede.localFK.idlocal}" class="inp" style="height: 35px" >                                                   
                                                     <f:selectItems  var="rede" value="#{clienteBean.clienteSelecionado.localList}" itemValue="#{rede.idlocal}" itemLabel="#{rede.nome}" />                                                   
                                                     <!-- <f:ajax render="resultados"/>-->
                                                 </h:selectOneMenu>
@@ -1347,31 +1332,27 @@
                                         <tr>
                                             <td class="w3-right-align"><b>Operadora:</b></td>
                                             <td>
-                                                <h:form>
-                                                    <h:selectOneMenu  value="#{linkBean.link.operadora}"  class="inp" style="height: 35px" >
-                                                        <f:selectItem itemLabel="Vivo" itemValue="1" />
-                                                        <f:selectItem itemLabel="NET" itemValue="2"/>
-                                                        <f:selectItem itemLabel="Tim Live" itemValue="3" />  
-                                                        <f:selectItem itemLabel="Claro" itemValue="4" /> 
-                                                        <f:selectItem itemLabel="Vogel" itemValue="5" /> 
-                                                        <f:selectItem itemLabel="WCS" itemValue="6" /> 
-                                                        <f:selectItem itemLabel="Telium" itemValue="7" /> 
-                                                        <f:selectItem itemLabel="Outra" itemValue="8" /> 
-                                                    </h:selectOneMenu>
-                                                </h:form>
+                                                <h:selectOneMenu  value="#{linkBean.link.operadora}"  class="inp" style="height: 35px" >
+                                                    <f:selectItem itemLabel="Vivo" itemValue="1" />
+                                                    <f:selectItem itemLabel="NET" itemValue="2"/>
+                                                    <f:selectItem itemLabel="Tim Live" itemValue="3" />  
+                                                    <f:selectItem itemLabel="Claro" itemValue="4" /> 
+                                                    <f:selectItem itemLabel="Vogel" itemValue="5" /> 
+                                                    <f:selectItem itemLabel="WCS" itemValue="6" /> 
+                                                    <f:selectItem itemLabel="Telium" itemValue="7" /> 
+                                                    <f:selectItem itemLabel="Outra" itemValue="8" /> 
+                                                </h:selectOneMenu>
                                             </td>
                                         </tr> 
                                         <tr>
                                             <td class="w3-right-align"><b>Tipo:</b></td>
-                                            <td>
-                                                <h:form>
-                                                    <h:selectOneMenu  value="#{linkBean.link.tipoRede}" class="inp" style="height: 35px" >
-                                                        <f:selectItem itemLabel="Fibra" itemValue="1" />
-                                                        <f:selectItem itemLabel="Cabo" itemValue="2"/>
-                                                        <f:selectItem itemLabel="ADSL" itemValue="3" />  
-                                                        <f:selectItem itemLabel="Radio" itemValue="4" />                                          
-                                                    </h:selectOneMenu>
-                                                </h:form>
+                                            <td> 
+                                                <h:selectOneMenu  value="#{linkBean.link.tipoRede}" class="inp" style="height: 35px" >
+                                                    <f:selectItem itemLabel="Fibra" itemValue="1" />
+                                                    <f:selectItem itemLabel="Cabo" itemValue="2"/>
+                                                    <f:selectItem itemLabel="ADSL" itemValue="3" />  
+                                                    <f:selectItem itemLabel="Radio" itemValue="4" />                                          
+                                                </h:selectOneMenu>
                                             </td>
                                         </tr>
                                         <tr>
@@ -1402,9 +1383,9 @@
                                             <tr>
                                                 <td class="w3-right-align"><b>Senha:</b></td>
                                                 <td><p:inputText id="senha1" type="password" value="#{linkBean.link.senha}" class="inp">
-                                                <f:validateLength minimum="3" />
-                                                </p:inputText>
-                                                <p:message for="senha1" styleClass="validate"/>
+                                                        <f:validateLength minimum="3" />
+                                                    </p:inputText>
+                                                    <p:message for="senha1" styleClass="validate"/>
                                                 </td>
                                             </tr>  
                                         </h:panelGroup>
@@ -1412,9 +1393,9 @@
                                             <tr>
                                                 <td class="w3-right-align"><b>Senha:</b></td>
                                                 <td><p:inputText id="senha2" type="text" value="#{linkBean.link.senha}" class="inp">
-                                                 <f:validateLength minimum="3" />
-                                                </p:inputText>
-                                                <p:message for="senha2" styleClass="validate"/>
+                                                        <f:validateLength minimum="3" />
+                                                    </p:inputText>
+                                                    <p:message for="senha2" styleClass="validate"/>
                                                 </td>
                                             </tr>  
                                         </h:panelGroup>
@@ -1437,7 +1418,7 @@
                                     <br></br>
                                     <div class="w3-right w3-padding"> 
 
-                                        <p:commandButton value="Excluir" onclick="abreModal('ex04')"  class="botao">                                   
+                                        <p:commandButton value="Excluir" ajax="false" onclick="abreModal('ex04')"  class="botao">                                   
                                         </p:commandButton>
                                         <p:commandButton  value="Atualizar" ajax="false" action="#{linkBean.atualizar()}"  update="formLink"   class="botao">
                                         </p:commandButton>                                        
@@ -1580,7 +1561,7 @@
                 if (x.className.indexOf(" w3-show ") === -1) {
                     x.className = x.className.replace(" w3-hide ", " w3-show ");
                     bt.className = bt.className.replace("itemCor", " cor ");
-                    window.location = '#BT' + id;
+                   // window.location = '#BT' + id;
 
                 } else {
                     x.className = x.className.replace(" w3-show ", " w3-hide ");

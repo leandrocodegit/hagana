@@ -1,62 +1,84 @@
 <!doctype html>
 <html lang="en">
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <head>
-    <meta charset="UTF-8">
-    <title>Upload File using jQuery.ajax() with progress support</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Progressbar - Indeterminate Value</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+  $( function() {
+    $( "#progressbar" ).progressbar({
+      value: false
+    });
+    $( "button" ).on( "click", function( event ) {
+      var target = $( event.target ),
+        progressbar = $( "#progressbar" ),
+        progressbarValue = progressbar.find( ".ui-progressbar-value" );
+ 
+      if ( target.is( "#numButton" ) ) {
+        progressbar.progressbar( "option", {
+          value: Math.floor( Math.random() * 100 )
+        });
+      } else if ( target.is( "#colorButton" ) ) {
+        progressbarValue.css({
+          "background": '#' + Math.floor( Math.random() * 16777215 ).toString( 16 )
+        });
+      } else if ( target.is( "#falseButton" ) ) {
+        progressbar.progressbar( "option", "value", false );
+      }
+    });
+  } );
+  </script>
+  <style>
+  #progressbar .ui-progressbar-value {
+    background-color: #ccc;
+  }
+  </style>
 </head>
 <body>
-
-<h2>HTML5 File Upload Progress Bar Tutorial</h2>
-<form id="upload_form" enctype="multipart/form-data" method="post">
-  <input type="file" name="file1" id="file1" onchange="uploadFile()"><br>
-  <progress id="progressBar" value="0" max="100" style="width:300px;"></progress>
-  <h3 id="status"></h3>
-  <p id="loaded_n_total"></p>
-</form>
+ 
+<div id="progressbar"></div>
+<button id="numButton">Random Value - Determinate</button>
+<button id="falseButton">Indeterminate</button>
+<button id="colorButton">Random Color</button>
+ 
+ 
+</body>
+</html><!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Progressbar - Indeterminate Value</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
+  
+   <di>
+      
+    <h3>Texto</h3>
+      </di>
+      
   
  
-<script>
-function _(el) {
-  return document.getElementById(el);
-}
-
-function uploadFile() {
-  var file = _("file1").files[0];
-  // alert(file.name+" | "+file.size+" | "+file.type);
-  var formdata = new FormData();
-  formdata.append("file1", file);
-  var ajax = new XMLHttpRequest();
-  ajax.upload.addEventListener("progress", progressHandler, false);
-  ajax.addEventListener("load", completeHandler, false);
-  ajax.addEventListener("error", errorHandler, false);
-  ajax.addEventListener("abort", abortHandler, false);
-  ajax.open("POST", "file_upload_parser.php"); // http://www.developphp.com/video/JavaScript/File-Upload-Progress-Bar-Meter-Tutorial-Ajax-PHP
-  //use file_upload_parser.php from above url
-  ajax.send(formdata);
-}
-
-function progressHandler(event) {
-  _("loaded_n_total").innerHTML = "Uploaded " + event.loaded + " bytes of " + event.total;
-  var percent = (event.loaded / event.total) * 100;
-  _("progressBar").value = Math.round(percent);
-  _("status").innerHTML = Math.round(percent) + "% uploaded... please wait";
-}
-
-function completeHandler(event) {
-  _("status").innerHTML = event.target.responseText;
-  _("progressBar").value = 0; //wil clear progress bar after successful upload
-}
-
-function errorHandler(event) {
-  _("status").innerHTML = "Upload Failed";
-}
-
-function abortHandler(event) {
-  _("status").innerHTML = "Upload Aborted";
-}
-</script>
-
+  <style>
+  #progressbar .ui-progressbar-value {
+    background-color: red;
+  }
+  </style>
+</head>
+<body>
+ 
+    <div id="progressbar" style="background-color: red"></div>
+<button id="numButton">Random Value - Determinate</button>
+<button id="falseButton">Indeterminate</button>
+<button id="colorButton">Random Color</button>
+ 
+ 
 </body>
 </html>

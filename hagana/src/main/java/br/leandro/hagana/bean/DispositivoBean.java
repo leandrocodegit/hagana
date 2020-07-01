@@ -66,7 +66,6 @@ public class DispositivoBean implements Serializable {
 
     public List<Dispositivo> getDispositivoList() {
         return ClienteDAO.getInstance().findCliente(SessionContext.getInstance().getClienteSelecionado()).getDispositivoList();
-
     }
 
     public List<Fabricante> getFabricantes() {

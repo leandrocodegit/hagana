@@ -12,13 +12,14 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct; 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -28,20 +29,25 @@ import javax.faces.context.FacesContext;
 @ViewScoped
 public class ClienteBean implements Serializable {
 
-    private static final long serialVersionUID = 12855655321L;
+    private static final long serialVersionUID = 1277755655321L;
 
     private HtmlDataTable dataTable;
     private List<Cliente> clienteList;
     private List<Device> deviceList;
     private Cliente cliente;
-    private String pesquisa; 
+    private String pesquisa;
 
     @PostConstruct
-    public void init() { 
-        clienteList = ClienteDAO.getInstance().getclientes();
-        
-        if (SessionContext.getInstance().getClienteSelecionado() == null) {
-            message("Atenção!", "Selecionar um cliente para começar.");
+    public void init() {
+
+        try {
+            clienteList = ClienteDAO.getInstance().getclientes();
+
+            if (SessionContext.getInstance().getClienteSelecionado() == null) {
+                message("Olá,", "Selecionar um cliente para começar.");
+            }
+        } catch (NoResultException erro) {
+            message("", "Não há clientes cadastrados!");
         }
     }
 
@@ -83,7 +89,6 @@ public class ClienteBean implements Serializable {
 
     public void buscar() {
         clienteList = ClienteDAO.getInstance().pesquisar(pesquisa);
-       
 
         if (pesquisa.equals("")) {
             clienteList = ClienteDAO.getInstance().getclientes();
@@ -102,7 +107,7 @@ public class ClienteBean implements Serializable {
         this.pesquisa = pesquisa;
     }
 
-    public String selecionaCliente(Cliente cliente) {
+    public String selecionaCliente() {
 
         cliente = (Cliente) dataTable.getRowData();
         SessionContext.getInstance().setClienteSelecionado(cliente);
@@ -116,14 +121,13 @@ public class ClienteBean implements Serializable {
 
     public void deletar() {
         if (cliente != null) {
-            
-            if(deletaPasta()){
-            ClienteDAO.getInstance().delete(cliente.getConta());
-            clienteList = ClienteDAO.getInstance().getclientes();
-           
-            message("Sucesso!", "Removido conta.");
-            }
-            else{
+
+            if (deletaPasta()) {
+                ClienteDAO.getInstance().delete(cliente.getConta());
+                clienteList = ClienteDAO.getInstance().getclientes();
+
+                message("Sucesso!", "Removido conta.");
+            } else {
                 message("Falha!", "Erro ao remover arquivos.");
             }
         }
@@ -162,33 +166,33 @@ public class ClienteBean implements Serializable {
     public boolean deletaPasta() {
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         String diretorio = ec.getRealPath("/") + "restrict\\arquivos\\contas\\" + cliente.getConta();
-        File path = new File(diretorio + "\\imagens");        
+        File path = new File(diretorio + "\\imagens");
 
-        if (path.exists()) {            
-        
-        File file; 
-        String[] children = path.list();
+        if (path.exists()) {
 
-        for (int i = 0; i < children.length; i++) {
-            file = new File(path.getPath(), children[i]);
+            File file;
+            String[] children = path.list();
+
+            for (int i = 0; i < children.length; i++) {
+                file = new File(path.getPath(), children[i]);
+                file.delete();
+            }
+            file = new File(path.getPath());
             file.delete();
-        }
-        file = new File(path.getPath());
-        file.delete();
-        
-        path = new File(diretorio + "\\arquivos");        
-        children = path.list();
 
-        for (int i = 0; i < children.length; i++) {
-            file = new File(path.getPath(), children[i]);
+            path = new File(diretorio + "\\arquivos");
+            children = path.list();
+
+            for (int i = 0; i < children.length; i++) {
+                file = new File(path.getPath(), children[i]);
+                file.delete();
+            }
+            file = new File(path.getPath());
             file.delete();
-        }
-        file = new File(path.getPath());
-        file.delete();
-        
-        file = new File(diretorio);
-        file.delete();
-        
+
+            file = new File(diretorio);
+            file.delete();
+
             return true;
         }
         return false;

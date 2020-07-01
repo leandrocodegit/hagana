@@ -6,6 +6,7 @@
 package br.leandro.hagana.controler;
 
 import br.leandro.hagana.entidade.Usuario;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -41,12 +42,20 @@ public class UsuarioDao {
 
         return entityManager;
     }
+    
+     public List<Usuario> getUsuarios() {
+        Query query = getEntityManager().createNamedQuery("Usuario.findAll");
+        return query.getResultList();
+    }
  
     public Usuario findUser(Usuario usuario) {
         Query query = entityManager.createNamedQuery("Usuario.findByUser");
-        query.setParameter("user", usuario.getUser());
+        query.setParameter("idusuario", usuario.getIdusuario());
         query.setParameter("password", usuario.getPassword());
         Usuario user = (Usuario) query.getSingleResult();
+        entityManager.refresh(user);
+        
+        
         return user;
     }
     
@@ -54,7 +63,7 @@ public class UsuarioDao {
         
         UsuarioDao usuarioDao = new UsuarioDao();
         Usuario usuario = new Usuario();
-        usuario.setUser("1");
+        usuario.setIdusuario("1");
         usuario.setPassword("1");
         
         System.out.println(usuarioDao.findUser(usuario).getNome());

@@ -1,0 +1,289 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"></link>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> </link>
+    <link href="https://vjs.zencdn.net/7.6.5/video-js.css" rel="stylesheet"> </link>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link href="/hagana/restrict/css/style.css" rel="stylesheet" type="text/css"/>
+
+    <h:head>
+        <title>Busca</title>
+    </h:head>
+
+    <h:body>
+
+        <div class="w3-main"  >
+            <div class="w3-card  menu w3-top" style="padding-left:6px;">
+                <button id="openNav" class="w3-xlarge w3-button w3-hover-white btBar w3-border-0" onclick="w3_open()" style="outline: none" >&#9776;</button>              
+            </div>
+            <div class="w3-sidebar w3-card-4  w3-collapse w3-animate-left" style="width:200px;"  id="sideBar" >
+                <div class="btBarGradiente  ">
+                    <div class="w3-container " onclick="w3_close()">
+                        <i class="fas fa-angle-left" style="font-size:30px;padding-top:4%;color: white; "></i>
+                    </div>
+                </div>
+
+                <ul>
+                    <li class="icone"><a href="dashboard.xhtml"><span><b class="fas fa-stream w3-text-blue-grey"></b></span>   <b class="textoMenu" style="color:#0bd6e2" >Dashboard</b></a></li>
+                    <li class="icone"><a href="index.xhtml"><span><b class="fas fa-hdd w3-text-blue-grey"></b></span>   <b class="textoMenu" >Dispositivos</b></a></li>   
+                    <li class="icone"><a href="terminal.xhtml"><span><b class="fas fa-keyboard w3-text-blue-grey"></b></span>   <b class="textoMenu" >Terminal</b></a></li>
+                    <li class="icone"><a href="map.xhtml"><span><b class="fas fa-sitemap w3-text-blue-grey"></b></span>   <b class="textoMenu" >Mapa</b></a></li>
+                    <li class="icone"><a href="arquivos.xhtml"  onclick="rc()" ><span><b class="fas fa-clone w3-text-blue-grey"></b></span>   <b class="textoMenu" >Arquivos</b></a></li>         
+                    <li class="icone"><a href="fotos.xhtml"><span><b class="fas fa-camera-retro w3-text-blue-grey" ></b></span>   <b class="textoMenu" >Fotos</b></a></li>
+                    <h:panelGroup rendered="#{loginBean.usuarioLogado.gerenciarUsuario == true}">
+                        <li class="icone"><a href="manager.xhtml"><span><b class="fas fa-user-plus w3-text-blue-grey"></b></span><b class="w3-text-blue-grey" style="padding-left:9px" > Usuários</b></a></li>
+                    </h:panelGroup>
+
+                    <li class="icone"><a href="login.xhtml"><span><b class="far fa-user w3-text-purple"></b></span>   <b class="w3-text-purple" style="padding-left:9px" > Olá, #{loginBean.dadosUsuario}</b></a></li>
+
+
+                    <div class="w3-padding">
+
+                        <div id="demoDrop" >
+
+                            <h:form>
+                                <b class="fas fa-power-off" style="margin-left:10px;color:#fe5000"></b>
+                                <h:commandLink 
+                                    action="#{loginBean.sair()}"
+                                    value="Sair"                                     
+                                    style="font-size: 18px;padding-left:20px;color:#fe5000"> 
+                                </h:commandLink>
+                            </h:form>
+                        </div>
+                    </div>
+                </ul>
+            </div>
+
+            <footer class=" w3-bottom">  
+                <a class="w3-btn w3-white w3-border w3-border-blue w3-round-xlarge w3-text-blue" href="clientes.xhtml"  style="font-size:16px;text-decoration: none;margin: 5px">#{clienteBean.clienteSelecionado.conta}</a>
+            </footer>
+
+
+            <div class="w3-main" style="margin-left:200px" id="main" >     
+
+                <div class="w3-mobile w3-section w3-row-padding w3-left " style="width:100%;padding-top:50px;padding-left:0px;padding-right:0;padding-bottom: 5px ">
+
+                    <div class="" style="height:40px;margin-bottom: 20px;margin-left:5px" id="navCliente">                        
+                        <a class="w3-button w3-xlarge w3-round-large w3-text-white w3-hover-pink" href="clientes.xhtml"  
+                           style="font-size:16px;text-decoration: none;margin-left: -12px;background: #0bd6e2">#{loginBean.dadosCliente}</a>
+                    </div>
+
+                    <br/>
+
+                    <div class="w3-container">
+                        <h:form>
+
+                            <div class="w3-container" >
+                                <p:commandButton  
+                                    actionListener="#{comandBean.executePing()}" ajax="true" update="dataGrafic"
+                                    value="Ping" style="width: 80px;font-size: 16px;height: 60px"
+                                    class="w3-btn w3-white w3-border w3-border-lime w3-text-lime w3-round-large w3-left far fa-clock" >  
+                                </p:commandButton>
+
+                                <p:commandButton  
+                                    actionListener="#{comandBean.executeARP()}" ajax="true"  
+                                    value="Tracert" style="width: 100px;font-size: 16px;height: 60px"
+                                    class="w3-btn w3-white w3-border w3-border-light-blue w3-text-light-blue w3-round-large w3-left fas fa-cogs" >   
+                                </p:commandButton>
+
+                                <p:commandButton  
+                                    actionListener="#{comandBean.executeScan()}" ajax="true" 
+                                    value="Escaner" style="width: 105px;font-size: 16px;height: 60px"
+                                    class="w3-btn w3-white w3-border w3-border-khaki w3-text-khaki w3-round-large w3-left fas fa-sitemap" >  
+                                </p:commandButton>
+                            </div>
+                            
+                            <div class="w3-container w3-padding sel" >
+                                <h:selectOneMenu class="w3-left" value="#{comandBean.MACvalue}" style="height: 40px;max-width: 1000vh">                                                     
+                                    <f:selectItems var="comp" value="#{clienteBean.clienteSelecionado.computadorList}" itemValue="#{comp.macAdress}"  itemLabel="#{comp.toString()} - #{comp.nome} - #{comp.localFK.nome}" />                                       
+                                </h:selectOneMenu>
+                            </div>
+
+                            <div class="w3-container w3-padding sel " >
+                                <h:selectOneMenu class="w3-left " value="#{comandBean.comandValue}" style="height: 40px;max-width: 1000vh">                                                     
+                                    <f:selectItems var="device" value="#{comandBean.devicesList}" itemValue="#{device.ip}"  itemLabel="#{device.toString()} - #{device.nome} - #{device.localFK.nome}" />                                       
+                                </h:selectOneMenu>
+                            </div>
+                            
+                            <p:poll interval="1" listener="#{comandBean.updateProgress()}" update="dataGrafic"   /> 
+
+                        </h:form>
+
+                        <style>
+                            .sel select{
+                                width: 100%;
+                                font-size: 19px;
+                                color: #26384e;
+                                border: 0.5px solid #91b1cb; 
+                            }
+                        </style>
+
+                    </div>
+ 
+                    <h:form id="dataGrafic">
+                        <table class="w3-table-all w3-large table-hover">
+
+                            <tr class="w3-cyan w3-card " style="height: 50px">
+                                <h:panelGroup rendered="#{comandBean.request.scan == true}">
+
+
+
+                                    <th  class="w3-text-white">Host name</th>
+                                    <th  class="w3-text-white">Endereço IP</th>
+                                    <th  class="w3-text-white">Endereço MAC</th>
+                                    <th  class="w3-text-white">Fabricante</th>
+
+
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{comandBean.request.scan == false}">
+
+                                    <th class="w3-text-white">#{comandBean.request.mensage}</th>
+
+                                </h:panelGroup>
+
+                            </tr>
+
+                            <ui:repeat  var="graf"  value="#{comandBean.request.lines}" >
+
+
+                                <tr class="w3-hover-light-blue">
+                                    <h:panelGroup rendered="#{comandBean.request.scan == true}">
+                                        <td>#{graf.host}</td>                                   
+                                        <td>#{graf.ip}</td>
+                                        <td>#{graf.mac}</td>
+                                        <td>#{graf.fabricante}</td>
+                                    </h:panelGroup>
+                                    <h:panelGroup rendered="#{comandBean.request.scan == false}">
+                                        <td>#{graf.line}</td>                                  
+
+                                    </h:panelGroup>
+
+                                </tr>
+
+                            </ui:repeat>    
+
+
+
+
+
+                        </table>
+
+                    </h:form>
+
+                    
+
+
+                </div>
+            </div>
+        </div>
+
+        <style>
+            td{ 
+                font-size: 18px;
+            }
+            tr:hover td{
+                color: white; 
+            }
+            svg{ 
+                margin-left: 120px;
+            }
+            path{
+                stroke-width:3;  
+                stroke: #00e4ff; 
+            }
+            ellipse{  
+
+                rx:45; 
+                ry:45;
+            }
+            ellipse:hover  {  
+                fill:#1adce8;
+            }
+
+            text{ 
+                fill:white;
+                font-size:14px;
+            }
+            tspan{  
+
+                font-size: 9px;
+            }
+            .ui-tooltip{
+                color: white;
+                background: #a800d1;
+                border-radius: 10px;
+                padding: 10px;
+            }
+            .ui-growl-item-container{
+
+                background-color: #121313; 
+                border-radius:8px;
+                font-size: 16px;
+                color: #ff0068; 
+                font-family: 'Roboto Slab';
+            }
+            body{
+
+            }
+        </style>
+
+        <!-- fim main -->
+        <br></br>  
+
+
+        <script>
+
+
+            function w3_open() {
+
+                document.getElementById("sideBar").style.display = "block";
+                var x = document.getElementById("main");
+
+                x.className = x.className.replace("  w3-white  ", " w3-hide ");
+                document.getElementById("sideBar").style.width = "200px";
+                document.getElementById("main").style.marginLeft = "200px";
+
+
+            }
+
+            function w3_close() {
+                document.getElementById("sideBar").style.display = "none";
+                var x = document.getElementById("sideBar");
+
+                x.className = x.className.replace("w3-hide", " w3-white ");
+                document.getElementById("sideBar").style.width = "0px";
+                document.getElementById("main").style.marginLeft = "0px";
+
+            }
+
+            function openTab(tab) {
+
+                if (tab === "terminal") {
+                    document.getElementById("grafico").style.display = "none";
+                    document.getElementById("terminal").style.display = "block";
+                } else {
+                    document.getElementById("terminal").style.display = "none";
+                    document.getElementById("grafico").style.display = "block";
+                }
+
+            }
+
+
+
+        </script>
+    </h:body>
+
+
+
+</html>
